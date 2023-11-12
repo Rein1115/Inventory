@@ -61,7 +61,7 @@ class ProductsController extends Controller
             DB::table('products')->insert([
                 "product_name" => $validate['productname'],
                 "quantity" => $validate['quantity'],
-                "price" => $validate['price'],
+                "price" => number_format($validate['price'], 2, '.', ''),
                 "expiration" => $validate['expiration'],
             ]);
 
@@ -114,6 +114,20 @@ class ProductsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            try {
+                $response = Auth::check()
+                    ? (DB::table('products')->where('product_id', $id)->delete()
+                        ? response()->json(['status' => true, 'message' => 'Product deleted successfully'])
+                        : response()->json(['status' => false, 'message' => 'Product not found or not deleted'], 404))
+                        : response()->json(['status' => false, 'message' => 'Unauthorized'], 401);
+                return $response;
+            } catch (\Exception $e) {
+                return response()->json(['status' => false, 'message' => 'An error occurred: ' . $e->getMessage()]);
+            }
+
+        } catch (\Exception $e) {
+            return response()->json(['status' => false, 'message' => 'An error occurred: ' . $e->getMessage()]);
+        }
     }
 }
