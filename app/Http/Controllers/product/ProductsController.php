@@ -16,16 +16,16 @@ class ProductsController extends Controller
      */
     public function index()
     {
-
+        $response = [];
         try{
           $response  =   Auth::check() ?  
-            DB::SELECT('select  * products ') : [];
+            DB::SELECT('select  * from  products ') : [];
         }
         catch(\Exception $e){
             $errorMessage = $e->getMessage();
         }
-
-        return view('products.product',compact('response'));
+        // dd($response);
+        return view('products.productlist',compact('response'));
     }
 
     /**
@@ -46,7 +46,30 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+            $response = [];
+
+            $validate = Auth::check() ?
+            $request->validate([
+                "productname" => "required",
+                "quantity" => "required",
+                "price" => "required",
+                "expiration" => "required"
+            ]) : [];
+
+            
+            DB::table('products')->insert([
+                "product_name" => $validate['productname'],
+                "quantity" => $validate['quantity'],
+                "price" => $validate['price'],
+                "expiration" => $validate['expiration'],
+            ]);
+
+            return response()->json(['status' => true , 'message' => 'Product Inserted Successfully']);
+
+        }catch(\Exception $e){
+            return response()->json(['status' => false, 'message' => 'An error occurred: ' . $e->getMessage()]);
+        }
     }
 
     /**

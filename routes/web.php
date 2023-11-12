@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\product\ProductsController;
+use App\Http\Controllers\HomeController;
 
 
 /*
@@ -21,10 +22,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 
 //products 
-Route::resource('/product', ProductsController::class)->names('products');
+Route::resource('/Inventory', ProductsController::class)->names('Inventory');
+
+
 
 
