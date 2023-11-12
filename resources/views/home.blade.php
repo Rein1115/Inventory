@@ -559,4 +559,8 @@
          </div>
       </div>
    </div> 
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/home/home.js') }}" defer></script>
+    
 @endsection
