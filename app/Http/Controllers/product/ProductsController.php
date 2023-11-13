@@ -24,7 +24,6 @@ class ProductsController extends Controller
         catch(\Exception $e){
             $errorMessage = $e->getMessage();
         }
-        // dd($response);
         return view('products.productlist',compact('response'));
     }
 
@@ -34,9 +33,11 @@ class ProductsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        //
+    {   
+        $response = [];
+        return view('products.productdetails',compact('response'));
     }
+    
 
     /**
      * Store a newly created resource in storage.
@@ -47,15 +48,14 @@ class ProductsController extends Controller
     public function store(Request $request)
     {
         try{
-            $response = [];
-
             $validate = Auth::check() ?
             $request->validate([
                 "productname" => "required",
                 "quantity" => "required",
                 "price" => "required",
                 "expiration" => "required"
-            ]) : [];
+            ])
+            : [];
 
             
             DB::table('products')->insert([
@@ -69,7 +69,7 @@ class ProductsController extends Controller
 
         }catch(\Exception $e){
             return response()->json(['status' => false, 'message' => 'An error occurred: ' . $e->getMessage()]);
-        }
+        }    
     }
 
     /**
@@ -78,10 +78,21 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
-    }
+        public function show($id)
+        {
+            $response = [];
+
+            try {
+                $response = Auth::check() ? 
+                DB::table('products')->where('product_id', $id)->get()
+                : [];
+                
+            } catch (\Exception $e) {
+                $errorMessage = $e->getMessage();
+            }
+            return view('products.productdetails',compact('response') );
+        }
+    
 
     /**
      * Show the form for editing the specified resource.
@@ -91,7 +102,7 @@ class ProductsController extends Controller
      */
     public function edit($id)
     {
-        //
+   
     }
 
     /**
@@ -103,7 +114,34 @@ class ProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+        try{
+            
+            $response = [];
+            $validate = Auth::check() ? $request->validate([
+                "productname" => "required",
+                "quantity" => "required",
+                "price" => "required",
+                "expiration" => "required"
+            ]) : [];
+
+            
+            DB::table('products')
+            ->where('product_id', $id)
+            ->update([
+                "product_name" => $validate['productname'],
+                "quantity" => $validate['quantity'],
+                "price" => number_format($validate['price'], 2, '.', ''),
+                "expiration" => $validate['expiration'],
+            ]);
+
+            return response()->json(['status' => true ,'message' => 'Updated Successfully']);
+
+        }catch (\Exception $e){
+            $errorMessage = $e->getMessage();
+            return response()->json(['status' => false,'message' => $errorMessage]);
+
+        }
     }
 
     /**
