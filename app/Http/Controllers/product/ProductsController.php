@@ -18,7 +18,7 @@ class ProductsController extends Controller
     {
         $response = [];
         try{
-          $response  =   Auth::check() ?  
+        $response  =   Auth::check() ?  
             DB::SELECT('select  * from  products ') : [];
         }
         catch(\Exception $e){
@@ -114,6 +114,7 @@ class ProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         
         try{
             

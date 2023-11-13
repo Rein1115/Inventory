@@ -27,6 +27,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('Home');
 
 //products 
 Route::resource('/Inventory', ProductsController::class)->names('Inventory');
+// Route::resource('/Products/{id}', [ProductsController::class])->name('ProductsUpdate');
 
 
 
