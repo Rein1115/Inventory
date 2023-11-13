@@ -13,10 +13,11 @@
              <table id="datatable" class="table table-striped" data-toggle="data-table">
                 <thead>
                    <tr>
-                      <th>Product Name</th>
+                      <th>Delivered To</th>
+                      <th>Address</th>
                       <th>Quantity</th>
-                      <th>Price</th>
-                      <th>Expiry Date</th>
+                      <th>Product Name</th>
+                      <th>Date</th>
                       <th>Action</th>
                    </tr>
                 </thead>
@@ -40,6 +41,5 @@
        </div>
     </div>
  </div>
-@vite(['resources/js/product/product-list.js'])
-@endsection 
- 
+
+@endsection
