@@ -19,7 +19,7 @@
     <div class="card">
        <div class="card-header d-flex justify-content-between">
           <div class="header-title">
-             <a href = "" class="btn btn-primary">Add Inventory</a>
+             <a href = "{{route('Inventory.create')}}" class="btn btn-primary">Add Inventory</a>
           </div>
        </div>
        <div class="card-body">
@@ -42,12 +42,12 @@
                         <td> ₱{{ $item->price }}</td>
                         <td>{{ $item->expiration }}</td>
                         <td>
-                            <button class="btn btn-success edit-btn"  data-id="{{ $item->product_id }}">Edit</button>
-                            <button class="btn btn-danger delete-btn" id="delete" data-id="{{ $item->product_id }}">Delete</button>
+                           <a href="{{ route('Inventory.show', $item->product_id) }}" class="btn btn-success edit-btn" data-id="{{ $item->product_id }}">Edit</a>
+                            <a class="btn btn-danger delete-btn" id="delete" data-id="{{ $item->product_id }}">Delete</a>
                         </td>
                     </tr>
                     @endforeach
-                </tbody>    
+                </tbody>  
                 
              </table>
           </div>
