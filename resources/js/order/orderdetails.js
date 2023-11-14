@@ -4,15 +4,23 @@ import Swal from 'sweetalert2';
 
 $('#quan').on('input', function () {
 
-    var inputValue = parseFloat($('#quan').val());
+    var inputValue = $('#quan').val();
 
-    var price = parseFloat($('#pname').data('price'));
+    var floatValue = parseFloat(inputValue);
 
-    /// price = "232" * 99;
-    
+    if (inputValue != '') {
+        var price = parseFloat($('#pname').data('price'));
 
-    var total = inputValue * price;
-    
-   $('#total-amount').val(total);
+        var total = floatValue * price;
+
+        $('#total-amount').val(total);
+    }
+    else {
+        $('#total-amount').val('');
+
+    }
+
+
+
 
 });
