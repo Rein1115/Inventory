@@ -13,6 +13,9 @@ $('#quan').on('input', function () {
 
         var total = floatValue * price;
 
+        total = parseFloat(total).toFixed(2);
+
+
         $('#total-amount').val(total);
     }
     else {
