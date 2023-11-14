@@ -55,9 +55,9 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label">Quantity: *</label>
+                                    <label class="form-label">Quantity: * <span class="text-danger">{{ !empty($productlist) ? $productlist[0]->quantity : '' }} available product(s)</span></label>
                                     <input type="number" value="{{ !empty($response) ? $response[0]->quantity : '' }}"
-                                        class="form-control" id="quan" name="quantity" placeholder="Quantity">
+                                        class="form-control" id="quan" name="quantity" placeholder="Quantity"  data-quan="{{ !empty($productlist) ? $productlist[0]->quantity : '' }}">
                                 </div>
                             </div>
 

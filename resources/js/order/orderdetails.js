@@ -4,25 +4,43 @@ import Swal from 'sweetalert2';
 
 $('#quan').on('input', function () {
 
+    var initialQuantity = parseInt($('#quan').data('quan'));
     var inputValue = $('#quan').val();
 
-    var floatValue = parseFloat(inputValue);
+    var intValue = parseInt(inputValue);
+
 
     if (inputValue != '') {
-        var price = parseFloat($('#pname').data('price'));
 
-        var total = floatValue * price;
+        if (initialQuantity >= intValue) {
 
-        total = parseFloat(total).toFixed(2);
+            var price = parseFloat($('#pname').data('price'));
+            var total = intValue * price;
+            total = parseFloat(total).toFixed(2);
 
 
-        $('#total-amount').val(total);
+            $('#total-amount').val(total);
+        }
+
+
+        else {
+            Swal.fire({
+                title: "Warning!",
+                text: "Product quantity is not enough",
+                icon: "warning",
+                showCancelButton: false,
+                confirmButtonText: "Okay"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#quan').val('');
+                }
+            });
+        }
     }
     else {
         $('#total-amount').val('');
 
     }
-
 
 
 
