@@ -56,46 +56,40 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
-
-        $request->validate([
-            "productname" => "required",
-            "deliveredto" => "required",
-            "address" => "required",
-            "date" => "required",
-            "quantity" => "required",
-            "terms" => "required",
-            "po" => "required",
-            "deliveredby" => "required"
-        ]);
-
-        // return $request;
-        // try{
-        //     $validate = Auth::check() ?
-        //     $request->validate([
-        //         "productname" => "required",
-        //         "delivered" => "required",
-        //         "address" => "required",
-        //         "date" => "required",
-        //         "quantity" => "required",
-        //         "terms" => "required",
-        //         "po" => "required",
-        //         "deliveredby" => "required"
-        //     ])
-        //     : [];
+        try{
+            $validate = Auth::check() ?
+            $request->validate([
+                "product_id" => "required",
+                "deliveredto" => "required",
+                "address" => "required",
+                "date" => "required",
+                "quantity" => "required",
+                "terms" => "required",
+                "po" => "required",
+                "deliveredby" => "required",
+                "totalamount" => "required"
+            ])
+            : [];
 
             
-        //     DB::table('orders')->insert([
-        //         "product_name" => $validate['productname'],
-        //         "quantity" => $validate['quantity'],
-        //         "price" => number_format($validate['price'], 2, '.', ''),
-        //         "expiration" => $validate['expiration'],
-        //     ]);
+            DB::table('orders')
+            ->insert([
+                "product_Id" => $validate['product_id'],
+                "deliveredto" => $validate['deliveredto'],
+                "address" => $validate['address'],
+                "date" => $validate['date'],
+                "quantity" => $validate['quantity'],
+                "totalamount" => $validate['totalamount'],
+                "terms" => $validate['terms'],
+                "po" => $validate['po'],
+                "deliveredby" => $validate['deliveredby']
+            ]);
 
-        //     return response()->json(['status' => true , 'message' => 'Product Inserted Successfully']);
+            return response()->json(['status' => true , 'message' => 'Product Inserted Successfully']);
 
-        // }catch(\Exception $e){
-        //     return response()->json(['status' => false, 'message' => 'An error occurred: ' . $e->getMessage()]);
-        // }    
+        }catch(\Exception $e){
+            return response()->json(['status' => false, 'message' => 'An error occurred: ' . $e->getMessage()]);
+        }    
     }
 
     /**

@@ -8,8 +8,7 @@
                     <h3 class="mb-4">Add Inventory:</h3>
                 </div>
             </div>
-            <input type="hidden" id="data"
-                value= "@foreach ($productlist as $item){{ $item->product_id ? $item->product_id : '' }} @endforeach">
+            
             <div class="card-body">
 
 
@@ -18,14 +17,15 @@
                     @if (!empty($response))
                         @method('PUT')
                     @endif
-
+                    <input type="hidden" id="data" name="product_id"
+                    value= "@foreach ($productlist as $item){{ $item->product_id ? $item->product_id : '' }} @endforeach">
                     <div class="form-card text-start">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label">Product Name: *</label>
                                     <input type="text" value="{{ !empty($productlist) ? $productlist[0]->product_name : '' }}"
-                                        class="form-control" id="pname" name="productname" placeholder="Product Name" data-price="{{ !empty($productlist) ? $productlist[0]->price : '' }}" />
+                                        class="form-control" id="pname"  placeholder="Product Name" data-price="{{ !empty($productlist) ? $productlist[0]->price : '' }}" readonly/>
                                 </div>
                             </div>
 
@@ -81,7 +81,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label">deliveredby: *</label>
-                                    <input type="date" value="{{ !empty($response) ? $response[0]->terms : '' }}"
+                                    <input type="text" value="{{ !empty($response) ? $response[0]->terms : '' }}"
                                         class="form-control" name="deliveredby" placeholder="Deliveredby" />
                                 </div>
                             </div>
