@@ -33,6 +33,7 @@ $('#quan').on('input', function () {
             }).then((result) => {
                 if (result.isConfirmed) {
                     $('#quan').val('');
+                    $('#total-amount').val('');
                 }
             });
         }
