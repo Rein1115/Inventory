@@ -41,7 +41,7 @@
                                 <div class="form-group">
                                     <label class="form-label">Price: *</label>
                                     <input type="number" value="{{ !empty($response) ? $response[0]->price : '' }}"
-                                        class="form-control" id="pric" name="price" placeholder="Price">
+                                        class="form-control" id="pric" name="price" placeholder="Price" step="0.01">
                                 </div>
                             </div>
 

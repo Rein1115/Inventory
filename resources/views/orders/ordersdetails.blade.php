@@ -86,16 +86,16 @@
                                 </div>
                             </div>
 
-                            @if(!empty($response))
+                            {{-- @if(!empty($response)) --}}
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="form-label">Total Amount: *</label>
                                     <input type="text" value="{{ !empty($response) ? $response[0]->totalamount : '' }}"
-                                        class="form-control" name="totalamount" placeholder="Total Amount" readonly />
+                                        class="form-control" id="total-amount" name="totalamount" placeholder="Total Amount" readonly />
                                 </div>
                             </div>
-                            @else
-                            @endif
+                            {{-- @else
+                            @endif --}}
                             
                         </div>
                     </div>
@@ -107,5 +107,6 @@
             </div>
         </div>
     </div>
-    @vite(['resources/js/product/product-details.js'])
+    @vite(['resources/js/order/orderdetails.js'])
+
 @endsection
