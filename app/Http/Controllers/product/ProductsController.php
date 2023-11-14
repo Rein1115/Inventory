@@ -19,7 +19,7 @@ class ProductsController extends Controller
         $response = [];
         try{
         $response  =   Auth::check() ?  
-            DB::SELECT('select  * from  products ') : [];
+            DB::SELECT('select  * from  products where status = 0 ') : [];
         }
         catch(\Exception $e){
             $errorMessage = $e->getMessage();
@@ -156,7 +156,11 @@ class ProductsController extends Controller
         try {
             try {
                 $response = Auth::check()
-                    ? (DB::table('products')->where('product_id', $id)->delete()
+                    ? (DB::table('products')
+                    ->where('product_id', $id)
+                    ->update([
+                        'status' => 1
+                    ])
                         ? response()->json(['status' => true, 'message' => 'Product deleted successfully'])
                         : response()->json(['status' => false, 'message' => 'Product not found or not deleted'], 404))
                         : response()->json(['status' => false, 'message' => 'Unauthorized'], 401);
