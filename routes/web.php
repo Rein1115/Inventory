@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\product\ProductsController;
+use App\Http\Controllers\order\OrdersController;
 use App\Http\Controllers\HomeController;
 
 
@@ -27,7 +28,12 @@ Route::get('/home', [HomeController::class, 'index'])->name('Home');
 
 //products 
 Route::resource('/Inventory', ProductsController::class)->names('Inventory');
-// Route::resource('/Products/{id}', [ProductsController::class])->name('ProductsUpdate');
+
+Route::resource('/Orders', OrdersController::class)->names('Orders');
+
+
+Route::get('/ProductOrder/{id}', [OrdersController::class,'productOrder'])->name('productOrder');
+
 
 
 
