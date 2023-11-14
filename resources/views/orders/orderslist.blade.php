@@ -19,7 +19,7 @@
     <div class="card">
        <div class="card-header d-flex justify-content-between">
           <div class="header-title">
-             <a href = "{{route('Inventory.create')}}" class="btn btn-primary">Add Inventory</a>
+             <a href = "{{route('Orders.create')}}" class="btn btn-primary">Add Orders</a>
           </div>
        </div>
        <div class="card-body">
@@ -27,24 +27,24 @@
              <table id="datatable" class="table table-striped" data-toggle="data-table">
                 <thead>
                    <tr>
-                      <th>Product Name</th>
-                      <th>Quantity</th>
+                      <th>Deliveredto</th>
+                      <th>product_name</th>
                       <th>Price</th>
-                      <th>Expiry Date</th>
+                      <th>Deliveredby</th>
                       <th>Action</th>
                    </tr>
                 </thead>
                 <tbody>
                     @foreach ($response as $item)
                     <tr>
-                        <td>{{ $item->product_name }}</td>
-                        <td>{{ $item->quantity }}</td>
+                        <td>{{ $item->deliveredto }}</td>
+                        <td>{{ $item->product_name}}</td>
                         <td> ₱{{ $item->price }}</td>
-                        <td>{{ $item->expiration }}</td>
+                        <td>{{ $item->deliveredby}}</td>
                         <td>
-                           <a href="{{ route('Inventory.show', $item->product_id) }}" class="btn btn-success edit-btn" data-id="{{ $item->product_id }}">Edit</a>
-                            <a class="btn btn-danger delete-btn" id="delete" data-id="{{ $item->product_id }}">Delete</a>
-                            <a href="{{ route('Orders.create')}}" class="btn btn-primary add-order" id="delete" data-id="{{ $item->product_id }}">Add order</a>
+                           <a href="{{ route('Inventory.show', $item->order_id) }}" class="btn btn-success edit-btn" data-id="{{ $item->order_id }}">Edit</a>
+                            <a class="btn btn-danger delete-btn" id="delete" data-id="{{ $item->order_id }}">Delete</a>
+                            {{-- <a class="btn btn-primary" id="delete" data-id="{{ $item->order_id }}">Open</a> --}}
                         </td>
                     </tr>
                     @endforeach
@@ -55,6 +55,6 @@
        </div>
     </div>
  </div>
-@vite(['resources/js/product/product-list.js'])
+@vite(['resources/js/order/order-list.js'])
 @endsection 
  

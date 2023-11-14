@@ -9,7 +9,8 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/js/home/home.js',
                 'resources/js/product/product-list.js',
-                'resources/js/product/product-details.js'
+                'resources/js/product/product-details.js',
+                'resources/js/order/order-list.js'
             ],
             refresh: true,
         }),
