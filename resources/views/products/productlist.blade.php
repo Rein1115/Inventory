@@ -44,12 +44,11 @@
                         <td>
                            <a href="{{ route('Inventory.show', $item->product_id) }}" class="btn btn-success edit-btn" data-id="{{ $item->product_id }}">Edit</a>
                             <a class="btn btn-danger delete-btn" id="delete" data-id="{{ $item->product_id }}">Delete</a>
-                            <a href="{{ route('Orders.create')}}" class="btn btn-primary add-order" id="delete" data-id="{{ $item->product_id }}">Add order</a>
+                            <a href="{{ route('productOrder',$item->product_id)}}" class="btn btn-primary add-order" id="delete" data-id="{{ $item->product_id }}">Add order</a>
                         </td>
                     </tr>
                     @endforeach
                 </tbody>  
-                
              </table>
           </div>
        </div>

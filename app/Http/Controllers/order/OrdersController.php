@@ -56,6 +56,19 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
+
+        // $request->validate([
+        //     "productname" => "required",
+        //     "deliveredto" => "required",
+        //     "address" => "required",
+        //     "date" => "required",
+        //     "quantity" => "required",
+        //     "terms" => "required",
+        //     "po" => "required",
+        //     "deliveredby" => "required"
+        // ]);
+
+        // return $request;
         try{
             $validate = Auth::check() ?
             $request->validate([
@@ -128,5 +141,20 @@ class OrdersController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function productOrder(){
+        $response = [];
+
+        try {
+            $response = Auth::check() ? 
+            DB::table('products')->where('product_id', $id)->get()
+            : [];
+            
+        } catch (\Exception $e) {
+            $errorMessage = $e->getMessage();
+        }
+        return view('orders.ordersdetails',compact('response') );
+
     }
 }

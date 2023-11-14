@@ -32,5 +32,9 @@ Route::resource('/Inventory', ProductsController::class)->names('Inventory');
 Route::resource('/Orders', OrdersController::class)->names('Orders');
 
 
+Route::get('/ProductOrder/{id}', [OrdersController::class,'productOrder'])->name('productOrder');
+
+
+
 
 
