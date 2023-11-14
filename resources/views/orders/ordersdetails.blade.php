@@ -8,24 +8,24 @@
                     <h3 class="mb-4">Add Inventory:</h3>
                 </div>
             </div>
-            <input type="hidden" id="data"
-                value= "@foreach ($response as $item){{ $item->product_id ? $item->product_id : '' }} @endforeach">
+            
             <div class="card-body">
 
 
-                <form id="{{ !empty($response) ? 'UpdateProd' : 'InsertProd' }}" class="mt-3 text-center" method="post">
+                <form action = "{{route('Orders.store')}}" class="mt-3 text-center" method="post">
                     @csrf
                     @if (!empty($response))
                         @method('PUT')
                     @endif
-
+                    <input type="hidden" id="data" name="product_id"
+                    value= "@foreach ($productlist as $item){{ $item->product_id ? $item->product_id : '' }} @endforeach">
                     <div class="form-card text-start">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label">Product Name: *</label>
-                                    <input type="text" value="{{ !empty($response) ? $response[0]->product_name : '' }}"
-                                        class="form-control" id="pname" name="productname" placeholder="Product Name" />
+                                    <input type="text" value="{{ !empty($productlist) ? $productlist[0]->product_name : '' }}"
+                                        class="form-control" id="pname"  placeholder="Product Name" data-price="{{ !empty($productlist) ? $productlist[0]->price : '' }}" readonly/>
                                 </div>
                             </div>
 
@@ -40,7 +40,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label">Address: *</label>
-                                    <input type="number" value="{{ !empty($response) ? $response[0]->address : '' }}"
+                                    <input type="text" value="{{ !empty($response) ? $response[0]->address : '' }}"
                                         class="form-control" id="add" name="address" placeholder="Address">
                                 </div>
                             </div>
@@ -81,7 +81,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label">deliveredby: *</label>
-                                    <input type="date" value="{{ !empty($response) ? $response[0]->terms : '' }}"
+                                    <input type="text" value="{{ !empty($response) ? $response[0]->terms : '' }}"
                                         class="form-control" name="deliveredby" placeholder="Deliveredby" />
                                 </div>
                             </div>
@@ -91,12 +91,11 @@
                                 <div class="form-group">
                                     <label class="form-label">Total Amount: *</label>
                                     <input type="text" value="{{ !empty($response) ? $response[0]->totalamount : '' }}"
-                                        class="form-control" name="totalamount" placeholder="Total Amount" readonly />
+                                        class="form-control" id="total-amount" name="totalamount" placeholder="Total Amount" readonly />
                                 </div>
                             </div>
-                            {{-- @else --}}
-
-                            {{-- @endif --}}
+                            {{-- @else
+                            @endif --}}
                             
                         </div>
                     </div>
@@ -108,5 +107,6 @@
             </div>
         </div>
     </div>
-    @vite(['resources/js/product/product-details.js'])
+    @vite(['resources/js/order/orderdetails.js'])
+
 @endsection

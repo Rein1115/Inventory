@@ -56,39 +56,33 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
-
-        // $request->validate([
-        //     "productname" => "required",
-        //     "deliveredto" => "required",
-        //     "address" => "required",
-        //     "date" => "required",
-        //     "quantity" => "required",
-        //     "terms" => "required",
-        //     "po" => "required",
-        //     "deliveredby" => "required"
-        // ]);
-
-        // return $request;
         try{
             $validate = Auth::check() ?
             $request->validate([
-                "productname" => "required",
-                "delivered" => "required",
+                "product_id" => "required",
+                "deliveredto" => "required",
                 "address" => "required",
                 "date" => "required",
                 "quantity" => "required",
                 "terms" => "required",
                 "po" => "required",
-                "deliveredby" => "required"
+                "deliveredby" => "required",
+                "totalamount" => "required"
             ])
             : [];
 
             
-            DB::table('orders')->insert([
-                "product_name" => $validate['productname'],
+            DB::table('orders')
+            ->insert([
+                "product_Id" => $validate['product_id'],
+                "deliveredto" => $validate['deliveredto'],
+                "address" => $validate['address'],
+                "date" => $validate['date'],
                 "quantity" => $validate['quantity'],
-                "price" => number_format($validate['price'], 2, '.', ''),
-                "expiration" => $validate['expiration'],
+                "totalamount" => $validate['totalamount'],
+                "terms" => $validate['terms'],
+                "po" => $validate['po'],
+                "deliveredby" => $validate['deliveredby']
             ]);
 
             return response()->json(['status' => true , 'message' => 'Product Inserted Successfully']);
@@ -106,7 +100,18 @@ class OrdersController extends Controller
      */
     public function show($id)
     {
-        //
+        $response = [];
+        $productlist = [];
+            try {
+                $response = Auth::check() ? 
+                DB::table('orders')->where('order_id', $id)->get()
+                : [];
+                
+            } catch (\Exception $e) {
+                $errorMessage = $e->getMessage();
+            }
+
+            return view('orders.ordersdetails',compact('response','productlist') );
     }
 
     /**
@@ -143,18 +148,21 @@ class OrdersController extends Controller
         //
     }
 
-    public function productOrder(){
+    public function productOrder($id){
+        $productlist = [];
         $response = [];
 
         try {
-            $response = Auth::check() ? 
+            $productlist = Auth::check() ? 
             DB::table('products')->where('product_id', $id)->get()
             : [];
             
         } catch (\Exception $e) {
             $errorMessage = $e->getMessage();
         }
-        return view('orders.ordersdetails',compact('response') );
+
+  
+        return view('orders.ordersdetails',compact('response','productlist') );
 
     }
 }
