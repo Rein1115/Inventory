@@ -57,45 +57,45 @@ class OrdersController extends Controller
     public function store(Request $request)
     {
 
-        // $request->validate([
-        //     "productname" => "required",
-        //     "deliveredto" => "required",
-        //     "address" => "required",
-        //     "date" => "required",
-        //     "quantity" => "required",
-        //     "terms" => "required",
-        //     "po" => "required",
-        //     "deliveredby" => "required"
-        // ]);
+        $request->validate([
+            "productname" => "required",
+            "deliveredto" => "required",
+            "address" => "required",
+            "date" => "required",
+            "quantity" => "required",
+            "terms" => "required",
+            "po" => "required",
+            "deliveredby" => "required"
+        ]);
 
         // return $request;
-        try{
-            $validate = Auth::check() ?
-            $request->validate([
-                "productname" => "required",
-                "delivered" => "required",
-                "address" => "required",
-                "date" => "required",
-                "quantity" => "required",
-                "terms" => "required",
-                "po" => "required",
-                "deliveredby" => "required"
-            ])
-            : [];
+        // try{
+        //     $validate = Auth::check() ?
+        //     $request->validate([
+        //         "productname" => "required",
+        //         "delivered" => "required",
+        //         "address" => "required",
+        //         "date" => "required",
+        //         "quantity" => "required",
+        //         "terms" => "required",
+        //         "po" => "required",
+        //         "deliveredby" => "required"
+        //     ])
+        //     : [];
 
             
-            DB::table('orders')->insert([
-                "product_name" => $validate['productname'],
-                "quantity" => $validate['quantity'],
-                "price" => number_format($validate['price'], 2, '.', ''),
-                "expiration" => $validate['expiration'],
-            ]);
+        //     DB::table('orders')->insert([
+        //         "product_name" => $validate['productname'],
+        //         "quantity" => $validate['quantity'],
+        //         "price" => number_format($validate['price'], 2, '.', ''),
+        //         "expiration" => $validate['expiration'],
+        //     ]);
 
-            return response()->json(['status' => true , 'message' => 'Product Inserted Successfully']);
+        //     return response()->json(['status' => true , 'message' => 'Product Inserted Successfully']);
 
-        }catch(\Exception $e){
-            return response()->json(['status' => false, 'message' => 'An error occurred: ' . $e->getMessage()]);
-        }    
+        // }catch(\Exception $e){
+        //     return response()->json(['status' => false, 'message' => 'An error occurred: ' . $e->getMessage()]);
+        // }    
     }
 
     /**
@@ -106,7 +106,18 @@ class OrdersController extends Controller
      */
     public function show($id)
     {
-        //
+        $response = [];
+        $productlist = [];
+            try {
+                $response = Auth::check() ? 
+                DB::table('orders')->where('order_id', $id)->get()
+                : [];
+                
+            } catch (\Exception $e) {
+                $errorMessage = $e->getMessage();
+            }
+
+            return view('orders.ordersdetails',compact('response','productlist') );
     }
 
     /**
@@ -143,18 +154,21 @@ class OrdersController extends Controller
         //
     }
 
-    public function productOrder(){
+    public function productOrder($id){
+        $productlist = [];
         $response = [];
 
         try {
-            $response = Auth::check() ? 
+            $productlist = Auth::check() ? 
             DB::table('products')->where('product_id', $id)->get()
             : [];
             
         } catch (\Exception $e) {
             $errorMessage = $e->getMessage();
         }
-        return view('orders.ordersdetails',compact('response') );
+
+  
+        return view('orders.ordersdetails',compact('response','productlist') );
 
     }
 }

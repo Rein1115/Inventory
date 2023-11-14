@@ -9,11 +9,11 @@
                 </div>
             </div>
             <input type="hidden" id="data"
-                value= "@foreach ($response as $item){{ $item->product_id ? $item->product_id : '' }} @endforeach">
+                value= "@foreach ($productlist as $item){{ $item->product_id ? $item->product_id : '' }} @endforeach">
             <div class="card-body">
 
 
-                <form id="{{ !empty($response) ? 'UpdateProd' : 'InsertProd' }}" class="mt-3 text-center" method="post">
+                <form action = "{{route('Orders.store')}}" class="mt-3 text-center" method="post">
                     @csrf
                     @if (!empty($response))
                         @method('PUT')
@@ -24,8 +24,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label">Product Name: *</label>
-                                    <input type="text" value="{{ !empty($response) ? $response[0]->product_name : '' }}"
-                                        class="form-control" id="pname" name="productname" placeholder="Product Name" />
+                                    <input type="text" value="{{ !empty($productlist) ? $productlist[0]->product_name : '' }}"
+                                        class="form-control" id="pname" name="productname" placeholder="Product Name" data-price="{{ !empty($productlist) ? $productlist[0]->price : '' }}" />
                                 </div>
                             </div>
 
@@ -40,7 +40,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label">Address: *</label>
-                                    <input type="number" value="{{ !empty($response) ? $response[0]->address : '' }}"
+                                    <input type="text" value="{{ !empty($response) ? $response[0]->address : '' }}"
                                         class="form-control" id="add" name="address" placeholder="Address">
                                 </div>
                             </div>
@@ -86,7 +86,7 @@
                                 </div>
                             </div>
 
-                            {{-- @if(!empty($response)) --}}
+                            @if(!empty($response))
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="form-label">Total Amount: *</label>
@@ -94,9 +94,8 @@
                                         class="form-control" name="totalamount" placeholder="Total Amount" readonly />
                                 </div>
                             </div>
-                            {{-- @else --}}
-
-                            {{-- @endif --}}
+                            @else
+                            @endif
                             
                         </div>
                     </div>
