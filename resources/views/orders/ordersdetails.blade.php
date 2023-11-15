@@ -12,7 +12,7 @@
             <div class="card-body">
 
 
-                <form action = "{{route('Orders.store')}}" class="mt-3 text-center" method="post">
+                <form id="InsertOrder" class="mt-3 text-center" method="post">
                     @csrf
                     @if (!empty($response))
                         @method('PUT')
@@ -86,16 +86,25 @@
                                 </div>
                             </div>
 
-                            {{-- @if(!empty($response)) --}}
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label">Total Amount: *</label>
                                     <input type="text" value="{{ !empty($response) ? $response[0]->totalamount : '' }}"
                                         class="form-control" id="total-amount" name="totalamount" placeholder="Total Amount" readonly />
                                 </div>
                             </div>
-                            {{-- @else
-                            @endif --}}
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Status Paid: *</label>
+                                        <div>
+                                            <select class="form-control" name="u/p" id="">
+                                                <option value="0">Unpaid</option>
+                                                <option value="1">Paid</option>
+                                            </select>
+                                        </div>
+                                </div>
+                            </div>
                             
                         </div>
                     </div>

@@ -7,7 +7,6 @@ $('#InsertProd').on('submit', function (e) {
     e.preventDefault();
 
     var formData = new FormData(this);
-
     axios.post('/Inventory', formData)
         .then(function (r) {
             if (r.data.status === true) {
@@ -43,7 +42,8 @@ $('#InsertProd').on('submit', function (e) {
 });
 
 
-// Assuming you have a form with product data and a submit button
+// update
+
 
 $('#UpdateProd').on('submit', function (e) {
     e.preventDefault();
@@ -66,16 +66,15 @@ $('#UpdateProd').on('submit', function (e) {
 
     axios.put(`/Inventory/${productId}`, jsonObject)
         .then(response => {
-
-            // Handle success, show SweetAlert notification
             Swal.fire({
                 icon: 'success',
                 title: 'Product Updated',
                 text: response.data.message,
-            });
+            }).then(()=>{
+                location.reload();
+            })
         })
         .catch(error => {
-            // Handle error, show SweetAlert error notification
             Swal.fire({
                 icon: 'error',
                 title: 'Update Failed',
@@ -84,4 +83,3 @@ $('#UpdateProd').on('submit', function (e) {
         });
 });
 
-// UpdateProd

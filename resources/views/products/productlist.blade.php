@@ -1,20 +1,6 @@
 @extends('layouts.homeapp')
 
 @section('content')
-<div class="col-lg-12">
-    <div class="card mb-4">
-        <form id="formtest" method="post">
-            @csrf
-            <input type="text" name="productname">
-            <input type="text" name="quantity">
-            <input type="text" name="price">
-            <input type="date" name="expiration">
-            <button type="submit">test</button>
-        </form>
-
-    </div>
-</div>
-
 <div class="col-sm-12">
     <div class="card">
        <div class="card-header d-flex justify-content-between">
@@ -38,9 +24,9 @@
                     @foreach ($response as $item)
                     <tr>
                         <td>{{ $item->product_name }}</td>
-                        <td>{{ $item->quantity }}</td>
+                        <td><span class="{{$item->quantity == 0 ? 'badge bg-danger' : '' }}">{{$item ->quantity == 0 ? "OUT OF STOCK" :  $item ->quantity }} </span></h1> </td>
                         <td> ₱{{ $item->price }}</td>
-                        <td>{{ $item->expiration }}</td>
+                        <td>{{ $item->expiration }}</td> 
                         <td>
                            <a href="{{ route('Inventory.show', $item->product_id) }}" class="btn btn-success edit-btn" data-id="{{ $item->product_id }}">Edit</a>
                             <a class="btn btn-danger delete-btn" id="delete" data-id="{{ $item->product_id }}">Delete</a>

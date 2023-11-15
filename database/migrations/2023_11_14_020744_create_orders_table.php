@@ -25,6 +25,7 @@ return new class extends Migration
             $table->integer('terms');
             $table->integer('po');
             $table->string('deliveredby');
+            $table->integer('upaid');
             $table->timestamps();
         });
     }

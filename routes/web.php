@@ -29,12 +29,11 @@ Route::get('/home', [HomeController::class, 'index'])->name('Home');
 //products 
 Route::resource('/Inventory', ProductsController::class)->names('Inventory');
 
+//Order
 Route::resource('/Orders', OrdersController::class)->names('Orders');
-
-
 Route::get('/ProductOrder/{id}', [OrdersController::class,'productOrder'])->name('productOrder');
-
-
+Route::get('/viewSummary/{id}', [OrdersController::class,'viewSummary'])->name('viewSummary');
+Route::get('/printOrder/{id}', [OrdersController::class,'printOrder'])->name('printOrder');
 
 
 
