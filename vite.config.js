@@ -10,7 +10,8 @@ export default defineConfig({
                 'resources/js/home/home.js',
                 'resources/js/product/product-list.js',
                 'resources/js/product/product-details.js',
-                'resources/js/order/order-list.js'
+                'resources/js/order/order-list.js',
+                'resources/css/order/printSummary.css'
             ],
             refresh: true,
         }),

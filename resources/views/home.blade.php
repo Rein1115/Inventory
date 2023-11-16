@@ -15,12 +15,12 @@
                       </div>
                       <div class="progress-detail">
                          <p  class="mb-2">Sales</p>
-                         <h4 class="counter">$560K</h4>
+                         <h4 class="counter">₱560K</h4>
                       </div>
                    </div>
                 </div>
              </li>
-             <li class="swiper-slide card card-slide" data-aos="fade-up" data-aos-delay="800">
+             {{-- <li class="swiper-slide card card-slide" data-aos="fade-up" data-aos-delay="800">
                 <div class="card-body">
                    <div class="progress-widget">
                       <div id="circle-progress-02" class="text-center circle-progress-01 circle-progress circle-progress-info" data-min-value="0" data-max-value="100" data-value="80" data-type="percent">
@@ -34,8 +34,8 @@
                       </div>
                    </div>
                 </div>
-             </li>
-             <li class="swiper-slide card card-slide" data-aos="fade-up" data-aos-delay="900">
+             </li> --}}
+             {{-- <li class="swiper-slide card card-slide" data-aos="fade-up" data-aos-delay="900">
                 <div class="card-body">
                    <div class="progress-widget">
                       <div id="circle-progress-03" class="text-center circle-progress-01 circle-progress circle-progress-primary" data-min-value="0" data-max-value="100" data-value="70" data-type="percent">
@@ -49,8 +49,8 @@
                       </div>
                    </div>
                 </div>
-             </li>
-             <li class="swiper-slide card card-slide" data-aos="fade-up" data-aos-delay="1000">
+             </li> --}}
+             {{-- <li class="swiper-slide card card-slide" data-aos="fade-up" data-aos-delay="1000">
                 <div class="card-body">
                    <div class="progress-widget">
                       <div id="circle-progress-04" class="text-center circle-progress-01 circle-progress circle-progress-info" data-min-value="0" data-max-value="100" data-value="60" data-type="percent">
@@ -64,8 +64,8 @@
                       </div>
                    </div>
                 </div>
-             </li>
-             <li class="swiper-slide card card-slide" data-aos="fade-up" data-aos-delay="1100">
+             </li> --}}
+             {{-- <li class="swiper-slide card card-slide" data-aos="fade-up" data-aos-delay="1100">
                 <div class="card-body">
                    <div class="progress-widget">
                       <div id="circle-progress-05" class="text-center circle-progress-01 circle-progress circle-progress-primary" data-min-value="0" data-max-value="100" data-value="50" data-type="percent">
@@ -79,8 +79,8 @@
                       </div>
                    </div>
                 </div>
-             </li>
-             <li class="swiper-slide card card-slide" data-aos="fade-up" data-aos-delay="1200">
+             </li> --}}
+             {{-- <li class="swiper-slide card card-slide" data-aos="fade-up" data-aos-delay="1200">
                 <div class="card-body">
                    <div class="progress-widget">
                       <div id="circle-progress-06" class="text-center circle-progress-01 circle-progress circle-progress-info" data-min-value="0" data-max-value="100" data-value="40" data-type="percent">
@@ -94,7 +94,7 @@
                       </div>
                    </div>
                 </div>
-             </li>
+             </li> --}}
              <li class="swiper-slide card card-slide" data-aos="fade-up" data-aos-delay="1300">
                 <div class="card-body">
                    <div class="progress-widget">
@@ -104,7 +104,7 @@
                          </svg>
                       </div>
                       <div class="progress-detail">
-                         <p  class="mb-2">Members</p>
+                         <p  class="mb-2">Orders</p>
                          <h4 class="counter">11.2M</h4>
                       </div>
                    </div>
@@ -164,7 +164,7 @@
              </div>
           </div>
        </div>
-       <div class="col-md-12 col-xl-6">
+       {{-- <div class="col-md-12 col-xl-6">
           <div class="card" data-aos="fade-up" data-aos-delay="900">
              <div class="flex-wrap card-header d-flex justify-content-between">
                 <div class="header-title">
@@ -210,9 +210,9 @@
                    </div>
                 </div>
              </div>
-          </div>
+          </div> --}}
        </div>
-       <div class="col-md-12 col-xl-6">
+       {{-- <div class="col-md-12 col-xl-6">
           <div class="card" data-aos="fade-up" data-aos-delay="1000">
              <div class="flex-wrap card-header d-flex justify-content-between">
                 <div class="header-title">
@@ -233,8 +233,8 @@
                 <div id="d-activity" class="d-activity"></div>
              </div>
           </div>
-       </div>         
-       <div class="col-md-12 col-lg-12">
+       </div>          --}}
+       {{-- <div class="col-md-12 col-lg-12">
           <div class="overflow-hidden card" data-aos="fade-up" data-aos-delay="600">
              <div class="flex-wrap card-header d-flex justify-content-between">
                 <div class="header-title">
@@ -405,11 +405,11 @@
                 </div>
              </div>
           </div>
-       </div>
+       </div> --}}
     </div>
  </div>
 
- <div class="col-md-12 col-lg-4">
+ {{-- <div class="col-md-12 col-lg-4">
       <div class="row">
          <div class="col-md-12 col-lg-12">
             <div class="card credit-card-widget" data-aos="fade-up" data-aos-delay="900">
@@ -558,7 +558,7 @@
             </div>
          </div>
       </div>
-   </div> 
+   </div>  --}}
 
     <!-- Scripts -->
     <script src="{{ asset('js/home/home.js') }}" defer></script>

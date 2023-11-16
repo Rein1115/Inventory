@@ -143,6 +143,7 @@ class ProductsController extends Controller
             return response()->json(['status' => false,'message' => $errorMessage]);
 
         }
+        return view('products.productdetails',compact('response'));
     }
 
     /**

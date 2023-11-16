@@ -191,6 +191,7 @@ class OrdersController extends Controller
             $response = Auth::check() ? 
             DB::select("
                 select 
+                    p.product_id as product_id,
                     p.product_name as product_name, 
                     p.price as price, 
                     o.deliveredto as deliveredto,
@@ -218,14 +219,43 @@ class OrdersController extends Controller
         return view('orders.ordersummary',compact('response','productlist') );
     }
 
+
+    public function updateQuan(Request $request, $id)
+    {
+        try {
+            $validate = Auth::check() ? $request->validate([
+                'upquan' => 'required',
+                'delorder' => 'required'
+            ]) : [];
+
+            $addquan = DB::select("select quantity from products where product_id = :id", ["id" => $id]);
+
+            $currentQuantity = isset($addquan[0]->quantity) ? $addquan[0]->quantity : 0;
+
+            $quanA = $validate['upquan'] + $currentQuantity;
+
+            DB::update("update products set quantity = :quantity where product_id = :id", [
+                'quantity' => $quanA,
+                'id' => $id,
+            ]);
+
+            DB::select("delete from orders where order_id = :id", ['id' => $validate['delorder']]);
+
+            return response()->json(['status' => true, 'message' => 'Updated product quantity and deleted order successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+
     public function printOrder($id){
         $productlist = [];
         $response = [];
-
-
         try{
             $response = Auth::check() ? 
             DB::select("select
+                 p.product_id as product_id,
+                 p.price as price,
                  o.order_id as order_id,
                  p.product_id as product_id,
                  p.product_name as product_name, 
@@ -242,12 +272,34 @@ class OrdersController extends Controller
                 inner join products as p on p.product_id = o.product_Id
                 where o.order_id = :id", ['id' => $id]
                 ) : [];
-            return response()->json(['status' => true, 'data' => $response]);
+                
+            // return response()->json(['status' => true, 'data' => $response]);
         }catch(\Exception $e){
-            return response()->json(['status' => false, 'message' => $e]);
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+        return view('orders.ordersindiview',compact('response'));
+    }
+
+    public function paymentUpdate(Request $request, $id){
+        $response = [];
+
+        try{
+            $validate = Auth::check() ? $request->validate([
+                'updatepay' =>'required'
+            ]) : [];
+            
+            DB::select("update orders set upaid = :updatepay where order_id = :id",['updatepay' => $validate['updatepay'] , 'id' => $id]);
+            
+            return response()->json(['status' => true, 'message' => 'This order is already paid']);
+        }catch(\Exception $e){
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
         }
 
     }
 
-
 }
+
+
+
+
+

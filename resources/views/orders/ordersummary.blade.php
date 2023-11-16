@@ -15,9 +15,9 @@
                    <tr>
                       <th class="text-center">Productname</th>
                       <th>Price</th>
-                      <th>Address</th>
-                      <th>Date</th>
                       <th>Quantity</th>
+                      <th>Address</th>
+                      <th>Payment Status</th>
                       <th>Total Amount</th>
                       <th class="text-center">Action</th>
                    </tr>
@@ -27,14 +27,19 @@
                     <tr>
                         <td>{{ $item->product_name }}</td>
                         <td>₱{{ $item->price}}</td>
-                        <td> {{ $item->address }}</td>
-                        <td>{{ $item->date}}</td>
                         <td>{{$item->quantity}}</td>
+                        <td> {{ $item->address }}</td>
+                        <td><span class="badge {{ $item->upaid === 0 ? 'text-bg-danger' : 'text-bg-success'}}">{{$item->upaid === 0 ? 'Unpaid' : 'Paid'}}</span></td>
                         <td>{{$item->totalamount}}</td>
-                        <td>
-                           {{-- <a href="{{ route('viewSummary', $item->order_id) }}" class="btn btn-primary edit-btn" data-id="{{ $item->order_id }}">View Summary</a> --}}
-                            <a class="btn btn-danger delete-btn" id="delete" data-id="{{ $item->order_id }}">Delete</a>
-                            <a href="{{route('printOrder',$item->order_id)}}" class="btn btn-primary" id="open" data-id="{{ $item->order_id }}">Open</a>
+                        <td class="justify d-flex">
+                            <form class="deleteOrderForm" method="post">
+                                @csrf
+                                <input type="hidden" name="upquan" value="{{ $item->quantity }}">
+                                <input type="hidden" name="delorder" value="{{ $item->order_id }}">
+                                <button class="btn btn-danger quan" data-quan="{{ $item->product_id }}" type="submit">Delete</button>
+                            </form> 
+                               &nbsp;
+                            <a href="{{route('printOrder',$item->order_id)}}" class="btn btn-primary" id="open" data-id="">Open</a>
                         </td>
                     </tr>
                     @endforeach
@@ -44,70 +49,7 @@
           </div>
        </div>
     </div>
- </div>
-
-
-
-    {{-- Print receipt --}}
-
-
-    <div class="col-sm-12">
-        <div class="card">
-           <div class="card-header d-flex justify-content-between">
-              <div class="header-title">
-              </div>
-           </div>
-           <div class="container">
-            <div class="receipt">
-                <h2 class="text-center">Receipt</h2>
-                <hr>
-                <div class="row">
-                    <div class="col-6">
-                        <p><strong>Date:</strong> October 10, 2023</p>
-                        <p><strong>Time:</strong> 12:30 PM</p>
-                    </div>
-                    <div class="col-6 text-right">
-                        <p><strong>Receipt #:</strong> 123456</p>
-                        <p><strong>Cashier:</strong> John Doe</p>
-                    </div>
-                </div>
-                <hr>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Item</th>
-                            <th class="text-right">Price</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Product 1</td>
-                            <td class="text-right">$10.00</td>
-                        </tr>
-                        <tr>
-                            <td>Product 2</td>
-                            <td class="text-right">$15.00</td>
-                        </tr>
-                        <!-- Add more rows as needed -->
-                    </tbody>
-                </table>
-                <hr>
-                <div class="text-right">
-                    <p><strong>Total:</strong> $25.00</p>
-                </div>
-                <hr>
-                <p class="text-center">Thank you for your purchase!</p>
-            </div>
-        </div>
-        </div>
-     </div>
-
-
-
-
-
-
-
+</div>
     @vite(['resources/js/order/ordersummary.js'])
 
 @endsection

@@ -18,7 +18,7 @@ use App\Http\Controllers\HomeController;
 */
 
 Route::get('/', function () {
-    return view('auth.login');
+    return view('welcome');
 });
 
 Auth::routes();
@@ -35,5 +35,7 @@ Route::get('/ProductOrder/{id}', [OrdersController::class,'productOrder'])->name
 Route::get('/viewSummary/{id}', [OrdersController::class,'viewSummary'])->name('viewSummary');
 Route::get('/printOrder/{id}', [OrdersController::class,'printOrder'])->name('printOrder');
 
+Route::post('/updateQuan/{id}', [OrdersController::class, 'updateQuan'])->name('updateQuan');
 
+Route::post('/paymentUpdate/{id}', [OrdersController::class, 'paymentUpdate'])->name('paymentUpdate');
 

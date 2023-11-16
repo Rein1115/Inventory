@@ -44,12 +44,12 @@
 
     <aside class="sidebar sidebar-default sidebar-white sidebar-base navs-rounded-all ">
         <div class="sidebar-header d-flex align-items-center justify-content-start">
-            <a href="../dashboard/index.html" class="navbar-brand">
+            <a href="{{route('Home')}}" class="navbar-brand">
 
                 <!--Logo start-->
                 <div class="logo-main">
                     <div class="logo-normal">
-                        <svg class=" icon-30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        {{-- <svg class=" icon-30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect x="-0.757324" y="19.2427" width="28" height="4" rx="2"
                                 transform="rotate(-45 -0.757324 19.2427)" fill="currentColor" />
                             <rect x="7.72803" y="27.728" width="28" height="4" rx="2"
@@ -58,10 +58,11 @@
                                 transform="rotate(45 10.5366 16.3945)" fill="currentColor" />
                             <rect x="10.5562" y="-0.556152" width="28" height="4" rx="2"
                                 transform="rotate(45 10.5562 -0.556152)" fill="currentColor" />
-                        </svg>
+                        </svg> --}}
+                        L
                     </div>
                     <div class="logo-mini">
-                        <svg class=" icon-30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        {{-- <svg class=" icon-30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect x="-0.757324" y="19.2427" width="28" height="4" rx="2"
                                 transform="rotate(-45 -0.757324 19.2427)" fill="currentColor" />
                             <rect x="7.72803" y="27.728" width="28" height="4" rx="2"
@@ -70,7 +71,8 @@
                                 transform="rotate(45 10.5366 16.3945)" fill="currentColor" />
                             <rect x="10.5562" y="-0.556152" width="28" height="4" rx="2"
                                 transform="rotate(45 10.5562 -0.556152)" fill="currentColor" />
-                        </svg>
+                        </svg> --}}
+                        L
                     </div>
                 </div>
                 <!--logo End-->
@@ -78,7 +80,7 @@
 
 
 
-                <h4 class="logo-title">Hope UI</h4>
+                <h4 class="logo-title">Company name</h4>
             </a>
             <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">
                 <i class="icon">
@@ -97,7 +99,7 @@
                 <!-- Sidebar Menu Start -->
                 <ul class="navbar-nav iq-main-menu" id="sidebar-menu">
                     <li class="nav-item static-item">
-                        <a class="nav-link static-item disabled" href="#" tabindex="-1">
+                        <a class="nav-link static-item disabled" href="{{route('Home')}}" tabindex="-1">
                             <span class="default-icon">Home</span>
                             <span class="mini-icon">-</span>
                         </a>
@@ -143,7 +145,7 @@
                     <!-- Orders Navigation Link -->
 
                     <li class="nav-item">
-                        <a class="nav-link {{request()->routeIs('Orders.index') ? 'active' : ''}} "
+                        <a class="nav-link {{request()->routeIs('Orders.index')||request()->routeIs('viewSummary') || request()->routeIs('printOrder') ? 'active' : ''}} "
                             aria-current="page" href="{{ route('Orders.index') }}">
 
                             <i class="icon">
@@ -335,8 +337,21 @@
                                 <div>
                                                                      
                                     <h1>{{ request()->routeIs('Home') ? 'Dashboard' : '' }}</h1>
+                                    <p>{{ request()->routeIs('Home') ? 'Explore your sales performance effortlessly in your dashboard.' : '' }}</p>
+
                                     <h1>{{ request()->routeIs('Inventory.index') || request()->routeIs('Inventory.create') || request()->routeIs('Inventory.show')    ? 'Inventory' : '' }}</h1>
-                                    <h1>{{request()->routeIs('Orders.index') ? 'Orders' : ''}} </h1>
+                                    <p>{{ request()->routeIs('Inventory.index') ? 'You can add inventory items and view real-time stock levels, including items that are in stock and those that are currently out of stock.' : '' }}</p>
+                                    <p>{{ request()->routeIs('Inventory.create') ? 'You can add inventory items here, specifying the quantity in stock, the corresponding price, and the expiry date for each product.' : '' }}</p>
+                                    <p>{{ request()->routeIs('Inventory.show') ? 'You can easily edit inventory details, including product name ,stock quantity, pricing, and expiry dates.' : '' }}</p>
+
+                                    <h1>{{request()->routeIs('Orders.index') ? 'Order(s)' : ''}} </h1>
+                                    <p>{{request()->routeIs('Orders.index') ? 'You can view a list of clinic that have placed orders with you.' : ''}} </p>
+
+                                    <h1>{{request()->routeIs('viewSummary')? 'Summary' : ''}}</h1>
+                                    <p>{{request()->routeIs('viewSummary')? 'You have the capability to conveniently access and review the comprehensive status details of all your orders, providing you with a clear and detailed overview of their current statuses, ensuring you stay informed and in control of your order management process.' : ''}}</p>
+
+                                    <h1>{{request()->routeIs('printOrder')? 'Print Summary' : ''}}</h1>
+                                    <p>{{request()->routeIs('printOrder')? 'You can print receipts and update the payment status for transactions.' : ''}}</p>
                                 </div>
                                 {{-- <div>
                                   <a href="" class="btn btn-link btn-soft-light">

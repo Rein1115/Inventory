@@ -28,8 +28,8 @@
                         <td> ₱{{ $item->price }}</td>
                         <td>{{ $item->deliveredby}}</td> --}}
                         <td>
-                           <a href="{{ route('viewSummary', $item->deliveredto) }}" class="btn btn-primary edit-btn" data-id="{{ $item->order_id }}">View Summary</a>
-                            <a class="btn btn-danger delete-btn" id="delete" data-id="{{ $item->order_id }}">Delete</a>
+                           <a href="{{ route('viewSummary', $item->deliveredto) }}" class="btn btn-primary edit-btn" data-id="{{ $item->order_id }}">View Order(s)</a>
+                            {{-- <a class="btn btn-danger delete-btn" id="delete" data-id="{{ $item->order_id }}">Delete</a> --}}
                             {{-- <a class="btn btn-primary" id="delete" data-id="{{ $item->order_id }}">Open</a> --}}
                         </td>
                     </tr>

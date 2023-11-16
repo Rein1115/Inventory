@@ -14,7 +14,7 @@
                 <thead>
                    <tr>
                       <th>Product Name</th>
-                      <th>Quantity</th>
+                      <th>Stock</th>
                       <th>Price</th>
                       <th>Expiry Date</th>
                       <th>Action</th>
