@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\product\ProductsController;
 use App\Http\Controllers\order\OrdersController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\salesreport\SalesRepController;
 
 
 /*
@@ -34,8 +35,9 @@ Route::resource('/Orders', OrdersController::class)->names('Orders');
 Route::get('/ProductOrder/{id}', [OrdersController::class,'productOrder'])->name('productOrder');
 Route::get('/viewSummary/{id}', [OrdersController::class,'viewSummary'])->name('viewSummary');
 Route::get('/printOrder/{id}', [OrdersController::class,'printOrder'])->name('printOrder');
-
 Route::post('/updateQuan/{id}', [OrdersController::class, 'updateQuan'])->name('updateQuan');
-
 Route::post('/paymentUpdate/{id}', [OrdersController::class, 'paymentUpdate'])->name('paymentUpdate');
 
+// Sales Report
+Route::resource('/salesRep', SalesRepController::class)->names('salesRep');
+Route::get('/displaySyear/{id}',[SalesRepController::class,'displaySyear'])->name('displaySyear');

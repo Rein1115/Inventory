@@ -30,7 +30,7 @@
                         <td>{{$item->quantity}}</td>
                         <td> {{ $item->address }}</td>
                         <td><span class="badge {{ $item->upaid === 0 ? 'text-bg-danger' : 'text-bg-success'}}">{{$item->upaid === 0 ? 'Unpaid' : 'Paid'}}</span></td>
-                        <td>{{$item->totalamount}}</td>
+                        <td>₱{{number_format($item->totalamount,2)}}</td>
                         <td class="justify d-flex">
                             <form class="deleteOrderForm" method="post">
                                 @csrf

@@ -75,7 +75,7 @@
                   </div>
                   <hr>
                   <div class="text-center">
-                     <h1><strong>Total: </strong>₱{{$item->totalamount}}</h1>
+                     <h1><strong>Total: </strong>₱{{number_format($item->totalamount ,2)}}</h1>
                   </div>
                   <hr>
                   <p class="text-center">Thank you for your purchase!</p>
