@@ -25,6 +25,11 @@ return new class extends Migration
             $table->integer('terms');
             $table->integer('po');
             $table->string('deliveredby');
+            $table->string('doctor_name');
+            $table->string('contact_num');
+            $table->unsignedBigInteger('or')->unique(); 
+            $table->integer('cr');
+            $table->string('collected_by');
             $table->integer('upaid');
             $table->timestamps();
         });

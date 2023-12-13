@@ -53,6 +53,9 @@ class ProductsController extends Controller
                 "productname" => "required",
                 "quantity" => "required",
                 "price" => "required",
+                "productbrandname" => "required",
+                "productmilligram" => "required",
+                "supplier_name" => "required",
                 "expiration" => "required"
             ])
             : [];
@@ -63,6 +66,10 @@ class ProductsController extends Controller
                 "quantity" => $validate['quantity'],
                 "price" => number_format($validate['price'], 2, '.', ''),
                 "expiration" => $validate['expiration'],
+                "brand_name" => $validate['productbrandname'],
+                "mg" => $validate['productmilligram'],
+                "supplier_name" => $validate['supplier_name'],
+
             ]);
 
             return response()->json(['status' => true , 'message' => 'Product Inserted Successfully']);
@@ -123,6 +130,9 @@ class ProductsController extends Controller
                 "productname" => "required",
                 "quantity" => "required",
                 "price" => "required",
+                "productbrandname" => "required",
+                "productmilligram" => "required",
+                "supplier_name" => "required",
                 "expiration" => "required"
             ]) : [];
 
@@ -134,6 +144,9 @@ class ProductsController extends Controller
                 "quantity" => $validate['quantity'],
                 "price" => number_format($validate['price'], 2, '.', ''),
                 "expiration" => $validate['expiration'],
+                "brand_name" => $validate['productbrandname'],
+                "mg" => $validate['productmilligram'],
+                "supplier_name" => $validate['supplier_name'],
             ]);
 
             return response()->json(['status' => true ,'message' => 'Updated Successfully']);

@@ -37,6 +37,7 @@ Route::get('/viewSummary/{id}', [OrdersController::class,'viewSummary'])->name('
 Route::get('/printOrder/{id}', [OrdersController::class,'printOrder'])->name('printOrder');
 Route::post('/updateQuan/{id}', [OrdersController::class, 'updateQuan'])->name('updateQuan');
 Route::post('/paymentUpdate/{id}', [OrdersController::class, 'paymentUpdate'])->name('paymentUpdate');
+Route::post('/paymentreaming', [OrdersController::class, 'paymentreaming'])->name('paymentreaming');
 
 // Sales Report
 Route::resource('/salesRep', SalesRepController::class)->names('salesRep');

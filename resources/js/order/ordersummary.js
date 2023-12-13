@@ -102,3 +102,38 @@ $('.updatePayment').on('submit',function(e){
    $('#printorders').on('click',function(){
         print();
    });  
+
+
+
+   $('#paymentmode').on('change',function(){
+        var val = $(this).val();
+
+        var credential = $('#CredentialNumber');
+        var valuelabel = $('#valuelabel');
+        var cash = $('.cash');
+
+
+        if(val === 'Bank'){
+            credential.show();
+            valuelabel.text('Bank Number(s)');
+            cash.show();
+        }
+        else if(val === 'Gcash'){
+            credential.show();
+            valuelabel.text('Gcash Number(s)');
+            cash.show();
+        }
+        else if(val === 'Paymaya'){
+            credential.show();
+            cash.show();
+            valuelabel.text('Paymaya Number(s)');
+        }
+        else if(val ==='Cash'){
+            credential.hide();
+            cash.show();
+        }
+        else{
+            credential.hide();
+            cash.hide();
+        }
+   });

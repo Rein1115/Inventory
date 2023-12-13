@@ -23,7 +23,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label">Product Name: *</label>
+                                    <label class="form-label">Product Name: <span class="text-danger">*</span></label>
                                     <input type="text" value="{{ !empty($response) ? $response[0]->product_name : '' }}"
                                         class="form-control" id="pname" name="productname" placeholder="Product Name" />
                                 </div>
@@ -31,7 +31,31 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label">Quantity: *</label>
+                                    <label class="form-label">Product Brand: <span class="text-danger">*</span></label>
+                                    <input type="text" value="{{ !empty($response) ? $response[0]->brand_name : '' }}"
+                                        class="form-control" id="pbname" name="productbrandname" placeholder="Product Brand" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Product Milligram: <span class="text-danger">*</span></label>
+                                    <input type="text" value="{{ !empty($response) ? $response[0]->mg : '' }}"
+                                        class="form-control" id="pbname" name="productmilligram" placeholder="Product Milligram" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Supplier Name: <span class="text-danger">*</span></label>
+                                    <input type="text" value="{{ !empty($response) ? $response[0]->supplier_name : '' }}"
+                                        class="form-control" id="pbname" name="supplier_name" placeholder="Supplier Name" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Quantity: <span class="text-danger">*</span></label>
                                     <input type="number" value="{{ !empty($response) ? $response[0]->quantity : '' }}"
                                         class="form-control" id="quan" name="quantity" placeholder="Quantity" />
                                 </div>
@@ -39,7 +63,7 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label">Price: *</label>
+                                    <label class="form-label">Price: <span class="text-danger">*</span></label>
                                     <input type="number" value="{{ !empty($response) ? $response[0]->price : '' }}"
                                         class="form-control" id="pric" name="price" placeholder="Price" step="0.01">
                                 </div>
@@ -47,7 +71,7 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label">Expiry Date: *</label>
+                                    <label class="form-label">Expiry Date: <span class="text-danger">*</span></label>
                                     <input type="date" value="{{ !empty($response) ? $response[0]->expiration : '' }}"
                                         class="form-control" name="expiration" placeholder="Expiry Date" />
                                 </div>

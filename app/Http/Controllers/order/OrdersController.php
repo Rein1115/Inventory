@@ -24,15 +24,15 @@ class OrdersController extends Controller
                 SELECT o.deliveredto, MIN(p.product_name) AS product_name, MIN(p.price) AS price, MIN(o.deliveredby) AS deliveredby, MIN(o.order_id) AS order_id
                 FROM orders AS o 
                 INNER JOIN products AS p ON o.product_Id = p.product_id
-                GROUP BY o.deliveredto;
+                GROUP BY 
+                o.deliveredto;
             ') : [];
-
         }        
         catch(\Exception $e){
             $errorMessage = $e->getMessage();
-        }
+        }  
+
         // dd($response);
-  
         return view('orders.orderslist',compact('response','productlist'));
     }
 
@@ -68,7 +68,12 @@ class OrdersController extends Controller
                 "po" => "required",
                 "deliveredby" => "required",
                 "totalamount" => "required",
-                "u/p" => "required"
+                "u/p" => "required",
+                "doctor_name" => "required",
+                "contact_num" => "required",
+                "or" => "required",
+                "cr" => "required",
+                "collected_by" => "required",
             ])
             : [];
 
@@ -86,6 +91,11 @@ class OrdersController extends Controller
                 "terms" => $validate['terms'],
                 "po" => $validate['po'],
                 "deliveredby" => $validate['deliveredby'],
+                "doctor_name" => $validate['collected_by'],
+                "contact_num" => $validate['contact_num'],
+                "or" => $validate['or'],
+                "cr" => $validate['cr'],
+                "collected_by" => $validate['collected_by'],
                 "upaid" => $validate['u/p']
             ]);
 
@@ -191,31 +201,18 @@ class OrdersController extends Controller
             $response = Auth::check() ? 
             DB::select("
                 select 
-                    p.product_id as product_id,
-                    p.product_name as product_name, 
-                    p.price as price, 
-                    o.deliveredto as deliveredto,
-                    o.address as address, 
-                    o.date as date, 
-                    o.quantity as quantity, 
-                    o.totalamount as totalamount , 
-                    o.terms as terms,
-                    o.po as po, 
-                    o.deliveredby as deliveredby , 
-                    o.upaid as upaid , 
-                    o.order_id as order_id
+                    o.or ,  DATE(o.created_at) AS order_date
                 from 
                     orders as o
-                inner join 
-                    products as p ON p.product_id = o.product_id
                 where 
-                    o.deliveredto = :id", ['id' => $id])
+                    o.deliveredto = :id
+                GROUP BY o.or,DATE(o.created_at) ", ['id' => $id])
             : [];
-           
+        
         } catch (\Exception $e) {
             $errorMessage = $e->getMessage();
         }
-
+        // dd($response);
         return view('orders.ordersummary',compact('response','productlist') );
     }
 
@@ -252,32 +249,53 @@ class OrdersController extends Controller
         $productlist = [];
         $response = [];
         try{
+            
             $response = Auth::check() ? 
-            DB::select("select
-                 p.product_id as product_id,
-                 p.price as price,
-                 o.order_id as order_id,
-                 p.product_id as product_id,
-                 p.product_name as product_name, 
-                 o.deliveredto as deliveredto,
-                 o.address as address, 
-                 o.date as date, 
-                 o.quantity as quantity, 
-                 o.totalamount as totalamount,
-                 o.terms as terms,
-                o.po as po, 
-                o.deliveredby as deliveredby, 
-                o.upaid as upaid
-                from orders as o
-                inner join products as p on p.product_id = o.product_Id
-                where o.order_id = :id", ['id' => $id]
-                ) : [];
-                
+            DB::select("
+                SELECT
+                    MIN(p.product_id) as product_id,
+                    GROUP_CONCAT( DISTINCT p.price) as product_price,
+                    MIN(o.order_id) as order_id,
+                    MIN(p.product_id) as product_id,
+                    GROUP_CONCAT(DISTINCT p.product_name) as product_names,
+                    o.deliveredto as deliveredto,
+                    o.address as address,
+                    MIN(o.date) as date,
+                    o.or,
+                    GROUP_CONCAT(DISTINCT o.quantity) as quantity,
+                    SUM(o.totalamount) as totalamount,
+                    MIN(o.terms) as terms,
+                    MIN(o.po) as po,
+                    MIN(o.deliveredby) as deliveredby,
+                    MIN(o.upaid) as upaid
+                FROM 
+                    orders AS o
+                INNER JOIN 
+                    products AS p ON p.product_id = o.product_Id
+                WHERE 
+                    o.or = :id
+                GROUP BY 
+                    o.address,
+                    o.deliveredto,
+                    o.or
+            ", ['id' => $id]) : [];
+        
+            $payments = Auth::check() ? DB::select('SELECT * FROM payments WHERE or_numbers = :id', ['id' => $id]) : [];
+
+            $paymentsval = null;
+          
+
+            foreach($payments as $item){
+                $paymentsval = $item->payment;
+            }
+                // dd($response,$paymentsval);
             // return response()->json(['status' => true, 'data' => $response]);
         }catch(\Exception $e){
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
         }
-        return view('orders.ordersindiview',compact('response'));
+
+        // return $response;
+        return view('orders.ordersindiview',compact('response','paymentsval'));
     }
 
     public function paymentUpdate(Request $request, $id){
@@ -296,6 +314,44 @@ class OrdersController extends Controller
         }
 
     }
+
+    public function paymentreaming(Request $request){
+
+        try{
+            $validate = Auth::check() ?
+            $request->validate([
+                "or"=>"required",
+                "paymentmode"=>"required",
+                "crenumber"=>"nullable",
+                "payment" =>"required",
+                "amount" => "required",
+            ])
+            : [];
+            $minusp = $validate['payment'] - $validate['amount'];
+            if ($validate['payment'] >= $validate['amount']) {
+                DB::table('payments')
+                ->insert([
+                    "or_numbers" => $validate['or'],
+                    "paymentmode" => $validate['paymentmode'],
+                    "number" => $validate['crenumber'],
+                    "amount" => $validate['amount'],
+                    "payment" => $minusp,
+                ]);
+    
+                return response()->json(['status' => true , 'message' => 'Payment Inserted Successfully']);
+    
+            } else {
+                return response()->json(['status' => false, 'message' => 'Payment is greater than the amount.']);
+            }
+
+           
+
+        }catch(\Exception $e){
+            return response()->json(['status' => false, 'message' => 'An error occurred: ' . $e->getMessage()]);
+        } 
+    }
+
+
 
 }
 
