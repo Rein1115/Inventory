@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('deliveredby');
             $table->string('doctor_name');
             $table->string('contact_num');
-            $table->unsignedBigInteger('or')->unique(); 
+            $table->unsignedBigInteger('or');
             $table->integer('cr');
             $table->string('collected_by');
             $table->integer('upaid');

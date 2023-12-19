@@ -52,8 +52,9 @@
                               <label for="paymentmode">Mode Of Payment<span class="text-danger">*</span></label>
                               <div class="col-12  mb-2">
                                  <input type="text" name="or" value="{{$item->or}}" style="display:none;">
+                                 <input type="hidden" name="orderid" value="{{$item->order_id}}">
                                  <select class="form-select" name="paymentmode" aria-label="Default select example" id="paymentmode">
-                                    <option selected>Open this select menu</option>
+                                    <option selected>Open this select payment mode</option>
                                     <option id="cash" value="Cash">Cash</option>
                                     <option id="gcash" value="Gcash">Gcash</option>
                                     <option  id="bank" value="Bank">Bank</option>
@@ -126,10 +127,13 @@
                            <p><strong>Delivered To:</strong> {{ $item->deliveredto }}</p>
                            <p><strong>Address:</strong> {{ $item->address }}</p>
                            <p><strong>Date:</strong> {{$item->date}}</p>
-                           @if($paymentsval == 0)
-                              <p><p><strong>Balance: </strong><span class="badge bg-success">Paid</span></p>
+                           <strong>Balance: </strong>
+                           @if($paymentsval === 0)
+                               <span class="badge bg-success">Paid</span>
+                           @elseif($paymentsval !== null)
+                               <span class="badge bg-secondary">₱{{ number_format($paymentsval, 2) }}</span>
                            @else
-                           <p><p><strong>Balance: </strong><span class="badge bg-secondary">₱{{ ($paymentsval !== null && $paymentsval !== 0) ? number_format($paymentsval, 2) : number_format($item->totalamount, 2) }}</span></p>
+                               <span class="badge bg-info">No Downpayment</span>
                            @endif
                         </div>
                         <div class="col-md-6">

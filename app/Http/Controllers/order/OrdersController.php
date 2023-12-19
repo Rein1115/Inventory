@@ -254,15 +254,15 @@ class OrdersController extends Controller
             DB::select("
                 SELECT
                     MIN(p.product_id) as product_id,
-                    GROUP_CONCAT( DISTINCT p.price) as product_price,
+                    GROUP_CONCAT(p.price) as product_price,
                     MIN(o.order_id) as order_id,
                     MIN(p.product_id) as product_id,
-                    GROUP_CONCAT(DISTINCT p.product_name) as product_names,
+                    GROUP_CONCAT(p.product_name) as product_names,
                     o.deliveredto as deliveredto,
                     o.address as address,
                     MIN(o.date) as date,
                     o.or,
-                    GROUP_CONCAT(DISTINCT o.quantity) as quantity,
+                    GROUP_CONCAT(o.quantity) as quantity,
                     SUM(o.totalamount) as totalamount,
                     MIN(o.terms) as terms,
                     MIN(o.po) as po,
@@ -321,6 +321,7 @@ class OrdersController extends Controller
             $validate = Auth::check() ?
             $request->validate([
                 "or"=>"required",
+                "orderid" => "required",
                 "paymentmode"=>"required",
                 "crenumber"=>"nullable",
                 "payment" =>"required",
@@ -332,6 +333,7 @@ class OrdersController extends Controller
                 DB::table('payments')
                 ->insert([
                     "or_numbers" => $validate['or'],
+                    "order_id" => $validate['orderid'],
                     "paymentmode" => $validate['paymentmode'],
                     "number" => $validate['crenumber'],
                     "amount" => $validate['amount'],

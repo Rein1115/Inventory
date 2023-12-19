@@ -15,13 +15,14 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->bigIncrements('payment_id');
-            $table->unsignedBigInteger('or_numbers');
-            $table->foreign('or_numbers')->references('or')->on('orders');
+            $table->unsignedBigInteger('order_id');
+            $table->foreign('order_id')->references('order_id')->on('orders');
+            $table->integer('or_numbers');
             $table->string('paymentmode');
             $table->integer('number')->nullable();
             $table->integer('amount');
             $table->integer('payment');
-            $table->integer('remainingpaymnet')->nullable();
+            $table->integer('remainingpayment')->nullable();
             $table->timestamps();
         });
     }
