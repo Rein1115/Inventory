@@ -7,6 +7,8 @@
         $productNames = explode(',', $item->product_names);
         $productPrices = explode(',', $item->product_price);
         $quantities = explode(',', $item->quantity);
+        $order_id = explode(',', $item->order_ids);
+        $product_id = explode(',', $item->product_ids);
     @endphp
     
     <div class="col-sm-12">
@@ -150,6 +152,7 @@
                                  <th>Product Name</th>
                                  <th>Price</th>
                                  <th>Quantity</th>
+                                 <th>Action</th>
                               </tr>
                            </thead>
                            <tbody>
@@ -159,9 +162,58 @@
                                   <td>{{ $productName }}</td>
                                   <td>₱{{ $productPrices[$index] }}</td>
                                   <td>{{ $quantities[$index] }}</td>
+                                  <td>
+                                    <a type="button" href="{{$order_id[$index]}}" class="btn btn-success"class="btn btn-success mb-2 rounded" data-bs-toggle="modal" data-bs-target="#staticBackdrop1{{$order_id[$index]}}">
+                                    Edit</a>
+                                 </td>
                               </tr>
+
+                              <div class="modal fade" id="staticBackdrop1{{$order_id[$index]}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                 <div class="modal-dialog">
+                                     <div class="modal-content">
+                                         <div class="modal-header">
+                                             <h5 class="modal-title" id="staticBackdropLabel">Payment Transaction </h5>
+                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                         </div>
+                                         <div class="modal-body">
+                                             <div class="form-group">
+                                                <form action="{{ route('editquantity') }}" method="post">
+                                                   
+                                                   @csrf
+                                                   <input type="text" name="product_id" value="{{$product_id[$index]}}">
+                                                   <input type="text" name="order_id" value="{{$order_id[$index]}}">
+
+                                                   <div class="row" >
+                                                      <label for="">ProductName<span class="text-danger">*</span></label>
+                                                      <div class="col-12  mb-2">
+                                                        <input class="form-control" type="text" value="{{$productName}}" readonly>
+                                                      </div>
+                        
+                                                      <div class="col-12" >
+                                                         <label >Price <span class="text-danger">*</span></label>
+                                                         <input class="form-control" value="{{ $productPrices[$index] }}" readonly>
+                                                      </div>
+                                                      
+                                                     
+                                                      <div class="col-12 mt-2">
+                                                         <label for="payment" ><span>Quantity <span class="text-danger" >*</span></span></label>
+                                                         <input class="form-control" type="number" id="payment" value="{{$quantities[$index]}}" name="quantity">
+                                                      </div>
+                                                   </div>
+                                             </div>
+                                             <div class="text-start">
+                                                 <button type="submit" class="btn btn-primary" data-bs-dismiss="modal"> Update</button>
+                                                 <button type="button" class="btn btn-danger"  data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+                                             </div>
+                                          </form>   
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
                           @endforeach
-                             
+                          
+                         
+
                            </tbody>
                         </table>
                      </div>

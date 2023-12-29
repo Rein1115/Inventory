@@ -254,8 +254,11 @@ class OrdersController extends Controller
             DB::select("
                 SELECT
                     MIN(p.product_id) as product_id,
+                    GROUP_CONCAT(p.product_id) as product_ids,
                     GROUP_CONCAT(p.price) as product_price,
+                    GROUP_CONCAT(o.order_id) as order_id,
                     MIN(o.order_id) as order_id,
+                    GROUP_CONCAT(o.order_id) as order_ids,
                     MIN(p.product_id) as product_id,
                     GROUP_CONCAT(p.product_name) as product_names,
                     o.deliveredto as deliveredto,
@@ -352,6 +355,38 @@ class OrdersController extends Controller
             return response()->json(['status' => false, 'message' => 'An error occurred: ' . $e->getMessage()]);
         } 
     }
+
+    public function editquantity(Request $request){
+        try{
+            $validate = Auth::check() ?
+            $request->validate([
+                "order_id"=>"required",
+                "quantity" => "required",
+                "product_id" => "required"
+            ])
+            : [];
+
+            $productId =DB::select("SELECT quantity FROM products WHERE product_id = :product_id", ['product_id' => $validate['product_id']]);
+            $availableQuantity = $productId[0]->quantity;
+            $minus = $availableQuantity - $validate['quantity'];
+            if ($validate['quantity'] <= $availableQuantity) {
+                DB::select("update orders set quantity = :quantity where order_id = :id",['quantity' => $validate['quantity'] , 'id' => $validate['order_id']]);
+                DB::select("update products set quantity = :minus where product_id = :product_id", ['product_id' => $validate['product_id'], 'minus' => $minus]);
+                
+                return response()->json(['status' => true , 'message' => 'Quantity updated successfully']);
+            } else {
+                return response()->json(['status' => false, 'message' => 'Quantity is greater than available quantity']);
+            }
+
+           
+        }catch(\Exception $e){
+            return response()->json(['status' => false, 'message' => 'An error occurred: ' . $e->getMessage()]);
+        }
+    }
+
+
+
+
 
 
 

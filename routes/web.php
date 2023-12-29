@@ -39,6 +39,11 @@ Route::post('/updateQuan/{id}', [OrdersController::class, 'updateQuan'])->name('
 Route::post('/paymentUpdate/{id}', [OrdersController::class, 'paymentUpdate'])->name('paymentUpdate');
 Route::post('/paymentreaming', [OrdersController::class, 'paymentreaming'])->name('paymentreaming');
 
+Route::post('/editquantity', [OrdersController::class, 'editquantity'])->name('editquantity');
+
 // Sales Report
 Route::resource('/salesRep', SalesRepController::class)->names('salesRep');
 Route::get('/displaySyear/{id}',[SalesRepController::class,'displaySyear'])->name('displaySyear');
+
+
+
