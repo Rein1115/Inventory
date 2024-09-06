@@ -21,7 +21,7 @@ use App\Http\Controllers\User\UserController;
 */
 
 Route::get('/', function () {
-    return view('auth.login');
+    return view('welcome');
 });
 
 

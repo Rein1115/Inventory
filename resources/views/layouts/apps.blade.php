@@ -131,6 +131,8 @@
                                 </ul>
                             </li>
                         </ul>
+
+                        <li><a href="{{ url('/login') }}"><i class="icon-key"></i> <span>Login</span></a></li>
                     </li>
 
 
@@ -350,6 +352,8 @@
                                               <a href="page-lock.html"><i class="icon-lock"></i> <span>Lock Screen</span></a>
                                           </li>
                                           <li><a href="page-login.html"><i class="icon-key"></i> <span>Logout</span></a></li>
+                                       
+
                                       </ul>
                                   </div>
                               </div>
