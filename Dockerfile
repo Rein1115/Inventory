@@ -10,6 +10,8 @@ WORKDIR /var/www
 
 RUN apt-get update && apt-get install -y \
 
+    nginx \
+
     build-essential \
 
     libpng-dev \
@@ -58,12 +60,12 @@ RUN chown -R www-data:www-data /var/www \
 
 EXPOSE 80
  
-# Configure PHP-FPM to listen on port 80
+# Copy Nginx configuration
 
-RUN sed -i 's/listen = .*/listen = 0.0.0.0:80/' /usr/local/etc/php-fpm.d/www.conf
+COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
  
-# Start PHP-FPM
+# Start Nginx and PHP-FPM
 
-CMD ["php-fpm"]
+CMD service nginx start && php-fpm && tail -f /var/log/nginx/access.log
 
  
