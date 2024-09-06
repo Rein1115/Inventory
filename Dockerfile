@@ -1,71 +1,37 @@
-# Use official PHP image as the base
-
+# Use the official PHP image with the FPM variant for PHP 8.3
 FROM php:8.3-fpm
  
 # Set working directory
-
-WORKDIR /var/www
+WORKDIR /var/www/html
  
-# Install system dependencies
-
+# Install system dependencies and PHP extensions
 RUN apt-get update && apt-get install -y \
-
-    nginx \
-
-    build-essential \
-
     libpng-dev \
-
     libjpeg-dev \
-
     libfreetype6-dev \
-
-    libzip-dev \
-
-    zip \
-
-    unzip \
-
-    git \
-
-    curl \
-
     libonig-dev \
-
     libxml2-dev \
-
-    && docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd zip
+    zip \
+    curl \
+    unzip \
+    git \
+    && docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd
  
 # Install Composer
-
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
  
-# Copy application files
-
-COPY . /var/www
+# Copy existing application files
+COPY . /var/www/html
+ 
+# Set up permissions for Laravel
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
  
 # Install PHP dependencies
-
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --optimize-autoloader --no-dev
  
-# Set permissions for Laravel
-
-RUN chown -R www-data:www-data /var/www \
-
-    && chmod -R 775 /var/www/storage \
-
-    && chmod -R 775 /var/www/bootstrap/cache
- 
-# Expose port 80
-
+# Expose the port Laravel will run on
 EXPOSE 80
  
-# Copy Nginx configuration
-
-COPY ./Nginx/nginx.conf /etc/Nginx/nginx.conf
- 
-# Start Nginx and PHP-FPM
-
-CMD service nginx start && php-fpm && tail -f /var/log/nginx/access.log
-
+# Start the Laravel server
+CMD ["php-fpm"]
  
