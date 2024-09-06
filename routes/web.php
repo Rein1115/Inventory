@@ -9,6 +9,7 @@ use App\Http\Controllers\Clinic\ClinicController;
 use App\Http\Controllers\select2\SelectController;
 use App\Http\Controllers\Payment\PaymentController;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\Profile\ProfileController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,20 +25,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Auth::routes();
 
-Route::middleware(['auth'])->group(function () {
 
+Route::middleware(['auth','check.active'])->group(function () {
+    
     Route::resource('user', UserController::class);
-
+    
 
     Route::get('selectsupplier', [SelectController::class, 'supplier']);
     Route::get('selectbrand', [SelectController::class, 'brand']);
     Route::resource('supplier', SupplierController::class);
     // Route::resource('clinic', ClinicController::class);
-    Route::resource('brand', BrandController::class);
+    Route::resource('brand', BrandController::class)->names('brand');
     Route::resource('order', OrderController::class);
     Route::resource('product', ProductController::class);
 
@@ -48,8 +49,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('deleteupquan', [OrderController::class, 'deleteupquan']);
 
 
-    Route::get('producthistory', [ProductController::class, 'producthistory']);
+    Route::get('producthistory', [ProductController::class, 'producthistory'])->name('producthistory');
     Route::resource('payment', PaymentController::class);
 
     Route::post('destroymodification/{id}', [PaymentController::class, 'destroymodification']);
+
+    Route::resource('profile', ProfileController::class);
 });

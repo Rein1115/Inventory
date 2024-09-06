@@ -38,7 +38,7 @@ $(document).ready(function() {
                     $('#saveandupdate').text('Save');
                     $('#saveandupdate').addClass('btn btn-primary');
                     $('#hiddensaveup').val('0');
-                    $('#exampleModalLongTitle').text('Create Branch Name');
+                    $('#exampleModalLongTitle').text('Create Brand Name');
                 } 
             },
             {
@@ -89,7 +89,7 @@ $(document).ready(function() {
 
     $('#brand').on('click', '.edit', function() {
         $('#brandName').val('');
-        $('#exampleModalLongTitle').text('Update Branch Name');
+        $('#exampleModalLongTitle').text('Update Brand Name');
         var id = $(this).data('id');
         $('#exampleModalCenter').modal('show');
         $('#saveandupdate').text('Update');

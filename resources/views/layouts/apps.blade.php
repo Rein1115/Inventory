@@ -47,105 +47,99 @@
        <div class="nk-sidebar ">           
           <div class="nk-nav-scroll">
               <ul class="metismenu" id="menu">
-                  {{-- <li class="nav-label">Dashboard</li> --}}
-                  <li>
-                      <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                          <i class="icon-speedometer menu-icon"></i><span class="nav-text">Dashboard</span>
-                      </a>
-                      <ul aria-expanded="false">
-                          <li><a href="./index.html">Home 1</a></li>
-                      </ul>
-                  </li>
-                  
-                  {{-- <li>
-                      <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                          <i class="icon-notebook menu-icon"></i><span class="nav-text">Payroll</span>
-                      </a>
-                      <ul aria-expanded="false">
-                          <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Request</a>
-                              <ul aria-expanded="false">
-                                  <li><a href="./page-error-404.html"><i class="icon-notebook menu-icon" style="font-size:12px;"></i>Undertime
-                                  </a></li>
-                                  <li><a href="./page-error-404.html"><i class="icon-notebook menu-icon" style="font-size:12px;"></i>Leave</a></li>
-  
-                              </ul>
-                          </li>
-                      </ul>
-                  </li> --}}
+
+
+                @if(isset(Auth::user()->role) > 0 )
+                {{-- Dashboard --}}
+                    <li>
+                        <a href="{{route('home')}}"><i class="icon-speedometer menu-icon"></i><span class="nav-text">Dashboard</span></a>
+                    </li>
+                {{-- End Dashboard --}}
 
                     <li>
-                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                            <i class="icon-notebook menu-icon"></i><span class="nav-text">Inventory</span>
+                        <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="fa fa-truck menu-icon"></i><span class="nav-text">Supplier</span></a>
+                            <ul aria-expanded="false">
+                                <li><a href="{{route('supplier.index')}}"><i class="icon-notebook menu-icon" style="font-size:12px;"></i> Request Supplier
+                                </a></li>
+                               
+                            </ul>
+                        </li>
+                    </li>
+
+                    <li>
+                        <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="icon-notebook menu-icon"></i><span class="nav-text">Brand</span></a>
+                            <ul aria-expanded="false">
+                                <li><a href="{{route('brand.index')}}"><i class="icon-notebook menu-icon" style="font-size:12px;"></i> Request Brand
+                                </a></li>
+                               
+                            </ul>
+                        </li>
+                    </li>
+                  
+                    <li>
+                        <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="icon-notebook menu-icon"></i><span class="nav-text">Product</span></a>
+                            <ul aria-expanded="false">
+                                <li><a href="{{route('product.index')}}"><i class="icon-notebook menu-icon" style="font-size:12px;"></i> Request Product
+                                </a></li>
+                                <li><a href="{{route('producthistory')}}"><i class="icon-notebook menu-icon" style="font-size:12px;"></i>Product History</a></li>
+                            </ul>
+                        </li>
+                    </li>
+
+                    <li>
+                        <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="fa fa-shopping-cart"></i><span class="nav-text">Order</span></a>
+                            <ul aria-expanded="false">
+                                <li><a href="{{route('order.index')}}"><i class="icon-notebook menu-icon" style="font-size:12px;"></i> Request Order
+                                </a></li>
+                            </ul>
+                        </li>
+                    </li>
+
+                    <li>
+                        <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="fa fa-money"></i><span class="nav-text">Payment</span></a>
+                            <ul aria-expanded="false">
+                                <li><a href="{{route('payment.index')}}"><i class="icon-notebook menu-icon" style="font-size:12px;"></i> Invoice
+                                </a></li>
+                                <li><a href="./page-error-404.html"><i class="icon-notebook menu-icon" style="font-size:12px;"></i> History
+                                </a></li>
+                            </ul>
+                        </li>
+                    </li>
+
+                    @if(isset(Auth::user()->role) && Auth::user()->role === 'Admin')
+                    <li>
+                        <a href="{{route('user.index')}}"><i class="fa fa-users"></i><span class="nav-text">User</span></a>
+                    </li>
+
+                    @else
+                    
+
+                    @endif
+                    
+                    <hr>
+                    {{-- <li class="nav-label">Account</li> --}}
+
+                    <li>
+                        <a href="{{ route('profile.show', Auth::user()->id) }}">
+                            <i class="fa fa-user"></i>
+                            <span class="nav-text">Profile</span>
                         </a>
+                    </li>
 
-
-                        <ul aria-expanded="false">
-                            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Product</a>
-                                <ul aria-expanded="false">
-                                    <li><a href="./page-error-404.html"><i class="icon-notebook menu-icon" style="font-size:12px;"></i> Request Product
-                                    </a></li>
-                                    <li><a href="./page-error-404.html"><i class="icon-notebook menu-icon" style="font-size:12px;"></i>Product History</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-
-                        <ul aria-expanded="false">
-                            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Order</a>
-                                <ul aria-expanded="false">
-                                    <li><a href="./page-error-404.html"><i class="icon-notebook menu-icon" style="font-size:12px;"></i> Request Order
-                                    </a></li>
-                                    {{-- <li><a href="./page-error-404.html"><i class="icon-notebook menu-icon" style="font-size:12px;"></i>Order History</a></li> --}}
-                                </ul>
-                            </li>
-                        </ul>
-
-                        <ul aria-expanded="false">
-                            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Brand</a>
-                                <ul aria-expanded="false">
-                                    <li><a href="./page-error-404.html"><i class="icon-notebook menu-icon" style="font-size:12px;"></i> Request Brand
-                                    </a></li>
-                            
-                                </ul>
-                            </li>
-                        </ul>
-
-                        <ul aria-expanded="false">
-                            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Supplier</a>
-                                <ul aria-expanded="false">
-                                    <li><a href="./page-error-404.html"><i class="icon-notebook menu-icon" style="font-size:12px;"></i> Request Supplier
-                                    </a></li>
-                                
-                                </ul>
-                            </li>
-                        </ul>
-
-                        <ul aria-expanded="false">
-                            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Payment</a>
-                                <ul aria-expanded="false">
-                                    <li><a href="./page-error-404.html"><i class="icon-notebook menu-icon" style="font-size:12px;"></i> Invoice
-                                    </a></li>
-
-                                    <li><a href="./page-error-404.html"><i class="icon-notebook menu-icon" style="font-size:12px;"></i> History
-                                    </a></li>
-                                
-                                </ul>
-                            </li>
-                        </ul>
-
-                        <li><a href="{{ url('/login') }}"><i class="icon-key"></i> <span>Login</span></a></li>
+                    <li>
+                        <a  onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();"><i class="fa fa-key"></i><span class="nav-text">Logout</span></a>
+                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
                     </li>
 
 
-
               </ul>
-              <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
+              @else
+
+
+              @endif
           </div>
       </div>
       <!--**********************************
@@ -332,6 +326,7 @@
                                   </div>
                               </div>
                           </li>
+                          
                           <li class="icons dropdown">
                               <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
                                   <span class="activity active"></span>

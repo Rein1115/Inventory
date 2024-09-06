@@ -118,10 +118,13 @@ $(document).ready(function(){
 
     $('#btnaddup').on('click',function(){
 
-        if($('#pay').val() == 0){
-            alert('Input greater than 0.');
+        const payValue = parseFloat($('#pay').val());
+
+        if (payValue <= 0) {
+            alert('Input must be greater than 0.');
             return;
-        }
+        } 
+
         var alltotal = parseFloat($('#pay').val()) + overalltotal;
              var data = {
                 order_transno : $('#payments').data('trans'),

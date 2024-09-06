@@ -3,6 +3,7 @@ $(document).ready(function() {
     
     $('#gender').select2();
     $('#role').select2();
+    $('#status').select2();
     $('#user').DataTable({
 
         dom             : 'Bflrtip',
@@ -37,7 +38,7 @@ $(document).ready(function() {
                     });
                     $('#exampleModalLongTitle').text('');
                     $('#saveandupdate').removeClass('btn btn-success');
-                    $('#brandName').val('');
+                   
                     $('#exampleModalCenter').modal('show');
                     $('#saveandupdate').text('Save');
                     $('#saveandupdate').addClass('btn btn-primary');
@@ -98,7 +99,7 @@ $(document).ready(function() {
             {
                 data: null,
                 render: function (data, type, row) {
-                    var showUrl = '/brand/' + row.id;
+                    
                     return '<button  class="btn btn-primary edit" id="edit" data-id="'+row.id+'"><i class="icon-pencil pencil-icon"> </i></button>' + ' ' +
                            '<button  class="btn btn-danger delete" data-id="'+row.id+'"><i class="icon-trash trash-icon"> </i></button>';
                 }
@@ -107,7 +108,7 @@ $(document).ready(function() {
     });
 
     $('#user').on('click', '.edit', function() {
-        $('#brandName').val('');
+  
         $('#exampleModalLongTitle').text('Update Branch Name');
         var id = $(this).data('id');
         $('#exampleModalCenter').modal('show');
@@ -120,9 +121,6 @@ $(document).ready(function() {
         axios.get('/user/' + id)
         .then(response => {
             var resp = response.data;
-
-         
-
             console.log(resp);
 
             $('#fname').val(resp.fname);
@@ -139,9 +137,10 @@ $(document).ready(function() {
             `);
             
 
+            console.log(resp.status);
             $('#status').html(`
-                <option value="Inactive" ${resp.gender === 'Inactive' ? 'selected' : ''}>Inactive</option>
-                <option value="Active" ${resp.gender === 'Active' ? 'selected' : ''}>Active</option>
+                <option value="Inactive" ${resp.status === 'Inactive' ? 'selected' : ''}>Inactive</option>
+                <option value="Active" ${resp.status === 'Active' ? 'selected' : ''}>Active</option>
             `);
 
             $('#email').val(resp.email);
@@ -149,12 +148,11 @@ $(document).ready(function() {
         });
     });
 
-    $('#brand').on('click', '.delete', function() {
+    $('#user').on('click', '.delete', function() {
         var id = $(this).data('id');
-        
         Swal.fire({
             title: 'Are you sure?',
-            text: "Do you want to delete this brand name?",
+            text: "Do you want to delete this user?",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -163,7 +161,7 @@ $(document).ready(function() {
             cancelButtonText: 'No, cancel!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete('brand/'+id)
+                axios.delete('user/'+id)
                     .then(response => {
                         var resp = response.data;
                         console.log(resp);
@@ -171,18 +169,17 @@ $(document).ready(function() {
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Success!',
-                                text: resp.message
+                                text: resp.response
                             }).then(() => {
-                                $('#brandName').val('');
-                                $('#brand').DataTable().ajax.reload();
+                                $('#exampleModalCenter').find('input, select').val('');
+                                $('#user').DataTable().ajax.reload();
 
                             });
                         } else {
-                       
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Error!',
-                                text: resp.message
+                                text: resp.response
                             });
                         }
                     })
@@ -197,7 +194,7 @@ $(document).ready(function() {
                 Swal.fire({
                     icon: 'info',
                     title: 'Cancelled',
-                    text: ' Brand name was not deleted!',
+                    text: ' User was not deleted!',
                 });
             }
         });
@@ -249,6 +246,7 @@ $(document).ready(function() {
                             }).then(() => {
                                 $('#exampleModalCenter').modal('hide');
                                 $('#user').DataTable().ajax.reload();
+                                $('#exampleModalCenter').find('input, select').val('');
                             });
                         } else {
                             var errorMessage = 'Error!';

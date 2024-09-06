@@ -19,7 +19,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         //
-        $data = DB::select('SELECT * FROM users  ');
+        $data = DB::select('SELECT * FROM users  WHERE  `role` != "Admin" ');
         // dd($data);
         if($request->ajax()){
             return response()->json($data);
@@ -77,8 +77,8 @@ class UserController extends Controller
             'gender' => ['required', 'string', 'max:255'],
             'role' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $id],
-            'password' =>['required', 'string', 'min:8', 'confirmed'],
-            'password_confirmation' => ['required', 'string', 'min:8'],
+            'password' =>['required', 'string', 'confirmed'],
+            'password_confirmation' => ['required', 'string'],
         ]);
         if ($validator->fails()) {
             return response()->json(['success' => false, 'response' => $validator->errors()], 200);
@@ -123,5 +123,26 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         //
+        try {
+            
+            $rowsAffected = DB::delete(
+                'DELETE FROM users WHERE id = ? AND (`status` = "Inactive" AND `role` != "Admin")',
+                [$id]
+            );
+        
+  
+            if ($rowsAffected > 0) {
+                return response()->json(['success' => true, 'response' => 'Inactive user deleted successfully']);
+            } else {
+                return response()->json(['success' => false, 'response' => 'You can\'t delete an active user or a user with Admin role.']);
+            }
+        } catch (Exception $e) {
+  
+            return response()->json(['success' => false, 'response' => $e->getMessage()]);
+        }
+        
+
+        
+
     }
 }
