@@ -1,10 +1,12 @@
+# Dockerfile for Laravel MVC deployment on Render
+ 
 # Use official PHP image as the base
 FROM php:8.3-fpm
  
 # Set working directory
 WORKDIR /var/www
  
-# Install dependencies
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \
     libpng-dev \
@@ -22,15 +24,22 @@ RUN apt-get update && apt-get install -y \
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
  
-# Copy application code
+# Copy application files
 COPY . /var/www
  
-# Install dependencies
+# Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
  
-# Set permissions
-RUN chown -R www-data:www-data /var/www
+# Set permissions for Laravel
+RUN chown -R www-data:www-data /var/www \
+&& chmod -R 775 /var/www/storage \
+&& chmod -R 775 /var/www/bootstrap/cache
  
-# Expose port 9000 and start PHP-FPM
-EXPOSE 9000
+# Copy nginx configuration (optional if using nginx)
+# COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
+ 
+# Expose port 80 for Render
+EXPOSE 80
+ 
+# Start PHP-FPM server
 CMD ["php-fpm"]

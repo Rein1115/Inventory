@@ -140,8 +140,8 @@ $(document).ready(function() {
             
 
             $('#status').html(`
-                <option value="Male" ${resp.gender === 'Inactive' ? 'selected' : ''}>Inactive</option>
-                <option value="Female" ${resp.gender === 'Active' ? 'selected' : ''}>Active</option>
+                <option value="Inactive" ${resp.gender === 'Inactive' ? 'selected' : ''}>Inactive</option>
+                <option value="Active" ${resp.gender === 'Active' ? 'selected' : ''}>Active</option>
             `);
 
             $('#email').val(resp.email);
@@ -228,7 +228,7 @@ $(document).ready(function() {
 
         Swal.fire({
             title: 'Are you sure?',
-            text: "Do you want to "+textm+" this user name?",
+            text: "Do you want to "+textm+" this user?",
             icon: 'info',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',

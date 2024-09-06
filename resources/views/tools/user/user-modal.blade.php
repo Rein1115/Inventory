@@ -39,7 +39,7 @@
                 <label for="role">Role</label>
                 <select name="role" id="role" class="form-control">
                     <option selected>Select Role</option>
-                    <option value="Admin">Male</option>
+                    <option value="Admin">Admin</option>
                     <option value="Employee">Employee</option>
                 </select>
             </div>
@@ -49,8 +49,8 @@
                 <label for="status">Status</label>
                 <select name="status" id="status" class="form-control">
                     <option selected>Select Status</option>
-                    <option value="A">Active</option>
-                    <option value="I">Inactive</option>
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
                 </select>
             </div>
 
