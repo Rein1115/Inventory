@@ -62,7 +62,7 @@ EXPOSE 80
  
 # Copy Nginx configuration
 
-COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
+COPY ./Nginx/nginx.conf /etc/Nginx/nginx.conf
  
 # Start Nginx and PHP-FPM
 
