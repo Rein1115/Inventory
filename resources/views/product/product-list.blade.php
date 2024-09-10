@@ -3,12 +3,15 @@
 Product(s) List
 @endsection
 @section('content')
+<div class="row">
+
+
 {{-- <div id="spinner" class="spinner" style="display: none;"></div> --}}
 <div class="row page-titles mx-0">
     <div class="col p-md-0">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
-            <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
+            <li class="breadcrumb-item active"><a href="javascript:void(0)">Product</a></li>
         </ol>
     </div>
 </div>
@@ -42,7 +45,9 @@ Product(s) List
                     </div>
                 </div>
     </div>
-</div>          
+</div>      
+
+</div>
 @include('tools.product.product-modal')
 @endsection
 @section('script')

@@ -1,5 +1,5 @@
 @extends('layouts.apps')
-
+@section('title') User(s) List @endsection
 @section('content')
 {{-- <div id="spinner" class="spinner" style="display: none;"></div> --}}
 <div class="container-fluid">

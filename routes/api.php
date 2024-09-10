@@ -8,8 +8,8 @@ use App\Http\Controllers\Supplier\SupplierController;
 use App\Http\Controllers\Brand\BrandController;
 use App\Http\Controllers\Clinic\ClinicController;
 use App\Http\Controllers\select2\SelectController;
-USE App\Http\Controllers\Payment\PaymentController;
-
+use App\Http\Controllers\Payment\PaymentController;
+use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Order\TestController;
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +28,10 @@ Route::get('selectbrand', [SelectController::class, 'brand']);
 Route::get('Productslist', [OrderController::class, 'Productslist']);
 Route::get('producthistory', [ProductController::class, 'producthistory']);
 
+Route::get('dashboard', [DashboardController::class, 'dashboardcard'])->name('dashboard');
+
+Route::get('dashboardgraph', [DashboardController::class, 'dashboardgraph'])->name('dashboardgraph');
+Route::get('dashboardunot', [DashboardController::class, 'dashboardunot'])->name('dashboardunot');
 
 Route::resource('payment', PaymentController::class);
 

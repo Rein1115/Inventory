@@ -27,19 +27,20 @@
                     <div class="form-group">
                         <label for="paymentmethod">Payment Method</label><br>
                         <select class="form-control form-control-sm" style="width: 100%;" id="paymentmethod" name="paymentmethod">
-                            <option value="Paymaya">Paymaya</option>
-                            <option value="Gcash">Gcash</option>
-                            <option value="Cash">Cash</option>
-                            <option value="Paypal">Paypal</option>
-                        </select>
+                          <option id="Cash" value="Cash">Cash</option>
+                          <option id="Gcash" value="Gcash">Gcash</option>
+                          <option id="Paymaya" value="Paymaya">Paymaya</option>    
+                          <option id="Paypal" value="Paypal">Paypal</option>
+                          <option id="banktransfer" value="banktransfer">Bank Transfers</option>
+                      </select>
                     </div>
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row num d-none" id="hidenum">
                 <div class="col">
                     <div class="form-group">
-                        <label for="serialnumber">Number</label>
+                        <label for="serialnumber">Serial Number</label>
                         <input type="serialnumber" class="form-control" id="serialnumber" >
                       </div>
                 </div>

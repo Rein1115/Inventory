@@ -90,22 +90,7 @@ class Controller extends BaseController
     }
 
 
-    public function accesmodule()
-    {
-        
-        $data = DB::select('SELECT COUNT(*) as count FROM users WHERE `status` != "Inactive" AND id = ?', [Auth::user()->id]);
-    
-    
-        $count = $data[0]->count ?? 0;
-    
 
-        if ($count > 0) {
- 
-            return response()->json(['success' => true, 'message' => 'Access granted.']);
-        } else {
-            return response()->json(['success' => false, 'message' => 'Access denied. Your account is inactive.']);
-        }
-    }
     
    
 

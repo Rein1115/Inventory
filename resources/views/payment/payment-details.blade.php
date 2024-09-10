@@ -1,10 +1,12 @@
 @extends('layouts.apps')
-
+@section('title') {{isset($data['orders']['trans_no']) ? 'Order Payment' : ''}} @endsection
 @section('content')
+<div class="row">
 <div class="row page-titles mx-0 ml-3">
     <div class="col p-md-0">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="javascript:void(0)">Product</a></li>
+            <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
+            <li class="breadcrumb-item"><a href="javascript:void(0)">Payment</a></li>
             <li class="breadcrumb-item active"><a href="javascript:void(0)">{{isset($data['transNo']) ? 'Update Product' : 'Create Product'}}</a></li>
         </ol>
     </div>
@@ -150,7 +152,7 @@
         </div>
     </div>
 </div>
-
+</div>
 @include('tools.payment.payment-modal')
 @endsection
 @section('script')

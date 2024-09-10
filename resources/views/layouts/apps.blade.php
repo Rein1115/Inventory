@@ -6,8 +6,8 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title> @yield('title')</title>
 
-    <title>@yield('title')</title>
 
       <!-- Favicon icon -->
       <link rel="icon" type="image/png" sizes="16x16" href="...images/favicon.png">
@@ -22,6 +22,9 @@
 
        <!-- Select2 CSS CDN -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/css/select2.min.css" rel="stylesheet" />
+
+
+    @yield('link')
 <style>
     /* body {
         font-size: 80% !important;
@@ -52,7 +55,7 @@
                 @if(isset(Auth::user()->role) > 0 )
                 {{-- Dashboard --}}
                     <li>
-                        <a href="{{route('home')}}"><i class="icon-speedometer menu-icon"></i><span class="nav-text">Dashboard</span></a>
+                        <a href="{{ route('home') }}"><i class="icon-speedometer menu-icon"></i><span class="nav-text">Dashboard</span></a>
                     </li>
                 {{-- End Dashboard --}}
 
@@ -67,7 +70,7 @@
                     </li>
 
                     <li>
-                        <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="icon-notebook menu-icon"></i><span class="nav-text">Brand</span></a>
+                        <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="fa fa-tag menu-icon"></i><span class="nav-text">Brand</span></a>
                             <ul aria-expanded="false">
                                 <li><a href="{{route('brand.index')}}"><i class="icon-notebook menu-icon" style="font-size:12px;"></i> Request Brand
                                 </a></li>
@@ -77,7 +80,7 @@
                     </li>
                   
                     <li>
-                        <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="icon-notebook menu-icon"></i><span class="nav-text">Product</span></a>
+                        <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="fa fa-cube menu-icon"></i><span class="nav-text">Product</span></a>
                             <ul aria-expanded="false">
                                 <li><a href="{{route('product.index')}}"><i class="icon-notebook menu-icon" style="font-size:12px;"></i> Request Product
                                 </a></li>
@@ -96,11 +99,11 @@
                     </li>
 
                     <li>
-                        <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="fa fa-money"></i><span class="nav-text">Payment</span></a>
+                        <li><a class="has-arrow" href="javascript:void(0)" aria-expanded="false"><i class="fa fa-money"></i><span class="nav-text">Payment</span></a>
                             <ul aria-expanded="false">
-                                <li><a href="{{route('payment.index')}}"><i class="icon-notebook menu-icon" style="font-size:12px;"></i> Invoice
+                                <li><a href="{{route('payment.index')}}"><i class="icon-notebook menu-icon" style="font-size:12px;"></i> Payment
                                 </a></li>
-                                <li><a href="./page-error-404.html"><i class="icon-notebook menu-icon" style="font-size:12px;"></i> History
+                                <li><a href="./page-error-404.html"><i class="icon-notebook menu-icon" style="font-size:12px;"></i> Invoice
                                 </a></li>
                             </ul>
                         </li>
@@ -116,10 +119,10 @@
 
                     @endif
                     
-                    <hr>
+                    {{-- <hr> --}}
                     {{-- <li class="nav-label">Account</li> --}}
 
-                    <li>
+                    {{-- <li>
                         <a href="{{ route('profile.show', Auth::user()->id) }}">
                             <i class="fa fa-user"></i>
                             <span class="nav-text">Profile</span>
@@ -132,7 +135,7 @@
                                  <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                             @csrf
                         </form>
-                    </li>
+                    </li> --}}
 
 
               </ul>
@@ -164,17 +167,36 @@
       <!--**********************************
               Nav header start
           ***********************************-->
-          <div class="nav-header">
+          {{-- <div class="nav-header">
               <div class="brand-logo">
-                  <a href="index.html">
+                  <a href="{{route('home')}}">
                       <b class="logo-abbr"><img src="../images/logo.png" alt=""> </b>
                       <span class="logo-compact"><img src="./images/logo-compact.png" alt=""></span>
                       <span class="brand-title">
                           <img src="../images/logo-text.png" alt="test">
+                         
                       </span>
                   </a>
               </div>
-          </div>
+          </div> --}}
+
+          <div class="nav-header">
+            <div class="brand-logo">
+                <a href="{{ route('home') }}">
+                    <b class="logo-abbr">
+                        {{-- <img src="../images/logo.png" alt="Main Logo"> --}}
+                        <span class="inventory-logo-text" style="color:white"> I</span>
+                    </b>
+                    <span class="logo-compact">
+                        {{-- <img src="./images/logo-compact.png" alt="Compact Logo"> --}}
+                    </span>
+                    <span class="brand-title">
+                        
+                        <span class="inventory-logo-text" style="color:white"> Inventory Logo</span>
+                    </span>
+                </a>
+            </div>
+        </div>
           <!--**********************************
               Nav header end
           ***********************************-->
@@ -190,7 +212,7 @@
                           <span class="toggle-icon"><i class="icon-menu"></i></span>
                       </div>
                   </div>
-                  <div class="header-left">
+                  {{-- <div class="header-left">
                       <div class="input-group icons">
                           <div class="input-group-prepend">
                               <span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3" id="basic-addon1"><i class="mdi mdi-magnify"></i></span>
@@ -202,7 +224,7 @@
                               </form>
                           </div>
                       </div>
-                  </div>
+                  </div> --}}
                   <div class="header-right">
                       <ul class="clearfix">
                           <li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
@@ -313,7 +335,7 @@
                                   </div>
                               </div>
                           </li>
-                          <li class="icons dropdown d-none d-md-flex">
+                          {{-- <li class="icons dropdown d-none d-md-flex">
                               <a href="javascript:void(0)" class="log-user"  data-toggle="dropdown">
                                   <span>English</span>  <i class="fa fa-angle-down f-s-14" aria-hidden="true"></i>
                               </a>
@@ -325,34 +347,40 @@
                                       </ul>
                                   </div>
                               </div>
-                          </li>
+                          </li> --}}
                           
                           <li class="icons dropdown">
-                              <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
-                                  <span class="activity active"></span>
-                                  <img src="../images/user/1.png" height="40" width="40" alt="">
-                              </div>
-                              <div class="drop-down dropdown-profile   dropdown-menu">
-                                  <div class="dropdown-content-body">
-                                      <ul>
-                                          <li>
-                                              <a href="app-profile.html"><i class="icon-user"></i> <span>Profile</span></a>
-                                          </li>
-                                          <li>
-                                              <a href="email-inbox.html"><i class="icon-envelope-open"></i> <span>Inbox</span> <div class="badge gradient-3 badge-pill badge-primary">3</div></a>
-                                          </li>
-                                          
-                                          <hr class="my-2">
-                                          <li>
-                                              <a href="page-lock.html"><i class="icon-lock"></i> <span>Lock Screen</span></a>
-                                          </li>
-                                          <li><a href="page-login.html"><i class="icon-key"></i> <span>Logout</span></a></li>
-                                       
-
-                                      </ul>
-                                  </div>
-                              </div>
-                          </li>
+                            <div class="user-img c-pointer position-relative" id="userDropdownToggle">
+                                <span class="activity active"></span>
+                                <img src="../images/user/1.png" height="40" width="40" alt="User Image">
+                            </div>
+                            <div class="drop-down dropdown-profile dropdown-menu" id="userDropdownMenu">
+                                <div class="dropdown-content-body">
+                                    <ul>
+                                        <li><a href="{{ route('profile.show', 0) }}"><i class="icon-user"></i> <span>Profile</span></a></li>
+                                        <li>
+                                            <a href="#" id="logout-link">
+                                                <i class="icon-key"></i> <span>Logout</span>
+                                            </a>
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                                @csrf
+                                            </form>
+                                        </li>
+                                    {{-- <li><a href="email-inbox.html"><i class="icon-envelope-open"></i> <span>Inbox</span> <div class="badge gradient-3 badge-pill badge-primary">3</div></a></li> --}}
+                                    {{-- <hr class="my-2">
+                                    <li><a href="page-lock.html"><i class="icon-lock"></i> <span>Lock Screen</span></a></li>
+                                    <li>
+                                        <a href="#" id="logout-link">
+                                            <i class="icon-key"></i> <span>Logout</span>
+                                        </a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                            @csrf
+                                        </form>
+                                    </li> --}}
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>                        
                       </ul>
                   </div>
               </div>
@@ -366,12 +394,11 @@
           ***********************************-->
           <div class="content-body">
               <div class="container-fluid">
-                  <div class="row">
-                      @yield('content')
-                  </div>
+                    @yield('content')
               </div>
               <!-- #/ container -->
           </div>
+
           <!--**********************************
               Content body end
           ***********************************-->
@@ -453,5 +480,27 @@
 
 
       @yield('script')
+
+
+      <script>
+        $(document).ready(function() {
+                // Toggle dropdown menu visibility
+                $('#userDropdownToggle').on('click', function() {
+                    $('#userDropdownMenu').toggleClass('show');
+                });
+
+                // Close dropdown when clicking outside
+                $(document).on('click', function(event) {
+                    if (!$(event.target).closest('#userDropdownToggle').length && !$(event.target).closest('#userDropdownMenu').length) {
+                        $('#userDropdownMenu').removeClass('show');
+                    }
+                });
+
+                $('#logout-link').on('click', function(event) {
+                    event.preventDefault(); // Prevent the default anchor click behavior
+                    $('#logout-form').submit(); // Submit the form
+                });
+            });
+                </script>
 </body>
 </html>

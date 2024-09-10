@@ -19,12 +19,20 @@ class UserController extends Controller
     public function index(Request $request)
     {
         //
-        $data = DB::select('SELECT * FROM users  WHERE  `role` != "Admin" ');
-        // dd($data);
-        if($request->ajax()){
-            return response()->json($data);
+        $admin = DB::select('SELECT COUNT(*) AS count FROM users WHERE role = "Admin" AND id = ?' , [Auth::user()->id]);
+        if($admin[0]->count > 0){
+            $data = DB::select('SELECT * FROM users  WHERE  `role` != "Admin" ');
+            // dd($data);
+            if($request->ajax()){
+                return response()->json($data);
+            }
+            return view('user.user-list');
         }
-        return view('user.user-list');
+        else{
+
+            return response()->view('page-error-404', [], 404);
+        }
+
     }
 
     /**
@@ -41,7 +49,7 @@ class UserController extends Controller
     public function store(Request $request)
     {   
 
-
+        return response()->view('page-error-404', [], 404);
     }
 
     /**
@@ -51,8 +59,7 @@ class UserController extends Controller
     {
         //
         
-        $data = DB::select('SELECT * FROM users WHERE id=?',[$id]);
-        return response()->json($data[0]);
+        return response()->view('page-error-404', [], 404);
     }
 
     /**
@@ -61,6 +68,7 @@ class UserController extends Controller
     public function edit(string $id)
     {
         //
+        return response()->view('page-error-404', [], 404);
     }
 
     /**

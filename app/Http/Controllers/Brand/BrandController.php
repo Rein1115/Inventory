@@ -44,6 +44,7 @@ class BrandController extends Controller
     public function store(Request $request)
     {
         //
+        return response()->view('page-error-404', [], 404);
        
     }
 

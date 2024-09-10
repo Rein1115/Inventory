@@ -29,6 +29,7 @@ class SupplierController extends Controller
     public function create()
     {
         //
+        return response()->view('page-error-404', [], 404);
     }
 
     /**
@@ -37,6 +38,7 @@ class SupplierController extends Controller
     public function store(Request $request)
     {
         //    
+        return response()->view('page-error-404', [], 404);
     }
 
     /**
@@ -62,6 +64,7 @@ class SupplierController extends Controller
     public function edit(string $id)
     {
         //
+        return response()->view('page-error-404', [], 404);
     }
 
     /**

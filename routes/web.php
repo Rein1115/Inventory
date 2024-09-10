@@ -10,6 +10,7 @@ use App\Http\Controllers\select2\SelectController;
 use App\Http\Controllers\Payment\PaymentController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Profile\ProfileController;
+use App\Http\Controllers\Dashboard\DashboardController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,15 +23,19 @@ use App\Http\Controllers\Profile\ProfileController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 Auth::routes();
-
-
+Auth::routes(['register' => false]);
 Route::middleware(['auth','check.active'])->group(function () {
-    
+    Route::get('/', function () {
+        return view('home');
+    });
+
     Route::resource('user', UserController::class);
     
 
@@ -55,4 +60,15 @@ Route::middleware(['auth','check.active'])->group(function () {
     Route::post('destroymodification/{id}', [PaymentController::class, 'destroymodification']);
 
     Route::resource('profile', ProfileController::class);
+
+
+
+
+    // dashboard
+    Route::get('/home', [DashboardController::class, 'dashboardcard'])->name('dashboard');
+    Route::get('/', [DashboardController::class, 'dashboardcard'])->name('dashboard');
+    Route::get('dashboardgraph', [DashboardController::class, 'dashboardgraph'])->name('dashboardgraph');
+
+    // Route::get('/', [DashboardController::class, 'dashboardunot'])->name('dashboardunot');
+    Route::get('/home', [DashboardController::class, 'dashboardunot'])->name('dashboardunot');
 });

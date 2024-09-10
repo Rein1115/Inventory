@@ -28,6 +28,65 @@ $(document).ready(function(){
         })
     }   
 
+
+     // Function to show or hide number input based on payment method and set required attribute
+     function toggleNumberInput() {
+        const paymentMethod = $('#paymentmethod').val();
+        if (paymentMethod === 'Cash') {
+           
+            $('#hidenum').hide(); 
+            
+        } else {
+            $('.num').removeClass('d-none')
+            $('#hidenum').show();  // Show number input for other payment methods
+        }
+    }
+    
+    // Function to validate the form
+    function validateForm() {
+        const paymentMethod = $('#paymentmethod').val();
+        const payValue = $('#pay').val().trim();
+        const serialNumber = $('#serialnumber').val().trim();
+        const payDate = $('#pay_date').val().trim();
+        
+        // Check if payment method is not 'Cash'
+        if (paymentMethod !== 'Cash') {
+            // Validate the number input if the payment method is not 'Cash'
+            if (!payValue) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Serial number is required.",
+                });
+                return false;
+            }
+            
+            // Validate the serial number input
+            if (!serialNumber) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Serial number is required.",
+                });
+                return false;
+            }
+        }
+        
+        // All validations passed
+        return true;
+    }
+    
+    toggleNumberInput();
+
+
+    $('#paymentmethod').change(function() {
+        toggleNumberInput();
+    });
+
+
+
+
+
     // console.log(items);
 
     console.log(transNo);
@@ -99,7 +158,7 @@ $(document).ready(function(){
         $('#btnAdd').hide();
     }
 
-
+ 
     var datatotal = $('#totalamounts').data('data');
    
     $('#totalamounts').text( '₱' + formatNumber(parseFloat(datatotal)));
@@ -121,9 +180,17 @@ $(document).ready(function(){
         const payValue = parseFloat($('#pay').val());
 
         if (payValue <= 0) {
-            alert('Input must be greater than 0.');
+          
+            Swal.fire({
+                icon: "info",
+                title: "Oops...",
+                text: "Input must be greater than 0.",
+              });
             return;
         } 
+        else if (!validateForm()){
+            return;
+        }
 
         var alltotal = parseFloat($('#pay').val()) + overalltotal;
              var data = {

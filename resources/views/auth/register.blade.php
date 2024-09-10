@@ -1,4 +1,4 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app')
 
 @section('content')
 <div class="container">
@@ -10,7 +10,7 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
-                    
+                
                         <div class="row mb-3">
                             <label for="fname" class="col-md-4 col-form-label text-md-end">{{ __('First Name') }}</label>
                             <div class="col-md-6">
@@ -116,4 +116,33 @@
         </div>
     </div>
 </div>
-@endsection
+@endsection --}}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 Error</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body, html {
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body class="d-flex justify-content-center align-items-center">
+    <div class="col-md-12 text-center">
+        <h1>404</h1>
+        <h2>Page Not Found</h2>
+        <p>
+            Sorry, the page you are looking for does not exist.
+        </p>
+    
+        <a href="{{ route('home') }}" class="btn btn-primary">Go to Home</a>
+    </div>
+</body>
+
+</html>
