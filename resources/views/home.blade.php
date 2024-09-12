@@ -15,7 +15,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-lg-3 col-sm-6">
+        <div class="col-lg-3 col-sm-3">
             <a href="" class="text-white">
                 <div class="card gradient-2">
                     <div class="card-body">
@@ -30,7 +30,7 @@
              </a>
         </div>
         
-            <div class="col-lg-3 col-sm-6">
+            <div class="col-lg-3 col-sm-3">
                 <a href="https://example.com" class="text-white">
                     <div class="card gradient-1">
                         <div class="card-body">
@@ -45,9 +45,9 @@
                 </a>
             </div>
  
-        <div class="col-lg-3 col-sm-6">
+        <div class="col-lg-3 col-sm-3">
             <a href="https://example.com" class="text-white">
-                <div class="card gradient-5">
+                <div class="card gradient-3">
                     <div class="card-body">
                         <h3 class="card-title text-white">Net Profit</h3>
                         <div class="d-inline-block">
@@ -59,39 +59,20 @@
                 </div>
             </a>
         </div>
-        <div class="col-lg-3 col-sm-6">
+        
+        <div class="col-lg-3 col-sm-3">
             <a href="https://example.com" class="text-white">
-                <div class="card gradient-3">
-                    <div class="card-body">
+                <div class="card gradient-3 h-55">
+                    <div class="card-body ">
                         <h3 class="card-title text-white">Total Cost</h3>
                         <div class="d-inline-block">
                             <h2 class="text-white">₱ <span id="totalcost"> {{isset($data['totalcost'][0]->totalcost) ? $data['totalcost'][0]->totalcost : '0.00'}} </span></h2>
-                            {{-- <p class="text-white mb-0">Jan - March 2019</p> --}}
                         </div>
                         <span class="float-right display-5 opacity-5"><i class="fa fa-money"></i></span>
                     </div>
                 </div>
             </a>
         </div>
-        
-            {{-- <div class="col-lg-3 col-sm-6">
-                <a href="https://example.com" class="text-white">
-                    <div class="card gradient-4">
-                        <div class="card-body">
-                            <h3 class="card-title text-white">Suppliers</h3>
-                            <div class="d-inline-block">
-                                <h2 class="text-white">99%</h2>
-                                <p class="text-white mb-0">
-                                
-                                </p>
-                            </div>
-                            <span class="float-right display-5 opacity-5"><i class="fa fa-truck menu-icon"></i></span>
-                        </div>
-                    </div>
-                </a>
-            </div> --}}
-        
-       
 
     </div>
 

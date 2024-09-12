@@ -31,9 +31,11 @@ Route::get('producthistory', [ProductController::class, 'producthistory']);
 Route::get('dashboard', [DashboardController::class, 'dashboardcard'])->name('dashboard');
 
 Route::get('dashboardgraph', [DashboardController::class, 'dashboardgraph'])->name('dashboardgraph');
-Route::get('dashboardunot', [DashboardController::class, 'dashboardunot'])->name('dashboardunot');
+Route::get('dashdunot', [DashboardController::class, 'dashboardunot'])->name('dashdunot');
 
 Route::resource('payment', PaymentController::class);
+
+Route::resource('user', UserController::class);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

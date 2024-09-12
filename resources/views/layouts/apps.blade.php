@@ -25,8 +25,8 @@
 
 
     @yield('link')
-<style>
-    /* body {
+{{-- <style>
+    body {
         font-size: 80% !important;
     }
     .form-group{
@@ -34,10 +34,10 @@
     }
     /* span{
         font-size: 100% !important;
-    } */ */
+    } */
 
    
-</style>
+</style> --}}
   </head>
   
   <body>
@@ -425,6 +425,21 @@
       <!--**********************************
           Main wrapper end
       ***********************************-->
+
+     
+
+
+
+
+
+
+
+      {{-- print --}}
+
+        @yield('print')
+
+      {{-- end print --}}
+    
   
       <!--**********************************
           Scripts

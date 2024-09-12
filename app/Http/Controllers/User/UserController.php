@@ -58,6 +58,15 @@ class UserController extends Controller
     public function show(Request $request , string $id)
     {
         //
+
+
+        $data = DB::select('SELECT * FROM users WHERE id = ? ',[$id]);
+
+
+        return response()->json($data);
+
+
+
         
         return response()->view('page-error-404', [], 404);
     }

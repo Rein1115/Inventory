@@ -5,7 +5,7 @@ $(document).ready(function(){
     var table ;
     var data = $('#dataval').data('data');
     var items = [];
-    var count = 0;
+    var count = 1;
 
     var prodall = $('#products').data('products');
 
@@ -26,12 +26,6 @@ $(document).ready(function(){
             items.push(array);
         });
     }
-
-
-  
-
- 
-
 
 
     $('#prodname').select2({
@@ -77,7 +71,7 @@ $(document).ready(function(){
             {
                 data: null,
                 render: function(data, type, row, meta) {
-                    return meta.row + 1 ;
+                    return row.index ;
                 }
             },
             { data: 'prod_name' },
@@ -106,6 +100,7 @@ $(document).ready(function(){
 
 
     table.on('click','#btnAdd',function(){
+        $('#prodname').prop('disabled', false);
         $('#prodname').val(null);
         $('#btnaddup').removeClass('d-none');
         // $('#exampleModalCenter').find('select').val(null);
@@ -124,12 +119,21 @@ $(document).ready(function(){
         const found = items.find((item) => item.product_id === productId);
     
         if ($('#Btn-save').text() === 'Save') {
-         
-        
+    
             if ($(this).text() === 'Save') {
 
                 if (found) {
-                    alert('Product already exists.');
+                    // alert('Product already exists.');
+
+                    Swal.fire({
+                        title: 'Error!',
+                        text: "Product already exists.",
+                        icon: 'info', 
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Close'
+                    });
                 }
                 else {
 
@@ -154,8 +158,15 @@ $(document).ready(function(){
 
                         // console.log(items);
                     } else {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: "All fields are required. Please fill in all the fields.",
+                            icon: 'warning', 
+                            showCancelButton: false,
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: 'Close'
+                        });
                         
-                        alert('All fields are required. Please fill in all the fields.');
                     }
                   
                 }
@@ -177,20 +188,52 @@ $(document).ready(function(){
                             table.row(rowIndex).data(found).draw(false);
                         }
                         totalamounts(items);
-                        console.log('Product updated.');
+                        // console.log('Product updated.');
                     } else {
-                        alert('Product not found for update.');
+                        // alert('Product not found for update.');
+                  
+
+                        Swal.fire({
+                            title: 'Error!',
+                            text: "Product not found for update.",
+                            icon: 'error', 
+                            showCancelButton: false, // Remove cancel button
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: 'Close'
+                        });
+                        
                     }
                     
                 } else {
                     
-                    alert('All fields are required. Please fill in all the fields.');
+                    // alert('All fields are required. Please fill in all the fields.');
+             
+
+                    
+                    Swal.fire({
+                        title: 'Error!',
+                        text: "All fields are required. Please fill in all the fields.",
+                        icon: 'error', 
+                        showCancelButton: false, // Remove cancel button
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Close'
+                    });
                 }
             }
         }
         else{
             if (found) {
-                alert('Product already exists.');
+                // alert('Product already exists.');
+
+                Swal.fire({
+                    title: 'Error!',
+                    text: "Product already exists.",
+                    icon: 'error', 
+                    showCancelButton: false, // Remove cancel button
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'Close'
+                });
+                
             } else {
                 var array = {
                     index: count++,
@@ -259,7 +302,7 @@ $(document).ready(function(){
 
     table.on('click', '.edit', function() {
         
-
+        $('#prodname').prop('disabled', true);
         if($('#Btn-save').text() === 'Save'){
             // alert('SAVE NI');
             $('#btnaddup').removeClass('d-none');
@@ -301,13 +344,41 @@ $(document).ready(function(){
         var quan = parseFloat($(this).val()); 
         var putquan = parseFloat($('#availablequan').val());
 
+        if($(this).val()==0){
+  
+            Swal.fire({
+                title: 'Warning!',
+                text: "You can't input zero.",
+                icon: 'warning', 
+                showCancelButton: false, // Remove cancel button
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Close'
+            });
+            $(this).val('');
+            return;
+        }
+
         if (isNaN(quan) || isNaN(putquan)) {
       
             return;
         }
 
         if (quan > putquan) {
-            alert('Quantity exceeds available stock');
+            // alert('Quantity exceeds available stock');
+            Swal.fire({
+                title: 'Error!',
+                text: "Quantity exceeds available stock.",
+                icon: 'warning', 
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Close'
+            });
+            
+
+            
+
+            
             $(this).val('');
             $('#totalpri').val(''); 
         }
@@ -326,11 +397,6 @@ $(document).ready(function(){
 
     $('#Btn-save').on('click',function(){
 
-
-
-        // if($('#quantity').val() == 0){
-        //     alert('You cant add zero value');
-        // }
 
     //    return  console.log(items);
         var data = {

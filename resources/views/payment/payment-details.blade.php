@@ -1,5 +1,12 @@
 @extends('layouts.apps')
 @section('title') {{isset($data['orders']['trans_no']) ? 'Order Payment' : ''}} @endsection
+@section('link')
+
+<link href="../css/invoicereceipt.css" rel="stylesheet">
+
+</style>
+
+@endsection
 @section('content')
 <div class="row">
 <div class="row page-titles mx-0 ml-3">
@@ -14,7 +21,7 @@
 <div class="container-fluid">
     <div class="col-lg-12">
         <div class="card col-sm" data-totalam="{{isset($data['orders']['total_amount']) ? $data['orders']['total_amount'] : '' }}"  data-trans="{{isset($data['orders']['trans_no']) ? $data['orders']['trans_no'] : '' }}" id="payments" data-payment ="{{isset($data['payments']) ? json_encode($data['payments']): '' }}">
-            <div class="card-body">
+            <div class="card-body" id="productlist" data-data="{{isset($data['productlist']) ? json_encode($data['productlist']): '' }}">
                 {{-- <h1 class="card-title mb-5">{{isset($data['data']['id']) ? 'Update Product' : 'Create Product'}}</h1> --}}
 
                 <div class="basic-form">
@@ -22,12 +29,12 @@
 
                             <div class="form-group col-sm">
                                 <label >Delivered To : </label>
-                                <span class="font-weight-bold">{{isset( $data['orders']['deliveredto']) ?  $data['orders']['deliveredto']: ''}}</span>
+                                <span class="font-weight-bold" id="deiveredto">{{isset( $data['orders']['deliveredto']) ?  $data['orders']['deliveredto']: ''}}</span>
                             </div>
 
                             <div class="form-group col-sm">
                                 <label >Delivered Date : </label>
-                                <span class="font-weight-bold">{{isset( $data['orders']['delivered_date']) ?  $data['orders']['delivered_date']: ''}}</span>
+                                <span class="font-weight-bold" id="delivereddate">{{isset( $data['orders']['delivered_date']) ?  $data['orders']['delivered_date']: ''}}</span>
                             </div>
                             
                     </div>
@@ -35,12 +42,12 @@
                     <div class="row">
                         <div class="form-group col-sm">
                             <label >Address :</label>
-                           <span class="font-weight-bold">{{isset( $data['orders']['address']) ?  $data['orders']['address']: ''}}</span>
+                           <span class="font-weight-bold" id="address">{{isset( $data['orders']['address']) ?  $data['orders']['address']: ''}}</span>
                         </div>
 
                         <div class="form-group col-sm">
                             <label >Terms : </label>
-                         <span class="font-weight-bold">{{isset( $data['orders']['terms']) ?  $data['orders']['terms']: ''}}</span>
+                         <span class="font-weight-bold" id="terms">{{isset( $data['orders']['terms']) ?  $data['orders']['terms']: ''}}</span>
                         </div>
 
                     </div>
@@ -48,24 +55,24 @@
                     <div class="row">
                         <div class="form-group col-sm">
                             <label >OR no:</label>
-                            <span class="font-weight-bold text-white badge badge-secondary">{{isset( $data['orders']['or']) ?  $data['orders']['or']: ''}}</span>
+                            <span class="font-weight-bold text-white badge badge-secondary" id="or">{{isset( $data['orders']['or']) ?  $data['orders']['or']: ''}}</span>
                         </div>
 
                         <div class="form-group col-sm">
                             <label >PO no:</label>
-                           <span class="font-weight-bold  text-white badge badge-secondary" > {{isset( $data['orders']['po_no']) ?  $data['orders']['po_no']: ''}}</span>
+                           <span class="font-weight-bold  text-white badge badge-secondary" id="po"> {{isset( $data['orders']['po_no']) ?  $data['orders']['po_no']: ''}}</span>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="form-group col-sm">
                             <label >Delivered By:</label>
-                            <span class="font-weight-bold"> {{isset( $data['orders']['deliveredby']) ?  $data['orders']['deliveredby']: ''}}</span>
+                            <span class="font-weight-bold" id="deliveredby"> {{isset( $data['orders']['deliveredby']) ?  $data['orders']['deliveredby']: ''}}</span>
                         </div>
 
                         <div class="form-group col-sm">
                             <label>Collected By:</label>
-                           <span class="font-weight-bold">{{isset( $data['orders']['collected_by']) ?  $data['orders']['collected_by']: ''}}</span>
+                           <span class="font-weight-bold" >{{isset( $data['orders']['collected_by']) ?  $data['orders']['collected_by']: ''}}</span>
                         </div>
                     </div>
 
@@ -128,24 +135,34 @@
 
 
                     <div class="col-lg-12">
-                        <div class="col-12 mt-3" >
-                            <div class="ui-group-buttons">
-                                <button type="button" class="btn btn-primary btn-md text-right">
-                                    <i class="fa fa-fw fa-money pr-4 text-white"></i>Total Payment(s)</button>
-                                <button type="button" class="btn btn-danger btn-md" data-total="" id="totalAmount">0.00</button>
+                        <div class="row mt-3">
+                            <!-- Total Payment Section on the Left -->
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="ui-group-buttons d-flex align-items-center">
+                                    <button type="button" class="btn btn-primary btn-md">
+                                        <i class="fa fa-fw fa-money pr-2 text-white"></i>Total Payment(s)
+                                    </button>
+                                    &nbsp;
+                                    <button type="button" class="btn btn-danger btn-md ms-2" data-total="" id="totalAmount">0.00</button>
+                                </div>
+                            </div>
+                            <!-- Print and Mail Buttons on the Right -->
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="d-flex justify-content-end">
+                                    <button class="btn btn-success me-2" id="invoice-print">
+                                        <i class="fa fa-print"></i> Print Invoice
+                                    </button>
+                                    &nbsp;
+                                    <button class="btn btn-danger">
+                                        <i class="fa fa-envelope-o"></i> Mail Invoice
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div> 
+                    </div>
                     
                     
-                    <!-- Buttons -->
-                    {{-- <div class="form-group mt-4 d-flex justify-content-end">
-                        @foreach ($data['button'] as $item)
-                            <button data-id="{{isset($data['data']['id']) ? $data['data']['id'] : ''}}"  id="{{$item['id']}}" type="button" class="{{$item['class']}}" id="{{$item['id']}}">{{$item['text']}}</button>
-                        @endforeach
-                    </div> --}}
-                    
-
+                
                 </div>
                 
             </div>
@@ -154,7 +171,11 @@
 </div>
 </div>
 @include('tools.payment.payment-modal')
+@section('print')
+@include('tools.invoicereceipt.invoicereceipt')
+@endsection
 @endsection
 @section('script')
 <script src="../apps/payment/payment-details.js"></script>
+<script src="../apps/invoicereceipt/invoicereceipt.js"></script>
 @endsection

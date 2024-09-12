@@ -121,29 +121,29 @@ $(document).ready(function() {
         axios.get('/user/' + id)
         .then(response => {
             var resp = response.data;
-            console.log(resp);
+            console.log(resp[0].fname);
 
-            $('#fname').val(resp.fname);
-            $('#lname').val(resp.lname);
+            $('#fname').val(resp[0].fname);
+            $('#lname').val(resp[0].lname);
 
             $('#gender').html(`
-                <option value="Male" ${resp.gender === 'Male' ? 'selected' : ''}>Male</option>
-                <option value="Female" ${resp.gender === 'Female' ? 'selected' : ''}>Female</option>
+                <option value="Male" ${resp[0].gender === 'Male' ? 'selected' : ''}>Male</option>
+                <option value="Female" ${resp[0].gender === 'Female' ? 'selected' : ''}>Female</option>
             `);
 
             $('#role').html(`
-                <option value="Admin" ${resp.role === 'Admin' ? 'selected' : ''}>Admin</option>
-                <option value="User" ${resp.role === 'User' ? 'selected' : ''}>User</option>
+                <option value="Admin" ${resp[0].role === 'Admin' ? 'selected' : ''}>Admin</option>
+                <option value="User" ${resp[0].role === 'User' ? 'selected' : ''}>User</option>
             `);
             
 
             console.log(resp.status);
             $('#status').html(`
-                <option value="Inactive" ${resp.status === 'Inactive' ? 'selected' : ''}>Inactive</option>
-                <option value="Active" ${resp.status === 'Active' ? 'selected' : ''}>Active</option>
+                <option value="Inactive" ${resp[0].status === 'Inactive' ? 'selected' : ''}>Inactive</option>
+                <option value="Active" ${resp[0].status === 'Active' ? 'selected' : ''}>Active</option>
             `);
 
-            $('#email').val(resp.email);
+            $('#email').val(resp[0].email);
             
         });
     });

@@ -142,9 +142,6 @@ $(document).ready(function(){
                 render: function(data, type, row) {
                     return '<button class="btn btn-danger text-white delete" id="delete" data-id="' + row.id + '"><i class="icon-trash trash-icon"></i></button>';
 
-
-                    // return '<button class="btn btn-primary text-white edit id="edit" data-id="' + row.id + '"><i class="icon-pencil pencil-icon"></i></button> '
-
                 }
             }
         ]
@@ -357,6 +354,5 @@ $(document).ready(function(){
     })
 
 
-    
 
 });

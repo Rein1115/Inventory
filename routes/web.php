@@ -67,8 +67,7 @@ Route::middleware(['auth','check.active'])->group(function () {
     // dashboard
     Route::get('/home', [DashboardController::class, 'dashboardcard'])->name('dashboard');
     Route::get('/', [DashboardController::class, 'dashboardcard'])->name('dashboard');
-    Route::get('dashboardgraph', [DashboardController::class, 'dashboardgraph'])->name('dashboardgraph');
 
-    // Route::get('/', [DashboardController::class, 'dashboardunot'])->name('dashboardunot');
-    Route::get('/home', [DashboardController::class, 'dashboardunot'])->name('dashboardunot');
+    Route::get('dashboardgraph', [DashboardController::class, 'dashboardgraph'])->name('dashboardgraph');
+    Route::get('dashdunot', [DashboardController::class, 'dashboardunot'])->name('dashdunot');
 });

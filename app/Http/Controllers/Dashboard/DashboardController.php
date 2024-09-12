@@ -34,13 +34,15 @@ class DashboardController extends Controller
 
     public function dashboardgraph(){
 
-        $date =  Carbon::now()->year();
-
+        $date =  date("Y");
+// return $date;
         $data = DB::select("SELECT 
         SUM(payment) AS total, 
-        MONTHNAME(pay_date) AS formatted_date 
-    FROM payments
-    GROUP BY MONTHNAME(pay_date)");
+        MONTHNAME(pay_date) AS formatted_date ,
+        YEAR(pay_date) AS `year`
+    FROM payments WHERE YEAR(pay_date) = ?
+    
+    GROUP BY YEAR(pay_date),MONTHNAME(pay_date)  ORDER BY MONTH(pay_date)",[$date]);
     
 
         return response()->json($data);
@@ -49,11 +51,11 @@ class DashboardController extends Controller
     public function dashboardunot(){
       
 
-        $data = DB::select('SELECT p.product_name, SUM(o.quantity) as total_quantity_sold
+        $data = DB::select('SELECT p.product_name, SUM(o.quantity) as total_quantity_sold ,p.brand_name AS brandname
         FROM products AS p
-        LEFT JOIN orders AS o ON p.id = o.product_id
-        GROUP BY p.id, p.product_name
-        ORDER BY total_quantity_sold ASC
+        LEFT JOIN orders AS o ON p.id = o.product_id WHERE o.product_id =p.id
+        GROUP BY p.brand_name ,p.id, p.product_name
+        ORDER BY total_quantity_sold DESC
         ');
 
     return response()->json($data);

@@ -65,7 +65,7 @@ $(document).ready(function(){
              var values = [];
  
              data.forEach(function (item) {
-                 labels.push(item.formatted_date);
+                 labels.push(item.formatted_date + ' ' + item.year);
                  values.push(parseFloat(item.total)); // Convert total to float
              });
  
@@ -78,34 +78,6 @@ $(document).ready(function(){
              console.error('Error fetching data:', error);
          });
 
-    // Donut Chart for Revenue Source
-    var ctxDonut = document.getElementById('chart_widget_donut').getContext('2d');
-    var myDonutChart = new Chart(ctxDonut, {
-        type: 'doughnut',
-        data: {
-            labels: ['Product Sales', 'Services', 'Affiliate'],
-            datasets: [{
-                label: 'Revenue',
-                data: [55, 25, 20], // Adjust these values to match your data
-                backgroundColor: [
-                    'rgba(54, 162, 235, 0.7)',
-                    'rgba(255, 206, 86, 0.7)',
-                    'rgba(75, 192, 192, 0.7)'
-                ],
-                borderColor: [
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            cutoutPercentage: 70, // Controls the thickness of the donut ring
-            responsive: true,
-            maintainAspectRatio: false
-        }
-    });
 // Initialize the doughnut chart
 var ctxDonut = document.getElementById('chart_widget_donut').getContext('2d');
 var myDonutChart = new Chart(ctxDonut, {
@@ -140,20 +112,21 @@ var myDonutChart = new Chart(ctxDonut, {
 });
 
 // Fetch data from the API and update the chart
-axios.get('dashboardunot') // Adjust the endpoint if needed
+axios.get('dashdunot') 
     .then(function (response) {
         var data = response.data;
 
-        console.log(data);
         // Extract labels (product names) and data (quantities sold)
-        // var labels = data.map(item => item.product_name);
-        // var salesData = data.map(item => item.total_quantity_sold);
+        var labels = data.map(item => `${item.product_name} (${item.brandname})`);
+        var salesData = data.map(item => item.total_quantity_sold);
 
-        // // Update chart data
-        // myDonutChart.data.labels = labels;
-        // myDonutChart.data.datasets[0].data = salesData;
+        // Update chart data
 
-        // // Update the chart to reflect the new data
+        myDonutChart.data.labels = labels;
+        myDonutChart.data.datasets[0].data = salesData ;
+
+        // Update the chart to reflect the new data
+        myDonutChart.update();
     })
     .catch(function (error) {
         console.error('Error fetching sales data:', error);

@@ -12,15 +12,16 @@ class SelectController extends Controller
 {
     //
 
-    public function supplier(){
-
-
-            $data = DB::select('SELECT * FROM suppliers');
+    public function supplier(Request $request){
+        $data = DB::select('SELECT CONCAT(fname, " ", lname) AS id, CONCAT(fname, " ", lname) AS text
+        FROM suppliers
+        WHERE fname LIKE ? OR lname LIKE ?
+    ', ['%' . $request->search . '%', '%' . $request->search . '%']);
         return response()->json($data);
     }
 
-    public function brand(){
-        $data = DB::select('SELECT * FROM brands');
+    public function brand(Request $request){
+        $data = DB::select('SELECT brand_name AS id ,brand_name AS text FROM brands WHERE brand_name LIKE ?',['%'.$request->search.'%']);
         return response()->json($data);
     }
 

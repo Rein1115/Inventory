@@ -231,6 +231,23 @@ class OrderController extends Controller
             return response()->json(['success' => false, 'Detect' => 'Header' , 'response' => $validator->errors()]);
         }
 
+        $existsor = DB::select('SELECT COUNT(*) AS count FROM orders WHERE `or` = ? AND trans_no != ?', [$data['or'], $id]);
+        $existspo = DB::select('SELECT count(*) AS count FROM orders WHERE `po_no` = ? AND trans_no !=?',[$data['po_no'] , $id]);
+        $existscr = DB::select('SELECT count(*) AS count FROM orders WHERE `cr` = ? AND trans_no!= ? ',[$data['cr'],$id]);
+
+        if($existsor[0]->count > 0){
+            return response()->json(['success' => false, 'message'=> 'OR no. is already exists. Please check first.']) ;
+           
+        }
+        else if($existspo[0]->count > 0 ) {
+            return response()->json(['success' => false, 'message'=> 'PO no. is already exists. Please check first.']) ;
+        }
+        else if ($existscr[0]->count > 0 ){
+            return response()->json(['success' => false, 'message'=> 'cr no. is already exists. Please check first.']) ;
+        }
+
+
+
         try {
                 $update = DB::update('UPDATE orders SET deliveredto = ?, `address` = ? , delivered_date =?, po_no = ? , terms = ?,  deliveredby = ? , doctor_name =? , contact_num = ?, `or` =? , cr =? , collected_by = ?,updated_by =?  WHERE trans_no = ? ', [
                     $data['deliveredto'],$data['address'],$data['delivered_date'],$data['po_no'],$data['terms'],$data['deliveredby'],$data['doctor_name'],$data['contact_num'],$data['or'],$data['cr'],$data['collected_by'],Auth::user()->fname.' '.Auth::user()->lname,$id]
@@ -396,7 +413,12 @@ class OrderController extends Controller
 
     public function Productslist(Request $request)
     {
-        $sql = DB::select("SELECT selling_price,id AS id, product_name AS text, mg ,brand_name , expiration_date,quantity FROM products WHERE quantity != 0 AND status != 'Pending' " );
+        // $sql = DB::select("SELECT selling_price,id AS id, product_name AS text, mg ,brand_name , expiration_date,quantity FROM products WHERE quantity != 0 AND status != 'Pending' " );
+
+        $sql = DB::select("SELECT selling_price, id AS id, product_name AS text, mg, brand_name, expiration_date, quantity FROM products WHERE (quantity != 0 AND status != 'Pending')
+        AND product_name LIKE ?", ['%'.$request->search .'%']);
+        
+
         return response()->json($sql);
     }
     

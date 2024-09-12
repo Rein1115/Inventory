@@ -4,62 +4,50 @@ $(document).ready(function() {
 
 
     // Start supplier
-    $.ajax({
-        url: '/selectsupplier',
-        dataType: 'json',
-        success: function(data) {
-         
-            var defaultOption = {
-                id: '',
-                text: 'Select a supplier'
-            };
-
-            // Initialize Select2 with the default option and fetched data
-            $('#suppliername').select2({
-                data: [defaultOption].concat(data.map(function(item) {
-                    return {
-                        id: item.fname + ' ' + item.lname,
-                        text: item.fname + ' ' + item.lname
-                    };
-                })),
-                placeholder: 'Select a supplier',
-                minimumInputLength: 0 // Allow search immediately
-            });
+    $('#suppliername').select2({
+        ajax: {
+            url: '/selectsupplier',
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    search: params.term // Send the search term to the server
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: data // The response should be in the format expected by Select2
+                };
+            },
+            cache: true
         },
-        error: function() {
-            alert('Failed to load data');
-        }
+        placeholder: 'Select a product',
+        minimumInputLength: 0 // Minimum length of input before making a request
     });
     // End supplier
 
 
 
       // Start brand
-      $.ajax({
-        url: '/selectbrand',
-        dataType: 'json',
-        success: function(data) {
-         
-            var defaultOption = {
-                id: '',
-                text: 'Select supplier'
-            };
-
-            // Initialize Select2 with the default option and fetched data
-            $('#brandname').select2({
-                data: [defaultOption].concat(data.map(function(item) {
-                    return {
-                        id: item.brand_name,
-                        text: item.brand_name
-                    };
-                })),
-                placeholder: 'Select brand',
-                minimumInputLength: 0 // Allow search immediately
-            });
+    $('#brandname').select2({
+        ajax: {
+            url: '/selectbrand',
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    search: params.term // Send the search term to the server
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: data // The response should be in the format expected by Select2
+                };
+            },
+            cache: true
         },
-        error: function() {
-            alert('Failed to load data');
-        }
+        placeholder: 'Select a product',
+        minimumInputLength: 0 // Minimum length of input before making a request
     });
     // End branch
 

@@ -127,11 +127,18 @@ class PaymentController extends Controller
         //  return $resultorders;
             $payments = DB::select('SELECT p.* ,u.id AS userid, u.fname ,u.lname FROM payments AS p INNER JOIN users AS u ON u.id = p.created_by WHERE p.order_transno = ? ', [$id]);
 
+
+            $productlist = DB::select('SELECT p.product_name,o.quantity,o.total_amount,p.selling_price FROM orders AS o LEFT JOIN products AS p ON p.id = o.product_id WHERE o.trans_no = ?' ,[$id]);
+
             $data = [
                 "orders" => $resultorders,
                 "payments" => $payments,
+                "productlist" => $productlist
                 // "button" => $this->buttonPrivate("orders",$id,'trans_no')
             ] ;
+
+
+            // dd($data);
 
 
             if($request->ajax()){
