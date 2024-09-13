@@ -17,7 +17,8 @@ class Clinic extends Model
         'address',
         'zipcode',
         'created_by',
-        'updated_by'
+        'updated_by',
+        'created_id'
 
     ];
 }     

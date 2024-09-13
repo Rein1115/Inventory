@@ -81,10 +81,15 @@ $(document).ready(function(){
             {
                 data: null,
                 render: function (data, type, row) {
-                    return '<span class="badge badge-primary">' +  row.fname + ' '+row.lname
-                    + '</span>';
+                    return '<span class="badge badge-primary">'+data.created_by+'</span>';
                 }
             },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return '<span class="badge badge-primary">' + (data.updated_by === undefined ? "0" : data.updated_by) + '</span>';
+                }
+            },            
             {
                 data: null,
                 render: function (data, type, row) {
@@ -93,8 +98,8 @@ $(document).ready(function(){
                 }
             }
         ],
-        order: [[0, 'desc']],
-        select: true
+        // order: [[0, 'desc']],
+        // select: true
     });
 
 

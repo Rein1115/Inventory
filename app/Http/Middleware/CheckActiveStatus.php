@@ -21,10 +21,10 @@ class CheckActiveStatus
             $count = $data[0]->count ?? 0;
     
             if ($count > 0) {
-     
                 return $next($request);
             } else {
-                return response()->view('page-error-404', [], 404);
+                Auth::logout();
+                return redirect('/login')->with('message', 'Your account is inactive. Please contact the admin for assistance.');
             }
     }
 }

@@ -35,6 +35,7 @@ Order(s) List
                                             <th style="text-align: center;">Delivered To</th>
                                             <th style="text-align: center;">Created At</th>
                                             <th style="text-align: center;">Created By</th>
+                                            <th style="text-align: center;">Updated By</th>
                                             <th style="text-align: center;"></th>
                                         </tr>
                                     </thead>

@@ -14,7 +14,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="form-group">
-                        <label for="prodname">Product Name</label><br>
+                        <label for="prodname">Product Name <span class="text-danger">*</span></label><br>
                         <select class="form-control form-control-sm" style="width: 100%;" id="prodname" name="prodname">
                             <!-- Options will be dynamically added here -->
                         </select>
@@ -62,8 +62,8 @@
 
                 <div class="col">
                     <div class="form-group">
-                        <label for="quantity">Quantity</label>
-                        <input type="text" class="form-control" id="quantity">
+                        <label for="quantity">Quantity<span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" id="quantity">
                       </div>
                 </div>
            
@@ -72,7 +72,7 @@
             <div class="row">
                 <div class="col">
                     <div class="form-group">
-                        <label for="company">Total Price</label>
+                        <label for="company">Total Price<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="totalpri" readonly>
                     </div>
                 </div>

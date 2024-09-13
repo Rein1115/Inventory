@@ -25,7 +25,7 @@ return new class extends Migration
             $table->integer('terms');
 
             $table->string('deliveredby');
-            $table->string('doctor_name');
+            $table->string('fullname');
             $table->string('contact_num');
             $table->integer('or');
             $table->integer('cr');
@@ -33,6 +33,7 @@ return new class extends Migration
             $table->string('payment_status');
             $table->string('created_by');
             $table->string('updated_by')->nullable();
+            $table->integer('created_id');
             $table->timestamps();
         });
     }

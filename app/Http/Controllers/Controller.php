@@ -18,7 +18,7 @@ class Controller extends BaseController
         $userCode = Auth::user()->id;
         $button = [];
         $isAdmin = Auth::user()->role === 'Admin';
-        $createdByExists = DB::select("SELECT * FROM $innerparam WHERE created_by = ? AND $tOid = ?", [$userCode,$id]);
+        $createdByExists = DB::select("SELECT * FROM $innerparam WHERE created_id = ? AND $tOid = ?", [$userCode,$id]);
         // return $createdByExists;
 
             $button = [
@@ -55,7 +55,7 @@ class Controller extends BaseController
         $userCode = Auth::user()->id;
         $button = [];
         $isAdmin = Auth::user()->role === 'Admin';
-        $createdByExists = DB::select("SELECT * FROM $innerparam WHERE created_by = ? AND id = ?", [$userCode,$id]);
+        $createdByExists = DB::select("SELECT * FROM $innerparam WHERE created_id = ? AND id = ?", [$userCode,$id]);
 
             $button = [
                 [
@@ -82,7 +82,7 @@ class Controller extends BaseController
 
     public function Authentication($table,$tOid,$id){
         $isAdmin = Auth::user()->role === 'Admin';
-        $createdByExists = DB::select("SELECT * FROM $table WHERE  created_by =? AND  $tOid =? ", [Auth::user()->id,$id]);
+        $createdByExists = DB::select("SELECT * FROM $table WHERE  created_id =? AND  $tOid =? ", [Auth::user()->id,$id]);
 
         if( !empty($createdByExists) || $isAdmin){
             return 1;

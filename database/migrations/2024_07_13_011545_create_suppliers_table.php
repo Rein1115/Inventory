@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('address');
             $table->integer('created_by');
             $table->string('updated_by')->nullable();
+            $table->integer('created_id');
             $table->timestamps();
         });
     }

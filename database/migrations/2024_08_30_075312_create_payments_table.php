@@ -20,6 +20,7 @@ return new class extends Migration
             $table->date('pay_date');
             $table->integer('created_by');
             $table->string('updated_by')->nullable();
+            $table->integer('created_id');
             $table->timestamps();
         });
     }

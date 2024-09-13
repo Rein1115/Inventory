@@ -35,7 +35,15 @@
                         <div class="card login-form mb-0">
                             <div class="card-body pt-5">
                                 <a class="text-center" href="index.html"> <h4>Inventory</h4></a>
+
+
+                                @if (session('message'))
+                                    <div class="alert alert-danger text-center" role="alert">
+                                       <i class="fa fa-exclamation-circle"></i> {{ session('message') }}
+                                    </div>
+                                @endif
         
+
                                 <form method="POST" action="{{ route('login') }}" class="mt-5 mb-5 login-input">
                                     @csrf
 

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string  ('brand_name');
             $table->integer('created_by');
             $table->string('updated_by')->nullable();
+            $table->integer('created_id');
             $table->timestamps();
         });
     }

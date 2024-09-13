@@ -13,7 +13,7 @@
         <div class="modal-body">
      
             <div class="form-group">
-              <label for="modalInputName">Brand Name</label>
+              <label for="modalInputName">Brand Name<span class="text-danger">*</span></label>
               <input type="text" class="form-control" id="brandName" placeholder="Enter brand name">
             </div>
         </div>

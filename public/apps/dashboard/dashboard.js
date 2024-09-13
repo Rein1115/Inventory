@@ -81,7 +81,8 @@ $(document).ready(function(){
 // Initialize the doughnut chart
 var ctxDonut = document.getElementById('chart_widget_donut').getContext('2d');
 var myDonutChart = new Chart(ctxDonut, {
-    type: 'doughnut',
+    // type: 'doughnut',
+    type : 'bar',
     data: {
         labels: [], // Will be populated dynamically with product names
         datasets: [{

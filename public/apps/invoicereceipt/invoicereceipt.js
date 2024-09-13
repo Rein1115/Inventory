@@ -5,11 +5,11 @@ $(document).ready(function(){
 
     console.log(product);
 
-   
+
 
     $('#invoice-print').on('click',function(){
         formatNumber(parseFloat($('#printtotalamounts').text()));
-        $('#parentprintheaders').removeClass('d-none');
+        // $('#parentprintheaders').removeClass('d-none');
        
         $('#printor').text($('#or').text());
         $('#printpo').text($('#po').text());

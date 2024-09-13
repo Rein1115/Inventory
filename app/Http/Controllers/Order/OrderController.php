@@ -19,10 +19,11 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         //
-            $data= DB::select('SELECT o.terms,o.trans_no, o.or, o.deliveredto,o.created_by,o.address,o.created_at, u.fname , u.lname FROM orders AS o LEFT JOIN users AS u ON u.id = o.created_by LEFT JOIN products AS p ON p.id = o.product_id GROUP BY trans_no, `or`, deliveredto,created_by,`address`,created_at,terms, u.fname , u.lname');
+            $data= DB::select('SELECT o.terms,o.trans_no, o.or, o.deliveredto,o.created_by,o.updated_by,o.address,o.created_at, u.fname , u.lname FROM orders AS o LEFT JOIN users AS u ON u.id = o.created_by LEFT JOIN products AS p ON p.id = o.product_id GROUP BY trans_no, `or`, deliveredto,created_by,`address`,created_at,terms, u.fname , u.lname,o.updated_by');
             if($request->ajax()){
                 return response()->json($data);
             }
+            // dd($data);
            
 
             $datas = DB::select('SELECT * FROM orders');
@@ -53,7 +54,7 @@ class OrderController extends Controller
             "address" => 'string|required', //done
             "delivered_date" => 'string|required', //done
             "deliveredto" => 'string|required', //done
-            "doctor_name" => 'string|required', //done
+            "fullname" => 'string|required', //done
             "contact_num" => 'numeric|required', //done
             "deliveredby" => 'string|required',  //done
             "or" => 'numeric|required', //done
@@ -131,13 +132,14 @@ class OrderController extends Controller
                     'po_no' => $data['po_no'],
                     'terms' => $data['terms'],
                     'deliveredby' => $data['deliveredby'],
-                    'doctor_name' => $data['doctor_name'],
+                    'fullname' => $data['fullname'],
                     'contact_num' => $data['contact_num'],
                     'or' => $data['or'],
                     'cr' => $data['cr'],
                     'collected_by' => $data['collected_by'],
                     'payment_status' => 'Unpaid',
-                    'created_by' => Auth::user()->id
+                    'created_by' => Auth::user()->fullname,
+                    'created_id' => Auth::user()->id
 
                 ]);
             }
@@ -156,13 +158,18 @@ class OrderController extends Controller
      */
     public function show(string $id)
     {
-        //
 
-        // dd($id);
-        // dd($this->buttonPrivate("orders",$id));
+        
 
 
         $result = DB::select('SELECT * FROM orders WHERE trans_no = ? ',[$id]);
+
+    
+
+        if (empty($result)) {
+            
+            return response()->view('page-error-404', [], 404);
+        }
 
         $datas = [] ; 
         for($i = 0; $i<count($result); $i++){
@@ -174,7 +181,7 @@ class OrderController extends Controller
                 "address" => $result[$i]->address, 
                 "delivered_date" => $result[$i]->delivered_date,
                 "deliveredto" => $result[$i]->deliveredto,
-                "doctor_name" => $result[$i]->doctor_name,
+                "fullname" => $result[$i]->fullname,
                 "contact_num" => $result[$i]->contact_num,
                 "deliveredby"  => $result[$i]->deliveredby,
                 "or" => $result[$i]->or,
@@ -186,6 +193,9 @@ class OrderController extends Controller
                 "button" => $this->buttonPrivate("orders",$id,'trans_no')
             ];
         }
+
+
+        // return dd($data);
 
             $products = DB::select('SELECT * FROM products');
 
@@ -219,7 +229,7 @@ class OrderController extends Controller
             "address" => 'string|required', //done
             "delivered_date" => 'string|required', //done
             "deliveredto" => 'string|required', //done
-            "doctor_name" => 'string|required', //done
+            "fullname" => 'string|required', //done
             "contact_num" => 'numeric|required', //done
             "deliveredby" => 'string|required',  //done
             "or" => 'numeric|required', //done
@@ -249,14 +259,10 @@ class OrderController extends Controller
 
 
         try {
-                $update = DB::update('UPDATE orders SET deliveredto = ?, `address` = ? , delivered_date =?, po_no = ? , terms = ?,  deliveredby = ? , doctor_name =? , contact_num = ?, `or` =? , cr =? , collected_by = ?,updated_by =?  WHERE trans_no = ? ', [
-                    $data['deliveredto'],$data['address'],$data['delivered_date'],$data['po_no'],$data['terms'],$data['deliveredby'],$data['doctor_name'],$data['contact_num'],$data['or'],$data['cr'],$data['collected_by'],Auth::user()->fname.' '.Auth::user()->lname,$id]
+                $update = DB::update('UPDATE orders SET deliveredto = ?, `address` = ? , delivered_date =?, po_no = ? , terms = ?,  deliveredby = ? , fullname =? , contact_num = ?, `or` =? , cr =? , collected_by = ?,updated_by = ?  WHERE trans_no = ? ', [
+                    $data['deliveredto'],$data['address'],$data['delivered_date'],$data['po_no'],$data['terms'],$data['deliveredby'],$data['fullname'],$data['contact_num'],$data['or'],$data['cr'],$data['collected_by'],Auth::user()->fullname,$id]
                 );
-            
                 return response()->json(['success' => true, 'message' => 'Order updated successfully.']);
-
-          
-            
         } catch (Exception $e) {
             return response()->json(['success' => false, 'message' => 'Failed to update order.', 'error' => $e->getMessage()]);
         }

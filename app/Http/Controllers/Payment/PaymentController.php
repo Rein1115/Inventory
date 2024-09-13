@@ -18,7 +18,7 @@ class PaymentController extends Controller
     public function index(Request $request)
     {
         //
-        $data = DB::select('SELECT o.address,o.trans_no,o.po_no,o.`or`,o.payment_status,u.fname,u.lname,o.created_at FROM orders AS o LEFT JOIN users AS u ON u.id = o.created_by  GROUP BY o.trans_no,o.po_no,o.`or`,o.payment_status,u.fname,u.lname,o.created_at,o.address');
+        $data = DB::select('SELECT `address`,trans_no,po_no,`or`,payment_status,created_at,created_by FROM orders  GROUP BY trans_no,po_no,`or`,payment_status,created_at,created_by,address');
 
         if($request->ajax()){
             return response()->json($data);
@@ -67,7 +67,7 @@ class PaymentController extends Controller
                 $finaltotal = $to->total;
             }
             if($data['total_all'] > $finaltotal){
-                return response()->json(['success' => false, 'response' => 'Overpayment']);
+                return response()->json(['success' => false, 'response' => 'Payment must be equal to or less than the balance amount.']);
             }
             DB::select('UPDATE orders SET payment_status = ? WHERE trans_no = ?',
                 [$data['total_all'] == $finaltotal ? 'Paid' : 'Unpaid', $data['order_transno']]
@@ -79,7 +79,9 @@ class PaymentController extends Controller
             'payment_mode' => $data['payment_mode'],
             'number' => $data['number'],
             'pay_date' => $data['pay_date'], 
-            'created_by' => Auth::user()->id]); 
+            'created_by' => Auth::user()->id,
+            'created_id' => Auth::user()->id,
+        ]);
 
             return response()->json(['success' => true, 'message' => 'Payment inserted']);
 

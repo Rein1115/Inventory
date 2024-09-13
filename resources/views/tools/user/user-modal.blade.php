@@ -34,7 +34,7 @@
                 </select>
             </div>
 
-            <!-- Role -->
+            {{-- <!-- Role -->
             <div class="form-group">
                 <label for="role">Role</label>
                 <select name="role" id="role" class="form-control">
@@ -42,7 +42,7 @@
                     <option value="Admin">Admin</option>
                     <option value="User">User</option>
                 </select>
-            </div>
+            </div> --}}
 
             <!-- Status -->
             <div class="form-group">

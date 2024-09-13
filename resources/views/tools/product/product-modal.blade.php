@@ -15,13 +15,13 @@
             <div class="row">
                 <div class="col">
                     <div class="form-group">
-                        <label for="fname">Product Name</label>
+                        <label for="fname">Product Name </label>
                         <input type="text" class="form-control" id="prodname" readonly>
                       </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
-                        <label for="company">Supplier Name</label>
+                        <label for="company">Supplier Name </label>
                         <input type="text" class="form-control" id="suppliername" placeholder="Enter company" readonly>
                     </div>
                 </div>

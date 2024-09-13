@@ -20,14 +20,15 @@ class Order extends Model
         'po_no',
         'terms',
         'deliveredby',
-        'doctor_name',
+        'fullname',
         'contact_num',
         'or',
         'cr',
         'collected_by',
         'payment_status',
         'created_by',
-        'updated_by'
+        'updated_by',
+        'created_id'
     ];
     
 }

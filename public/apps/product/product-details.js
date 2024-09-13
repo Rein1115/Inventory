@@ -139,7 +139,7 @@ $(document).ready(function() {
 
     $('#Btn-update').on('click',function(){
         var id = $('#id').data('id');
-        alert(id);
+        // alert(id);
         var data = {
             product_name : $('#product_name').val(),
             supplier_name : $('#suppliername').val(),
@@ -219,8 +219,8 @@ $(document).ready(function() {
 
 
     $('#Btn-delete').on('click', function() {
-        var id = $(this).data('id');
-        alert(id);
+        var id = $('#id').data('id');
+        // alert(id);
         Swal.fire({
             title: 'Are you sure?',
             text: "Do you want to delete this product?",

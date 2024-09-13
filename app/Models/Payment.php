@@ -17,6 +17,7 @@ class Payment extends Model
         'number',
         'pay_date',
         'created_by',
-        'updated_by'
+        'updated_by',
+        'created_id'
     ];
 }

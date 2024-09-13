@@ -131,10 +131,10 @@ $(document).ready(function() {
                 <option value="Female" ${resp[0].gender === 'Female' ? 'selected' : ''}>Female</option>
             `);
 
-            $('#role').html(`
-                <option value="Admin" ${resp[0].role === 'Admin' ? 'selected' : ''}>Admin</option>
-                <option value="User" ${resp[0].role === 'User' ? 'selected' : ''}>User</option>
-            `);
+            // $('#role').html(`
+            //     <option value="Admin" ${resp[0].role === 'Admin' ? 'selected' : ''}>Admin</option>
+            //     <option value="User" ${resp[0].role === 'User' ? 'selected' : ''}>User</option>
+            // `);
             
 
             console.log(resp.status);

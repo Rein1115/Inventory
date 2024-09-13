@@ -348,9 +348,9 @@ $(document).ready(function(){
   
             Swal.fire({
                 title: 'Warning!',
-                text: "You can't input zero.",
-                icon: 'warning', 
-                showCancelButton: false, // Remove cancel button
+                text: "You can only input positive numbers greater than zero..",
+                icon: 'warning',
+                showCancelButton: false,
                 confirmButtonColor: '#3085d6',
                 confirmButtonText: 'Close'
             });
@@ -369,10 +369,9 @@ $(document).ready(function(){
                 title: 'Error!',
                 text: "Quantity exceeds available stock.",
                 icon: 'warning', 
-                showCancelButton: true,
+                showCancelButton: false,
                 confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Close'
+                confirmButtonText: 'Okay'
             });
             
 
@@ -405,7 +404,7 @@ $(document).ready(function(){
             address :$('#address').val(),
             delivered_date : $('#delivered_date').val(),
             deliveredto : $('#deliveredto').val(),
-            doctor_name :$('#doctor_name').val(),
+            fullname :$('#fullname').val(),
             contact_num :$('#contact_num').val(),
             deliveredby:$('#deliveredby').val(),
             or :$('#or').val(),
@@ -484,7 +483,7 @@ $(document).ready(function(){
                     address :$('#address').val(),
                     delivered_date : $('#delivered_date').val(),
                     deliveredto : $('#deliveredto').val(),
-                    doctor_name :$('#doctor_name').val(),
+                    fullname :$('#fullname').val(),
                     contact_num :$('#contact_num').val(),
                     deliveredby:$('#deliveredby').val(),
                     or :$('#or').val(),

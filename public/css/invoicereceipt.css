@@ -136,6 +136,9 @@ hr {
 } 
 
 /* Print-specific styles */
+ #parentprintheaders{
+    display: none !important;
+ }
 @media print {
     .action-buttons,
     .btn,
@@ -143,7 +146,10 @@ hr {
         display: none !important;
     }
 
-     /* Ensure only the page content is displayed */
+    #parentprintheaders{
+        display: block !important;
+    }
+    
      .page-content {
         display: block !important;
         text-align: center !important; /* Center align text in print */

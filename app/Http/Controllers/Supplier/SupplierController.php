@@ -16,11 +16,26 @@ class SupplierController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->ajax()){
-            $data = DB::select('SELECT s.* , u.fname AS ufname, u.lname AS ulname FROM suppliers AS s INNER JOIN users AS u ON u.id = s.created_by');
-            return response()->json($data);
-        }   
-        return view('supplier.supplier-list');
+
+        $admin = DB::select('SELECT COUNT(*) AS count FROM users WHERE role = "Admin" AND id = ?' , [Auth::user()->id]);
+        if($admin[0]->count > 0){
+            if($request->ajax()){
+                $data = DB::select('SELECT s.* , u.fname AS ufname, u.lname AS ulname FROM suppliers AS s INNER JOIN users AS u ON u.id = s.created_by');
+                return response()->json($data);
+            }   
+            return view('supplier.supplier-list');
+        }
+        else{
+
+            return response()->view('page-error-404', [], 404);
+        }
+
+
+        // if($request->ajax()){
+        //     $data = DB::select('SELECT s.* , u.fname AS ufname, u.lname AS ulname FROM suppliers AS s INNER JOIN users AS u ON u.id = s.created_by');
+        //     return response()->json($data);
+        // }   
+        // return view('supplier.supplier-list');
     }
 
     /**
@@ -46,6 +61,11 @@ class SupplierController extends Controller
      */
     public function show(string $id)
     {
+
+        $admin = DB::select('SELECT COUNT(*) AS count FROM users WHERE role = "Admin" AND id = ?' , [Auth::user()->id]);
+        
+        if($admin[0]->count > 0){
+          
         try {
             // Find the supplier by $id
             $data = Supplier::findOrFail($id);
@@ -55,6 +75,13 @@ class SupplierController extends Controller
             // Return error response if supplier not found or other exception occurs
             return response()->json(['success' => false, 'message' => 'Supplier not found', 'error' => $e->getMessage()],500);
         }
+        }
+        else{
+
+            return response()->view('page-error-404', [], 404);
+        }
+
+
     
     }
 
@@ -105,7 +132,7 @@ class SupplierController extends Controller
     
                     // uncomment if they have already Auth
                 $supplier->created_by = Auth::user()->id;
-    
+                $supplier->created_id = Auth::user()->id;
                 $supplier->save();
     
             
@@ -124,7 +151,8 @@ class SupplierController extends Controller
                         if ($existingSupplier) {
                             return response()->json(['success' => false, 'message' => 'Supplier already exists']);
                         }
-                        $supplier->updated_by = Auth::user()->fname.' '.Auth::user()->lname;
+                        $supplier->updated_by = Auth::user()->fullname;
+                        
                         $supplier->update($validator->validated());
                 
                     

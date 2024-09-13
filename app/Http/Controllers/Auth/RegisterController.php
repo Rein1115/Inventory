@@ -74,7 +74,7 @@ class RegisterController extends Controller
             'gender' => $data['gender'],
             'code' => 904385,
             'role' => $data['role'],
-            'status' => 'A',
+            'status' => 'Active',
             'fullname' => strtoupper($data['fname'].' '.$data['lname']),
             'created_by' => $data['created_by'],
             'email' => $data['email'],

@@ -20,6 +20,7 @@ class Product extends Model
         'originalquan',
         'mg',
         'created_by',
-        'updated_by'
+        'updated_by',
+        'created_id'
     ];
 }

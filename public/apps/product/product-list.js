@@ -96,8 +96,8 @@ $(document).ready(function(){
                 }
             }
         ],
-        order: [[0, 'desc']],
-        select: true
+        // order: [[0, 'desc']],
+        // select: true
     });
 
     $('#supplier').on('click','.edit',function(){

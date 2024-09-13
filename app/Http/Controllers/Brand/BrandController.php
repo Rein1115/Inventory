@@ -16,13 +16,29 @@ class BrandController extends Controller
      */
     public function index(Request $request)
     {
-        $data = DB::select('SELECT b.id , u.fname AS fname , b.created_at AS created_at , u.lname AS lname,  b.brand_name AS brand_name FROM brands AS b INNER JOIN users AS u ON u.id = b.created_by ');
 
-
-        if($request->ajax()){
-            return response()->json($data);
+        $admin = DB::select('SELECT COUNT(*) AS count FROM users WHERE role = "Admin" AND id = ?' , [Auth::user()->id]);
+        if($admin[0]->count > 0){
+           
+            $data = DB::select('SELECT b.id , u.fname AS fname , b.created_at AS created_at , u.lname AS lname,  b.brand_name AS brand_name FROM brands AS b INNER JOIN users AS u ON u.id = b.created_by ');
+            if($request->ajax()){
+                return response()->json($data);
+            }
+            return view('brand.brand-list');
         }
-        return view('brand.brand-list');
+        else{
+
+            return response()->view('page-error-404', [], 404);
+        }
+
+
+        // $data = DB::select('SELECT b.id , u.fname AS fname , b.created_at AS created_at , u.lname AS lname,  b.brand_name AS brand_name FROM brands AS b INNER JOIN users AS u ON u.id = b.created_by ');
+
+
+        // if($request->ajax()){
+        //     return response()->json($data);
+        // }
+        // return view('brand.brand-list');
     }
 
     /**
@@ -35,7 +51,18 @@ class BrandController extends Controller
         //     $data = $this->buttonPublic('Save','0');
         //     return response()->json($data);
         // }
-        return view('brand.brand-details');
+
+        $admin = DB::select('SELECT COUNT(*) AS count FROM users WHERE role = "Admin" AND id = ?' , [Auth::user()->id]);
+        if($admin[0]->count > 0){
+            return view('brand.brand-details');
+        }
+        else{
+
+            return response()->view('page-error-404', [], 404);
+        }
+
+
+        // return view('brand.brand-details');
     }
 
     /**
@@ -53,16 +80,36 @@ class BrandController extends Controller
      */
     public function show(string $id)
     {
-        try {
-            // Find the Brand by $id
-            $data = Brand::findOrFail($id);
-    
-            // Return JSON response with the found Brand
-            return response()->json(['success' => true, 'response' => $data],200);
-        } catch (\Exception $e) {
-            // Return error response if Brand not found or other exception occurs
-            return response()->json(['success' => false, 'message' => 'Brand not found', 'error' => $e->getMessage()],500);
+
+        $admin = DB::select('SELECT COUNT(*) AS count FROM users WHERE role = "Admin" AND id = ?' , [Auth::user()->id]);
+        if($admin[0]->count > 0){
+            try {
+                // Find the Brand by $id
+                $data = Brand::findOrFail($id);
+        
+                // Return JSON response with the found Brand
+                return response()->json(['success' => true, 'response' => $data],200);
+            } catch (\Exception $e) {
+                // Return error response if Brand not found or other exception occurs
+                return response()->json(['success' => false, 'message' => 'Brand not found', 'error' => $e->getMessage()],500);
+            }
         }
+        else{
+
+            return response()->view('page-error-404', [], 404);
+        }
+
+
+        // try {
+        //     // Find the Brand by $id
+        //     $data = Brand::findOrFail($id);
+    
+        //     // Return JSON response with the found Brand
+        //     return response()->json(['success' => true, 'response' => $data],200);
+        // } catch (\Exception $e) {
+        //     // Return error response if Brand not found or other exception occurs
+        //     return response()->json(['success' => false, 'message' => 'Brand not found', 'error' => $e->getMessage()],500);
+        // }
     }
 
     /**
@@ -105,6 +152,8 @@ class BrandController extends Controller
     
                     // uncomment if they have already Auth
                         $brand->created_by = Auth::user()->id ;
+                        $brand->created_id = Auth::user()->id ;
+
                   
                 
                 
@@ -131,7 +180,7 @@ class BrandController extends Controller
                         if ($exists) {
                             return response()->json(['success' => false, 'message' => 'Brand Name already exists']);
                         }
-                        $brand->updated_by = Auth::user()->fname.' '.Auth::user()->lname ;
+                        $brand->updated_by = Auth::user()->fullname ;
                         $brand->update($validator->validated());
                        
                     

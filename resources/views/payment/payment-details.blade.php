@@ -26,16 +26,20 @@
 
                 <div class="basic-form">
                     <div class="row">
+                        
 
+                        
                             <div class="form-group col-sm">
-                                <label >Delivered To : </label>
-                                <span class="font-weight-bold" id="deiveredto">{{isset( $data['orders']['deliveredto']) ?  $data['orders']['deliveredto']: ''}}</span>
+                                <label >OR no:</label>
+                                <span class="font-weight-bold text-white badge badge-info" id="or">{{isset( $data['orders']['or']) ?  $data['orders']['or']: ''}}</span>
                             </div>
 
                             <div class="form-group col-sm">
-                                <label >Delivered Date : </label>
-                                <span class="font-weight-bold" id="delivereddate">{{isset( $data['orders']['delivered_date']) ?  $data['orders']['delivered_date']: ''}}</span>
+                                <label >PO no:</label>
+                               <span class="font-weight-bold  text-white badge badge-info" id="po"> {{isset( $data['orders']['po_no']) ?  $data['orders']['po_no']: ''}}</span>
                             </div>
+
+                     
                             
                     </div>
 
@@ -54,13 +58,14 @@
 
                     <div class="row">
                         <div class="form-group col-sm">
-                            <label >OR no:</label>
-                            <span class="font-weight-bold text-white badge badge-secondary" id="or">{{isset( $data['orders']['or']) ?  $data['orders']['or']: ''}}</span>
+                            <label >Delivered To : </label>
+                            <span class="font-weight-bold" id="deiveredto">{{isset( $data['orders']['deliveredto']) ?  $data['orders']['deliveredto']: ''}}</span>
                         </div>
 
+                 
                         <div class="form-group col-sm">
-                            <label >PO no:</label>
-                           <span class="font-weight-bold  text-white badge badge-secondary" id="po"> {{isset( $data['orders']['po_no']) ?  $data['orders']['po_no']: ''}}</span>
+                            <label >Delivered Date : </label>
+                            <span class="font-weight-bold" id="delivereddate">{{isset( $data['orders']['delivered_date']) ?  $data['orders']['delivered_date']: ''}}</span>
                         </div>
                     </div>
 

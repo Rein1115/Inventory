@@ -31,7 +31,7 @@
         </div>
         
             <div class="col-lg-3 col-sm-3">
-                <a href="https://example.com" class="text-white">
+                <a href="" class="text-white">
                     <div class="card gradient-1">
                         <div class="card-body">
                             <h3 class="card-title text-white">Income Today</h3>
@@ -46,7 +46,7 @@
             </div>
  
         <div class="col-lg-3 col-sm-3">
-            <a href="https://example.com" class="text-white">
+            <a href="" class="text-white">
                 <div class="card gradient-3">
                     <div class="card-body">
                         <h3 class="card-title text-white">Net Profit</h3>
@@ -61,7 +61,7 @@
         </div>
         
         <div class="col-lg-3 col-sm-3">
-            <a href="https://example.com" class="text-white">
+            <a href="" class="text-white">
                 <div class="card gradient-3 h-55">
                     <div class="card-body ">
                         <h3 class="card-title text-white">Total Cost</h3>

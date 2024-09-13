@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB; 
 use Illuminate\Support\Facades\Validator; 
 use App\Models\Product;
 use Auth;
+
 class ProductController extends Controller
 {
     /**
@@ -15,13 +17,28 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        //
-        $data = DB::select('SELECT p.* , u.fname AS ufname , u.lname AS ulname FROM products p LEFT JOIN users AS u ON u.id = p.created_by  WHERE p.quantity != 0');
-       
-        if ($request->ajax()) {
-            return response()->json($data);
+
+
+        $admin = DB::select('SELECT COUNT(*) AS count FROM users WHERE role = "Admin" AND id = ?' , [Auth::user()->id]);
+        if($admin[0]->count > 0){
+            $data = DB::select('SELECT p.* , u.fname AS ufname , u.lname AS ulname FROM products p LEFT JOIN users AS u ON u.id = p.created_by  WHERE p.quantity != 0');
+            if ($request->ajax()) {
+                return response()->json($data);
+            }
+            return view('product.product-list');
         }
-        return view('product.product-list');
+        else{
+
+            return response()->view('page-error-404', [], 404);
+        }
+
+
+        //
+        // $data = DB::select('SELECT p.* , u.fname AS ufname , u.lname AS ulname FROM products p LEFT JOIN users AS u ON u.id = p.created_by  WHERE p.quantity != 0');
+        // if ($request->ajax()) {
+        //     return response()->json($data);
+        // }
+        // return view('product.product-list');
 
     }
 
@@ -31,8 +48,20 @@ class ProductController extends Controller
     public function create()
     {
         //
+        $admin = DB::select('SELECT COUNT(*) AS count FROM users WHERE role = "Admin" AND id = ?' , [Auth::user()->id]);
+        if($admin[0]->count > 0){
         $data = ["button" => $this->buttonPrivate("products",0,'id')];
         return view('product.product-details',compact('data'));
+        }
+        else{
+
+            return response()->view('page-error-404', [], 404);
+        }
+
+
+        
+        // $data = ["button" => $this->buttonPrivate("products",0,'id')];
+        // return view('product.product-details',compact('data'));
     }
 
     /**
@@ -69,6 +98,7 @@ class ProductController extends Controller
 
                 // uncomment if they have already Auth
             $prod->created_by = Auth::user()->id;
+            $prod->created_id = Auth::user()->id;
             $prod->save();
 
             return response()->json(['success' => true, 'message' => 'Product created successfully'],200);
@@ -84,35 +114,81 @@ class ProductController extends Controller
     public function show(Request $request , string $id)
     {
         //
-        try {
-            // Find the Product by $id
-            // $datas = Product::findOrFail($id);
-            $datas = DB::select('SELECT * FROM products WHERE id = ? AND quantity !=0',[$id]);
+        $admin = DB::select('SELECT COUNT(*) AS count FROM users WHERE role = "Admin" AND id = ?' , [Auth::user()->id]);
+        if($admin[0]->count > 0){
+            try {
+                // Find the Product by $id
+                // $datas = Product::findOrFail($id);
+                $datas = DB::select('SELECT * FROM products WHERE id = ? AND quantity !=0',[$id]);
+    
+                // Check if the product is associated with any orders
+                $hasOrder = DB::select('SELECT COUNT(*) AS count FROM orders WHERE product_id = ?', [$id]);
+                
+    
+                $data = [
+                    "data" => $datas,
+                    "button" => $this->buttonPrivate("products",$id,'id'),
+                    "readonly" => $hasOrder[0]->count > 0 ? 'readonly' : ''
+                ] ;
+    
+            // return dd($data);
+    
+                // dd($data['data']);
+                if($request->ajax()){
+                    return response()->json(['success' => true, 'response' => $data]);
+                }
+           
+                if(empty($data['data'])){  
+                    return view('page-error-404');
+                }else{
+                       return view('product.product-details',compact('data'));
+                }
+    
+            } catch (\Exception $e) {
+                // Return error response if Product not found or other exception occurs
+                return response()->json(['success' => false, 'message' => 'Product not found', 'error' => $e->getMessage()],500);
+            }
+        }
+        else{
 
-          
+            return response()->view('page-error-404', [], 404);
+        }
+
+
+        
+
+        // try {
+        //     // Find the Product by $id
+        //     // $datas = Product::findOrFail($id);
+        //     $datas = DB::select('SELECT * FROM products WHERE id = ? AND quantity !=0',[$id]);
+
+        //     // Check if the product is associated with any orders
+        //     $hasOrder = DB::select('SELECT COUNT(*) AS count FROM orders WHERE product_id = ?', [$id]);
             
 
-            $data = [
-                "data" => $datas,
-                "button" => $this->buttonPrivate("products",$id,'id')
-            ] ;
+        //     $data = [
+        //         "data" => $datas,
+        //         "button" => $this->buttonPrivate("products",$id,'id'),
+        //         "readonly" => $hasOrder[0]->count > 0 ? 'readonly' : ''
+        //     ] ;
 
-            // dd($data['data']);
-            if($request->ajax()){
-                return response()->json(['success' => true, 'response' => $data]);
-            }
+        // // return dd($data);
+
+        //     // dd($data['data']);
+        //     if($request->ajax()){
+        //         return response()->json(['success' => true, 'response' => $data]);
+        //     }
        
-            if(empty($data['data'])){  
-                return view('page-error-404');
-            }else{
-                   return view('product.product-details',compact('data'));
-     
-            }
+        //     if(empty($data['data'])){  
+        //         return view('page-error-404');
+        //     }else{
+        //            return view('product.product-details',compact('data'));
+        //     }
 
-        } catch (\Exception $e) {
-            // Return error response if Product not found or other exception occurs
-            return response()->json(['success' => false, 'message' => 'Product not found', 'error' => $e->getMessage()],500);
-        }
+        // } catch (\Exception $e) {
+        //     // Return error response if Product not found or other exception occurs
+        //     return response()->json(['success' => false, 'message' => 'Product not found', 'error' => $e->getMessage()],500);
+        // }
     }
 
     /**
@@ -152,19 +228,31 @@ class ProductController extends Controller
                     return response()->json(['success' => false, 'response' => $validator->errors()], 200);
                 }
 
+
+
                 if($auth === 1){
                     try {
-            
                         // Find the product by ID
                         $product = Product::findOrFail($id);
-    
-                        // Update the product with validated data
-                        $product->fill($validator->validated());
-    
+            
+                        // Check if the product is associated with any orders
+                        $hasOrder = DB::select('SELECT COUNT(*) AS count FROM orders WHERE product_id = ?', [$id]);
+            
+                        if ($hasOrder[0]->count > 0) {
+                            // If the product is associated with orders, allow only the quantity field to be updated
+                            $updateData = Arr::only($validator->validated(), ['quantity','status']);
+                        } else {
+                            // If not associated with orders, update all fields
+                            $updateData = $validator->validated();
+                        }
+            
+                        // Update the product with the filtered data
+                        $product->fill($updateData);
+            
                         // Uncomment if you want to update 'created_by' based on authenticated user
-                        $product->updated_by = Auth::user()->fname.' '.Auth::user()->lname ;
+                        $product->updated_by = Auth::user()->fname . ' ' . Auth::user()->lname;
                         $product->save();
-    
+            
                         return response()->json(['success' => true, 'message' => 'Product updated successfully'], 200);
                     } catch (\Exception $e) {
                         return response()->json(['success' => false, 'message' => 'Failed to update product', 'error' => $e->getMessage()], 500);

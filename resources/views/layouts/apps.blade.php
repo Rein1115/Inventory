@@ -58,7 +58,7 @@
                         <a href="{{ route('home') }}"><i class="icon-speedometer menu-icon"></i><span class="nav-text">Dashboard</span></a>
                     </li>
                 {{-- End Dashboard --}}
-
+                @if(Auth::user()->role === 'Admin'  )
                     <li>
                         <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="fa fa-truck menu-icon"></i><span class="nav-text">Supplier</span></a>
                             <ul aria-expanded="false">
@@ -88,7 +88,9 @@
                             </ul>
                         </li>
                     </li>
-
+                @endif
+                
+                
                     <li>
                         <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="fa fa-shopping-cart"></i><span class="nav-text">Order</span></a>
                             <ul aria-expanded="false">
