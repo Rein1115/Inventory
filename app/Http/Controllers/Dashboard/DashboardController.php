@@ -26,8 +26,43 @@ class DashboardController extends Controller
         LEFT JOIN products AS p ON p.id = o.product_id
         WHERE o.payment_status = "Paid"');
 
-        $data['totalcost'] = DB::select('SELECT sum(original_price * quantity) AS totalcost  FROM products');
-     
+        // $data['totalcost'] = DB::select('SELECT sum(original_price * quantity) AS totalcost  FROM products');
+        // $data['queryprod'] = DB::select('
+        //     SELECT p.id AS product_id,
+        //         (COALESCE(p.quantity, 0) + COALESCE(SUM(o.quantity), 0)) AS total_quantity,
+        //         p.original_price
+        //     FROM products AS p
+        //     LEFT JOIN orders AS o ON o.product_id = p.id
+        //     GROUP BY p.id, p.quantity, p.original_price
+        // ');
+        
+        // $result = [];
+        // foreach ($data['queryprod'] as $product) {
+        //     // Calculate total cost for the product
+        //     $totalCost = $product->total_quantity * $product->original_price;
+            
+        //     // Store the result for the current product
+        //     $result[] = [
+        //         'product_id' => $product->product_id,
+        //         'total_quantity' => $product->total_quantity,
+        //         'original_price' => $product->original_price,
+        //         'total_cost' => $totalCost
+        //     ];
+        // }   
+
+
+        $data['totalcost'] = db::select('SELECT SUM(total_cost) AS totalcost
+        FROM (
+            SELECT (COALESCE(p.quantity, 0) + COALESCE(SUM(o.quantity), 0)) * p.original_price AS total_cost
+            FROM products AS p
+            LEFT JOIN orders AS o ON o.product_id = p.id
+            GROUP BY p.id, p.quantity, p.original_price
+        ) AS product_totals;
+        ');
+        
+        // return response()->json($data['totalcost']);
+
+
         return view('home',compact('data'));
     }
 
