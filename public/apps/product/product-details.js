@@ -82,7 +82,7 @@ $(document).ready(function() {
             cancelButtonText: 'No, cancel!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.post('/product', data)
+                axios.post('/product/', data)
                     .then(response => {
 
                         console.log(response);
