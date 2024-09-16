@@ -11,6 +11,7 @@ use App\Http\Controllers\Payment\PaymentController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Profile\ProfileController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Freebies\FreebiesController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -61,7 +62,7 @@ Route::middleware(['auth','check.active'])->group(function () {
 
     Route::resource('profile', ProfileController::class);
 
-
+    Route::resource('freebies', FreebiesController::class);
 
 
     // dashboard

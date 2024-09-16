@@ -30,10 +30,13 @@ Product(s) History
                                             <th style="text-align: center;"></th>
                                             <th style="text-align: center;">Product Name</th>
                                             <th style="text-align: center;">Brand Name</th>
-                                            <th style="text-align: center;">mg</th>
-                                            <th style="text-align: center;">Original Quantity</th>
+                                            <th style="text-align: center;">Mg</th>
                                             <th style="text-align: center;">Selling Price</th>
                                             <th style="text-align: center;">Original Price</th>
+                                            <th style="text-align: center;">Orders Quantity</th>
+                                            <th style="text-align: center;">Freebies Quantity</th>
+                                            <th style="text-align: center;">Total Quantity</th>
+                                            <th style="text-align: center;">created_by</th>
                                             <th style="text-align: center;">Status</th>
                                         </tr>
                                     </thead>
@@ -49,7 +52,7 @@ Product(s) History
     </div>
 </div>          
 
-</div>
+</div> 
 {{-- @include('tools.order.order-modal') --}}
 @endsection
 @section('script')

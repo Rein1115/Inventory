@@ -20,7 +20,8 @@ class SupplierController extends Controller
         $admin = DB::select('SELECT COUNT(*) AS count FROM users WHERE role = "Admin" AND id = ?' , [Auth::user()->id]);
         if($admin[0]->count > 0){
             if($request->ajax()){
-                $data = DB::select('SELECT s.* , u.fname AS ufname, u.lname AS ulname FROM suppliers AS s INNER JOIN users AS u ON u.id = s.created_by');
+                // $data = DB::select('SELECT s.* , u.fname AS ufname, u.lname AS ulname FROM suppliers AS s INNER JOIN users AS u ON u.id = s.created_by');
+                 $data = DB::select('SELECT *  FROM suppliers');
                 return response()->json($data);
             }   
             return view('supplier.supplier-list');
@@ -39,7 +40,7 @@ class SupplierController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new resourcep.
      */
     public function create()
     {
@@ -131,7 +132,7 @@ class SupplierController extends Controller
                 $supplier = new Supplier($validator->validated());
     
                     // uncomment if they have already Auth
-                $supplier->created_by = Auth::user()->id;
+                $supplier->created_by = Auth::user()->fullname;
                 $supplier->created_id = Auth::user()->id;
                 $supplier->save();
     

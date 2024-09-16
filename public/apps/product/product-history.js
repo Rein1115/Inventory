@@ -59,20 +59,30 @@ $(document).ready(function(){
                     data : 'mg'
                  },
                  {
-                    data : 'originalquan'
-                 },
-                 {
                     data : 'selling_price'
                  },
                  {
-                    data: 'original_price'
+                    data : 'original_price'
+                 },
+                 {
+                    data: 'total_orders_quantity'
+                 }, 
+                 {
+                    data: 'total_freebies_quantity'
+                 },
+                 {
+                    data: null,
+                    render: function (data, type, row) {
+                        return '<span class="badge badge-primary text-white">'+data.total_quantity+'</span>' ;
+                    }
+                 },
+                 {
+                    data: 'created_by'
                  }, 
                  {
                     data: null,
                     render: function (data, type, row) {
-                        return row.quantity == '0' 
-                        ? '<span class="text-warning">OUT OF STOCK(S)</span>' 
-                        : '';
+                        return '<span class="text-warning">OUT OF STOCK(S)</span>' ;
                     }
                 }
             ],  

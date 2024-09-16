@@ -11,6 +11,7 @@ use App\Http\Controllers\select2\SelectController;
 use App\Http\Controllers\Payment\PaymentController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Order\TestController;
+use App\Http\Controllers\Freebies\FreebiesController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -36,6 +37,8 @@ Route::get('dashdunot', [DashboardController::class, 'dashboardunot'])->name('da
 Route::resource('payment', PaymentController::class);
 
 Route::resource('user', UserController::class);
+
+Route::resource('freebies', FreebiesController::class);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

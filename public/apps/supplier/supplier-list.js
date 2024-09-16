@@ -85,7 +85,7 @@ $(document).ready(function(){
             { 
                 data: null,
                 render: function (data, type, row) {
-                    return '<span class="badge badge-info">' + row.ufname + ' ' +row.ulname +'</span>';
+                    return '<span class="badge badge-info">' +row.created_by+'</span>';
                 }
             },
             

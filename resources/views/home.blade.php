@@ -66,7 +66,21 @@
                     <div class="card-body ">
                         <h3 class="card-title text-white">Total Cost</h3>
                         <div class="d-inline-block">
-                            <h2 class="text-white">₱ <span id="totalcost"> {{isset($data['totalcost'][0]->totalcost) ? $data['totalcost'][0]->totalcost : '0.00'}} </span></h2>
+                            <h2 class="text-white">₱ <span id="totalcost"> {{isset($data['totalcost'][0]->total_cost) ? $data['totalcost'][0]->total_cost: '0.00'}} </span></h2>
+                        </div>
+                        <span class="float-right display-5 opacity-5"><i class="fa fa-money"></i></span>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-lg-3 col-sm-3">
+            <a href="" class="text-white">
+                <div class="card gradient-3 h-55">
+                    <div class="card-body ">
+                        <h3 class="card-title text-white">Total Expenses</h3>
+                        <div class="d-inline-block">
+                            <h2 class="text-white">₱ <span id="totalcost"> {{isset($data['totalcost'][0]->total_cost) ? $data['totalcost'][0]->total_cost: '0.00'}} </span></h2>
                         </div>
                         <span class="float-right display-5 opacity-5"><i class="fa fa-money"></i></span>
                     </div>

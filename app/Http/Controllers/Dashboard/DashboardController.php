@@ -26,38 +26,26 @@ class DashboardController extends Controller
         LEFT JOIN products AS p ON p.id = o.product_id
         WHERE o.payment_status = "Paid"');
 
-        // $data['totalcost'] = DB::select('SELECT sum(original_price * quantity) AS totalcost  FROM products');
-        // $data['queryprod'] = DB::select('
-        //     SELECT p.id AS product_id,
-        //         (COALESCE(p.quantity, 0) + COALESCE(SUM(o.quantity), 0)) AS total_quantity,
-        //         p.original_price
-        //     FROM products AS p
-        //     LEFT JOIN orders AS o ON o.product_id = p.id
-        //     GROUP BY p.id, p.quantity, p.original_price
-        // ');
-        
-        // $result = [];
-        // foreach ($data['queryprod'] as $product) {
-        //     // Calculate total cost for the product
-        //     $totalCost = $product->total_quantity * $product->original_price;
-            
-        //     // Store the result for the current product
-        //     $result[] = [
-        //         'product_id' => $product->product_id,
-        //         'total_quantity' => $product->total_quantity,
-        //         'original_price' => $product->original_price,
-        //         'total_cost' => $totalCost
-        //     ];
-        // }   
-
-
-        $data['totalcost'] = db::select('SELECT SUM(total_cost) AS totalcost
-        FROM (
-            SELECT (COALESCE(p.quantity, 0) + COALESCE(SUM(o.quantity), 0)) * p.original_price AS total_cost
+        $data['totalcost'] = db::select('SELECT 
+                p.id AS product_id,
+                p.product_name,
+                COALESCE(p.quantity, 0) AS product_quantity,
+                COALESCE(order_totals.orders_quantity, 0) AS orders_quantity,
+                COALESCE(freebie_totals.freebies_quantity, 0) AS freebies_quantity,
+                (COALESCE(p.quantity, 0) + COALESCE(order_totals.orders_quantity, 0) + COALESCE(freebie_totals.freebies_quantity, 0)) * p.original_price AS total_cost_per_product,
+                SUM((COALESCE(p.quantity, 0) + COALESCE(order_totals.orders_quantity, 0) + COALESCE(freebie_totals.freebies_quantity, 0)) * p.original_price) OVER() AS total_cost
             FROM products AS p
-            LEFT JOIN orders AS o ON o.product_id = p.id
-            GROUP BY p.id, p.quantity, p.original_price
-        ) AS product_totals;
+            LEFT JOIN (
+                SELECT product_id, SUM(quantity) AS orders_quantity
+                FROM orders
+                GROUP BY product_id
+            ) AS order_totals ON p.id = order_totals.product_id
+            LEFT JOIN (
+                SELECT product_id, SUM(quantity) AS freebies_quantity
+                FROM freebies
+                GROUP BY product_id
+            ) AS freebie_totals ON p.id = freebie_totals.product_id
+            GROUP BY p.id, p.product_name, p.quantity, p.original_price, order_totals.orders_quantity, freebie_totals.freebies_quantity;
         ');
         
         // return response()->json($data['totalcost']);
@@ -70,7 +58,6 @@ class DashboardController extends Controller
     public function dashboardgraph(){
 
         $date =  date("Y");
-// return $date;
         $data = DB::select("SELECT 
         SUM(payment) AS total, 
         MONTHNAME(pay_date) AS formatted_date ,

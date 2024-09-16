@@ -17,7 +17,7 @@
 <div class="container-fluid">
     <div class="col-lg-12">
         <div class="card col-sm" data-transNo= "{{isset($data['transNo']) ? $data['transNo']: '' }}" id="products" data-products ="{{isset($products) ? json_encode($products): '' }}">
-            <div class="card-body">
+            <div class="card-body" id="freebiesorder">
                 {{-- <h1 class="card-title mb-5">{{isset($data['data']['id']) ? 'Update Product' : 'Create Product'}}</h1> --}}
 
                 <div class="basic-form" id="dataval" data-data="{{ isset($data['lines']) ? json_encode($data['lines']) : '' }}" data-t="{{ isset($remainingQuantities) ? json_encode($remainingQuantities) : '' }}">
@@ -123,13 +123,23 @@
                     <div class="col-12" >
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Order(s) Checkout</h4>
+                                <div class="d-flex justify-content-between mb-3 col-12">
+                                    
+                                    <h4 class="card-title mb-0">Order(s) Checkout</h4>
+                                    <div id="showfreebies">
+                                        <button id="btnfree" class="btn btn-success text-white d-none">Add Freebie(s)</button>
+                                        {{-- <button id="btnview" class="btn btn-secondary text-white">view</button> --}}
+                                    </div>
+                                   
+                                </div>
                                 <div class="table-responsive">
                                     <table id="orders" style="text-align:center; width:100%; border-collapse:collapse;">
                                         <thead>
                                             <tr>
                                                 <th></th> <!-- This is for the row number -->
                                                 <th style="text-align: center;">Product Name</th>
+                                                <th style="text-align: center;">Brand</th>
+                                                <th style="text-align: center;">Mg</th>
                                                 <th style="text-align: center;">Quantity</th>
                                                 <th style="text-align: center;">Total Amount</th>
                                                 <th style="text-align: center;">Actions</th>
@@ -140,17 +150,14 @@
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <td colspan="5" style="text-align: center;"> <!-- Adjust colspan to match the number of columns -->
+                                                <td colspan="6.5" style="text-align: center;"> <!-- Adjust colspan to match the number of columns -->
                                                     <button type="button" id="btnAdd" class="btn btn-sm btn-success" style="border-radius:50%;">
                                                         <i class="icon-plus plus-icon text-white"></i>
                                                     </button>
                                                 </td>
                                             </tr>
                                         </tfoot>
-                                    </table>
-                                 
-                                    
-                                    
+                                    </table>  
                                 </div>
                             </div>
                         </div>
@@ -186,7 +193,12 @@
 </div>
 </div>
 @include('tools.order.order-modal')
+@include('tools.order.freebies-modal')
 @endsection
 @section('script')
 <script src="../apps/order/order-details.js"></script>
+
+
+
+<script src="../apps/order/order-freebies.js"></script>
 @endsection

@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('freebies', function (Blueprint $table) {
             $table->id();
-            $table->integer('order_transno');
-            $table->decimal('payment',8,2);
-            $table->string('payment_mode');
-            $table->string('number')->nullable();
-            $table->date('pay_date');
+            $table->integer('trans_No');
+            $table->integer('product_id');
+            $table->integer('quantity');
             $table->string('created_by');
-            $table->string('updated_by')->nullable();
+            $table->integer('Amount')->default(0);
             $table->integer('created_id');
             $table->timestamps();
         });
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('freebies');
     }
 };

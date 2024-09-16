@@ -97,7 +97,7 @@ class ProductController extends Controller
             $prod = new Product($validator->validated());
 
                 // uncomment if they have already Auth
-            $prod->created_by = Auth::user()->id;
+            $prod->created_by = Auth::user()->fullname;
             $prod->created_id = Auth::user()->id;
             $prod->save();
 
@@ -301,8 +301,30 @@ class ProductController extends Controller
     }
 
     public function producthistory(Request $request){
-        $data = DB::select('SELECT p.* , u.fname AS ufname , u.lname AS ulname FROM products p INNER JOIN users AS u ON u.id = p.created_by  WHERE p.quantity = 0');    
-        // return $data;   
+        // $data['prod'] = DB::select('SELECT * FROM products WHERE quantity = 0'); 
+        $data = DB::table('products as p')
+    ->leftJoin(DB::raw('(SELECT product_id, SUM(quantity) AS total_orders_quantity FROM orders GROUP BY product_id) AS order_totals'), 'p.id', '=', 'order_totals.product_id')
+    ->leftJoin(DB::raw('(SELECT product_id, SUM(quantity) AS total_freebies_quantity FROM freebies GROUP BY product_id) AS freebie_totals'), 'p.id', '=', 'freebie_totals.product_id')
+    ->select(
+        'p.id as product_id',
+        'p.product_name',
+        'p.brand_name',
+        'p.mg',
+        'p.selling_price',
+        'p.original_price',
+        'p.created_by',
+        DB::raw("'OUT OF STOCK(S)' as stock_status"),
+        DB::raw('COALESCE(order_totals.total_orders_quantity, 0) as total_orders_quantity'),
+        DB::raw('COALESCE(freebie_totals.total_freebies_quantity, 0) as total_freebies_quantity'),
+        DB::raw('COALESCE(p.quantity, 0) as product_quantity'),
+        DB::raw('(COALESCE(p.quantity, 0) + COALESCE(order_totals.total_orders_quantity, 0) + COALESCE(freebie_totals.total_freebies_quantity, 0)) as total_quantity')
+    )
+    ->groupBy('p.id', 'p.product_name', 'p.brand_name', 'p.mg', 'p.quantity', 'order_totals.total_orders_quantity', 'freebie_totals.total_freebies_quantity', 'p.selling_price',
+    'p.original_price','p.created_by')
+    ->get();
+
+// return $data;
+  
         if ($request->ajax()) {
             return response()->json($data);
         }

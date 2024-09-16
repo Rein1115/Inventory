@@ -4,6 +4,8 @@ $(document).ready(function(){
   
     var table ;
     var data = $('#dataval').data('data');
+    console.log('==========');
+    console.log(data);
     var items = [];
     var count = 1;
 
@@ -21,6 +23,8 @@ $(document).ready(function(){
                 product_id: dat.product_id,
                 prod_name: dat.product_name,
                 quantity: dat.quantity,
+                brand_name:dat.brand_name,
+                mg: dat.mg,
                 total_amount: parseFloat(dat.total_amount)
             };
             items.push(array);
@@ -75,6 +79,8 @@ $(document).ready(function(){
                 }
             },
             { data: 'prod_name' },
+            { data: 'brand_name' },
+            { data: 'mg' },
             {
                 data: 'quantity',
                 render: function(data, type, row) {
@@ -145,7 +151,9 @@ $(document).ready(function(){
                         var array = {
                             index: count++,
                             product_id: productId,
-                            prod_name: $('#prodname option:selected').text(), 
+                            prod_name: $('#prodname option:selected').text(),
+                            brand_name : $('#brandname').val(), 
+                            mg : $('#mg').val(),
                             quantity: $('#quantity').val(),
                             total_amount: parseFloat($('#totalpri').val()) 
                         };
@@ -239,6 +247,8 @@ $(document).ready(function(){
                     index: count++,
                     product_id: productId,
                     prod_name: $('#prodname option:selected').text(), 
+                    brand_name : $('#brandname').val(), 
+                    mg : $('#mg').val(),
                     quantity: $('#quantity').val(),
                     total_amount: parseFloat($('#totalpri').val())
                 };
@@ -358,7 +368,7 @@ $(document).ready(function(){
             return;
         }
 
-        if (isNaN(quan) || isNaN(putquan)) {
+        if (isNaN(quan) || isNaN(putquan)){
       
             return;
         }
@@ -435,6 +445,7 @@ $(document).ready(function(){
                                 text: resp.message
                             }).then(() => {
                                 window.location.href = '/order';
+                                // location.reload();
                             });
                         } else {
                             var errorMessage = 'Error!';
@@ -513,7 +524,8 @@ $(document).ready(function(){
                                             title: 'Success!',
                                             text: resp.message
                                         }).then(() => {
-                                            window.location.href = '/order';
+                                            // window.location.href = '/order';
+                                            location.reload();
                                         });
                                     } else {
                                         var errorMessage = 'Error!';
@@ -638,9 +650,6 @@ $(document).ready(function(){
 
     totalamounts(items)
     
-
-
-
 });
 
 

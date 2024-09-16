@@ -163,9 +163,6 @@ class OrderController extends Controller
 
 
         $result = DB::select('SELECT * FROM orders WHERE trans_no = ? ',[$id]);
-
-    
-
         if (empty($result)) {
             
             return response()->view('page-error-404', [], 404);
@@ -189,7 +186,7 @@ class OrderController extends Controller
                 "terms" =>   $result[$i]->terms,
                 "payment_status" => $result[$i]->payment_status,              
                 "collected_by" =>$result[$i]->collected_by ,
-                "lines" => db::select('SELECT p.product_name, o.trans_no,o.product_id, o.quantity, o.total_amount FROM orders AS o INNER JOIN products AS p ON o.product_id = p.id  WHERE o.trans_no = ? ', [$id]),
+                "lines" => db::select('SELECT p.product_name, o.trans_no,o.product_id, o.quantity, o.total_amount,p.mg,p.brand_name FROM orders AS o INNER JOIN products AS p ON o.product_id = p.id  WHERE o.trans_no = ? ', [$id]),
                 "button" => $this->buttonPrivate("orders",$id,'trans_no')
             ];
         }
@@ -255,9 +252,7 @@ class OrderController extends Controller
         else if ($existscr[0]->count > 0 ){
             return response()->json(['success' => false, 'message'=> 'cr no. is already exists. Please check first.']) ;
         }
-
-
-
+        
         try {
                 $update = DB::update('UPDATE orders SET deliveredto = ?, `address` = ? , delivered_date =?, po_no = ? , terms = ?,  deliveredby = ? , fullname =? , contact_num = ?, `or` =? , cr =? , collected_by = ?,updated_by = ?  WHERE trans_no = ? ', [
                     $data['deliveredto'],$data['address'],$data['delivered_date'],$data['po_no'],$data['terms'],$data['deliveredby'],$data['fullname'],$data['contact_num'],$data['or'],$data['cr'],$data['collected_by'],Auth::user()->fullname,$id]
@@ -266,7 +261,6 @@ class OrderController extends Controller
         } catch (Exception $e) {
             return response()->json(['success' => false, 'message' => 'Failed to update order.', 'error' => $e->getMessage()]);
         }
-    
     }   
 
     /**
@@ -281,6 +275,16 @@ class OrderController extends Controller
             try{ 
 
                 $data = $request->all();
+
+
+                $existsfreebies = DB::select('SELECT COUNT(*) AS count FROM freebies WHERE trans_No =? ',[$id]);
+
+                if($existsfreebies[0]->count > 0){
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'You cannot delete this order because it has associated freebies. Please delete the associated freebies before attempting to delete this order.'
+                    ], 200);
+                }
         
                 $validator = Validator::make($data['order'], [
                    'quantity' => 'required|integer',

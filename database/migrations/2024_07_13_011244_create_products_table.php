@@ -21,9 +21,8 @@ return new class extends Migration
             $table->string('status');
             $table->string('brand_name');
             $table->integer('quantity');
-            $table->integer('originalquan');
             $table->integer('mg');
-            $table->integer('created_by');
+            $table->string('created_by');
             $table->string('updated_by')->nullable();
             $table->integer('created_id');
 
