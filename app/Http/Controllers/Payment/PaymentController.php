@@ -98,6 +98,7 @@ class PaymentController extends Controller
     public function show(Request $request ,string $id)
     {
         //
+        // return $id;
 
         try {
             $orders = DB::select('SELECT * FROM orders WHERE trans_no = ?',[$id]);
@@ -118,7 +119,8 @@ class PaymentController extends Controller
                     "deliveredby" => $orders[$i]->deliveredby,
                     "collected_by" => $orders[$i]->collected_by,
                     "status" => $orders[$i]->payment_status,
-                    "total_amount" =>  $totalamounts
+                    "total_amount" =>  $totalamounts,
+                  
                 ];
             }
 
@@ -130,17 +132,22 @@ class PaymentController extends Controller
             $payments = DB::select('SELECT p.* ,u.id AS userid, u.fname ,u.lname FROM payments AS p INNER JOIN users AS u ON u.id = p.created_by WHERE p.order_transno = ? ', [$id]);
 
 
-            $productlist = DB::select('SELECT p.product_name,o.quantity,o.total_amount,p.selling_price FROM orders AS o LEFT JOIN products AS p ON p.id = o.product_id WHERE o.trans_no = ?' ,[$id]);
+            $productlist = DB::select('SELECT p.product_name,o.quantity,o.total_amount,p.selling_price,p.brand_name,p.mg FROM orders AS o LEFT JOIN products AS p ON p.id = o.product_id WHERE o.trans_no = ?' ,[$id]);
 
             $data = [
                 "orders" => $resultorders,
                 "payments" => $payments,
-                "productlist" => $productlist
+                "productlist" => $productlist,
+                "freebieslist" => DB::select('SELECT p.product_name,f.quantity,p.selling_price,p.brand_name,p.mg FROM freebies AS f INNER JOIN products AS p ON p.id = f.product_id WHERE f.trans_No =? ',[$id])
                 // "button" => $this->buttonPrivate("orders",$id,'trans_no')
             ] ;
 
+            // foreach($data['freebieslist'] AS $item){
+            //     return $item->product_name;
+            // }
 
-            // dd($data);
+
+            // dd($data['freebieslist']);
 
 
             if($request->ajax()){

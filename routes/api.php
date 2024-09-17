@@ -12,6 +12,7 @@ use App\Http\Controllers\Payment\PaymentController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Order\TestController;
 use App\Http\Controllers\Freebies\FreebiesController;
+use App\Http\Controllers\Expenses\ExpensesController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -39,6 +40,8 @@ Route::resource('payment', PaymentController::class);
 Route::resource('user', UserController::class);
 
 Route::resource('freebies', FreebiesController::class);
+
+Route::resource('expenses', ExpensesController::class);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

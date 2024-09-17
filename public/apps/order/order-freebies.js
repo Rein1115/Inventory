@@ -81,7 +81,7 @@ $(document).ready(function(){
     }).on('select2:select',function(e){
           
         var datas = e.params.data;
-        console.log(datas);
+
 
         $('#freebies-prodname').html(`<option value="${datas.id}"> ${datas.text}</option>`);
         $('#freebies-expirationdate').val(datas.expiration_date);
@@ -115,7 +115,7 @@ $(document).ready(function(){
             if (result.isConfirmed) {
                 axios.delete('/freebies/'+id,{data})
                     .then(response => {
-                        console.log(response);
+                    
                         var resp = response.data;
                 
                         if (resp.success === true) {
@@ -207,7 +207,7 @@ $(document).ready(function(){
                 axios.post('/freebies/',data)
                     .then(response => {
                         var resp = response.data;
-                        console.log(resp);
+                 
                         if (resp.success === true) {
                             Swal.fire({
                                 icon: 'success',

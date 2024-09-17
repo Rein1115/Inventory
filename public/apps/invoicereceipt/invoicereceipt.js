@@ -10,7 +10,6 @@ $(document).ready(function(){
     $('#invoice-print').on('click',function(){
         formatNumber(parseFloat($('#printtotalamounts').text()));
         // $('#parentprintheaders').removeClass('d-none');
-       
         $('#printor').text($('#or').text());
         $('#printpo').text($('#po').text());
         $('#printdeliveredto').text($('#deiveredto').text());

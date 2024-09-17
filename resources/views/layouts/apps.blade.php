@@ -110,10 +110,13 @@
                             </ul>
                         </li>
                     </li>
-
+                    <hr>
                     @if(isset(Auth::user()->role) && Auth::user()->role === 'Admin')
                     <li>
                         <a href="{{route('user.index')}}"><i class="fa fa-users"></i><span class="nav-text">User</span></a>
+                    </li>
+                    <li>
+                        <a href="{{route('expenses.index')}}"><i class="fa fa-money"></i><span class="nav-text">Expenses</span></a>
                     </li>
 
                     @else

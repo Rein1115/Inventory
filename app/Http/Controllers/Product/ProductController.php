@@ -32,14 +32,6 @@ class ProductController extends Controller
             return response()->view('page-error-404', [], 404);
         }
 
-
-        //
-        // $data = DB::select('SELECT p.* , u.fname AS ufname , u.lname AS ulname FROM products p LEFT JOIN users AS u ON u.id = p.created_by  WHERE p.quantity != 0');
-        // if ($request->ajax()) {
-        //     return response()->json($data);
-        // }
-        // return view('product.product-list');
-
     }
 
     /**

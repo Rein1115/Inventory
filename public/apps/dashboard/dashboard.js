@@ -4,18 +4,19 @@ $(document).ready(function(){
      var incometoday = parseFloat($('#incometoday').text());
      var netprofit = parseFloat($('#netprofit').text());
      var totalcost = parseFloat($('#totalcost').text());
- 
+    var expenses = parseFloat($('#totalexpenses').text())
      // Format and update numbers
      var formattedTotalSales = formatNumber(totalsales);
      var formattedIncomeToday = formatNumber(incometoday);
      var formattedNetProfit = formatNumber(netprofit);
      var formattedCost = formatNumber(totalcost);
+     var formattotalexpenses = formatNumber(expenses);
 
      $('#totalsales').text(formattedTotalSales);
      $('#incometoday').text(formattedIncomeToday);
      $('#netprofit').text(formattedNetProfit);
      $('#totalcost').text(formattedCost);
-
+     $('#totalexpenses').text(formattotalexpenses);
 
 
      var ctxBar = document.getElementById('chart_widget_2').getContext('2d');

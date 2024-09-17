@@ -12,6 +12,8 @@ use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Profile\ProfileController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Freebies\FreebiesController;
+use App\Http\Controllers\Expenses\ExpensesController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -71,4 +73,10 @@ Route::middleware(['auth','check.active'])->group(function () {
 
     Route::get('dashboardgraph', [DashboardController::class, 'dashboardgraph'])->name('dashboardgraph');
     Route::get('dashdunot', [DashboardController::class, 'dashboardunot'])->name('dashdunot');
+
+
+
+
+
+    Route::resource('expenses', ExpensesController::class);
 });

@@ -21,10 +21,22 @@ class DashboardController extends Controller
 
         $data['incometoday'] = DB::select('SELECT SUM(payment) as total_payment FROM payments WHERE DATE(created_at) = ?', [$date]);
 
+
+        $data['expenses'] = DB::select('SELECT SUM(amount) AS amount FROM expenses');
+
+
+        // return  $data['expenses'][0]->amount;
+  
+
         $data['netprofit'] = DB::select(' SELECT SUM((p.selling_price - p.original_price) * o.quantity) AS net_profit
         FROM orders AS o
         LEFT JOIN products AS p ON p.id = o.product_id
         WHERE o.payment_status = "Paid"');
+
+        $data['finalnetprofit'] =  $data['netprofit'][0]->net_profit - $data['expenses'][0]->amount;
+
+        // return $data['finalnetprofit'];
+
 
         $data['totalcost'] = db::select('SELECT 
                 p.id AS product_id,
@@ -71,15 +83,12 @@ class DashboardController extends Controller
     }
     
     public function dashboardunot(){
-      
-
         $data = DB::select('SELECT p.product_name, SUM(o.quantity) as total_quantity_sold ,p.brand_name AS brandname
         FROM products AS p
         LEFT JOIN orders AS o ON p.id = o.product_id WHERE o.product_id =p.id
         GROUP BY p.brand_name ,p.id, p.product_name
         ORDER BY total_quantity_sold DESC
         ');
-
     return response()->json($data);
     }
 }

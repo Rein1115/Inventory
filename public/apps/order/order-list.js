@@ -103,17 +103,6 @@ $(document).ready(function(){
     });
 
 
-    // $.ajax({
-    //     url: 'order',       
-    //     type: 'GET',    
-    //     success: function(response) {
-    //         console.log(response); // Handle the success response
-    //     },
-    //     error: function(xhr, status, error) {
-    //         console.error('Error:', status, error); // Handle errors
-    //     }
-    // });
-
 
     $('#order').on('click', '.delete', function() {
         var id = $(this).data('id');
@@ -121,7 +110,7 @@ $(document).ready(function(){
      
         var info = $('#alldas').data('datas');
    
-        // console.log(info);
+
 
      
         info.forEach(item => { 
@@ -134,7 +123,7 @@ $(document).ready(function(){
             }
         }); 
 
-        console.log(arrayob);
+  
 
         var data ={
             order : arrayob
@@ -152,8 +141,6 @@ $(document).ready(function(){
             if (result.isConfirmed) {
                 axios.delete('/order/'+id, {data})
                     .then(response => {
-
-                        console.log(response);
                         var resp = response.data;
                 
                         if (resp.success === true) {

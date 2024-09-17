@@ -4,8 +4,7 @@ $(document).ready(function(){
   
     var table ;
     var data = $('#dataval').data('data');
-    console.log('==========');
-    console.log(data);
+
     var items = [];
     var count = 1;
 
@@ -54,7 +53,7 @@ $(document).ready(function(){
     }).on('select2:select',function(e){
           
         var datas = e.params.data;
-        console.log(datas);
+  
 
         $('#prodname').html(`<option value="${datas.id}"> ${datas.text}</option>`);
         $('#expirationdate').val(datas.expiration_date);
@@ -160,11 +159,11 @@ $(document).ready(function(){
             
                         items.push(array);
                         table.row.add(array).draw(false);
-                        // console.log('Product added.');
+                       
                         totalamounts(items);
 
 
-                        // console.log(items);
+                     
                     } else {
                         Swal.fire({
                             title: 'Error!',
@@ -196,7 +195,7 @@ $(document).ready(function(){
                             table.row(rowIndex).data(found).draw(false);
                         }
                         totalamounts(items);
-                        // console.log('Product updated.');
+                      
                     } else {
                         // alert('Product not found for update.');
                   
@@ -254,8 +253,7 @@ $(document).ready(function(){
                 };
                 items.push(array);
                 table.row.add(array).draw(false);
-                console.log('Product added.');
-                // totalamounts(items);
+   
             }
         }
         
@@ -289,23 +287,19 @@ $(document).ready(function(){
             deletedItems.push(deletedItem);
             items.splice(itemIndex, 1);
             table.row($(this).closest('tr')).remove().draw(false);
-            console.log('Deleted items array:', deletedItems);
 
 
             totalamounts(items)
        
-            // var data = {
-            //     delete : deletedItems
-            // };
-
-            // axios.delete('/order/0/',{data}, 
-            //  )
-            // .then(response => {
-            //     console.log(response);
-            // });
-            // console.log('Remaining items:', items);
         } else {
-            console.log('Item not found');
+            Swal.fire({
+                title: 'Warning!',
+                text: 'Item not found',
+                icon: 'warning',
+                showCancelButton: false,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Close'
+            });
         }
     });
 
@@ -336,7 +330,7 @@ $(document).ready(function(){
 
         $('#exampleModalCenter').modal('show');
         const i = items.find(item => item.index === id);
-        // console.log(i);
+
         parseFloat($('#totalpri').val(i.total_amount))
         $('#prodname').html(`<option value="${i.product_id}">${i.prod_name}</option>`);
         $('#quantity').val(i.quantity);
@@ -407,7 +401,7 @@ $(document).ready(function(){
     $('#Btn-save').on('click',function(){
 
 
-    //    return  console.log(items);
+
         var data = {
             po_no : $('#po_no').val(),
              terms: $('#terms').val(),
@@ -471,7 +465,7 @@ $(document).ready(function(){
                         Swal.fire({
                             icon: 'error',
                             title: 'Oops...',
-                            text: 'Something went wrong! Please try again.',
+                            text: error,
                         });
                     });
             } else if (result.dismiss === Swal.DismissReason.cancel) {
@@ -568,11 +562,7 @@ $(document).ready(function(){
 
     $('#Btn-delete').on('click', function() {
         var id = $('#products').data('transno');
-        // var arrayob = [];
-     
-
-
-        // return console.log(items);
+   
 
         var data ={
             order : items
@@ -591,7 +581,7 @@ $(document).ready(function(){
                 axios.delete('/order/'+id, {data})
                     .then(response => {
 
-                        console.log(response);
+                    
                         var resp = response.data;
                 
                         if (resp.success === true) {
