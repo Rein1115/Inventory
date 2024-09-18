@@ -17,6 +17,7 @@ $(document).ready(function(){
         'December': ' #800000' 
     };
 
+
     $('#expenses').DataTable({
 
         dom             : 'Bflrtip',
@@ -61,6 +62,7 @@ $(document).ready(function(){
                     $('#saveandupdate').addClass('btn btn-primary');
                     $('#hiddensaveup').val('0');
                     $('#exampleModalLongTitle').text('Create Expenses');
+                    $('#expensedate').attr('readonly', false);
                 } 
             },
             {
@@ -118,22 +120,18 @@ $(document).ready(function(){
         var id = $(this).data('month');
         $('#expensesmodal').modal('show');
         var totalall = 0;
+       $('#hiddensaveup').val(id);
 
+       $('#expensedate').attr('readonly', true);
+
+   
         axios.get('/expenses/'+id)
         .then(response=>{
             var data =response.data;
-        
-            $('#expensestitle').text(data.month +' '+ data.year);
-
-
-            var expenses  = data.data.expenses;
             var items = [];
-
-            
+            $('#expensestitle').text(data.month +' '+ data.year);
+            var expenses  = data.data.expenses;
             expenses.forEach(item => {
-       
-                
-
 
                  var arr = {
                     category : item.category,
@@ -145,13 +143,7 @@ $(document).ready(function(){
 
                 totalall +=  parseFloat(item.amount);
 
-             
-
-          
-
-
                 items.push(arr)
-
             });
             $('#totalAmount').text('₱'+' '+formatNumber(totalall));
             table.clear().rows.add(items).draw();
@@ -179,27 +171,207 @@ $(document).ready(function(){
             { data: null, render: function (data, type, row) { return '<span class="badge badge-info">'+row.amount+'</span>'; }},
             { data: 'created_by' },
             { data: 'expenses_date' },
-            { data: null, render: function (data, type, row) { return '<button class="btn btn-primary edit" data-month="'+row.id+'"><i class="icon-eye eye-icon"> </i></button>'; }}
+            { data: null, render: function (data, type, row) {
+                return `
+                <div class="btn-group" role="group">
+                    <button class="btn btn-primary individualedit" data-indiid="${row.id}">
+                      <i class="icon-pencil pencil-icon"></i>
+                    </button> &nbsp;
+                    <button class="btn btn-danger individualdelete" data-indiid="${row.id}">
+                      <i class="icon-trash trash-icon"></i>
+                    </button>
+                </div>
+            `;
+
+             }}
         ]
     });
 
 
-
-
-
-    $('#saveandupdate').on('click',function(){
-        var data = {
-            category : $('#category').val(),
-            amount : $('#amount').val() ,
-            expenses_date : $('#expensedate').val() 
-        };
+    table.on('click','.individualedit',function(){
     
+        var id = $(this).data('indiid');
+        $('#hiddensaveup').val(id);
+        $('#expensesmodal').modal('hide');
+        $('#exampleModalCenter').modal('show');
+        $('#saveandupdate').text('Update');
+        $('#saveandupdate').addClass('btn btn-success');
+        $('#exampleModalLongTitle').text('Update Expense(s)');
+
+        axios.get('/individualexpenses/'+id)
+        .then(response => {
+
+            var data  = response.data;
+            
+            $('#category').val(data[0].category);
+            $('#amount').val(data[0].amount);
+            $('#expensedate').val(data[0].expenses_date);
+
+        }).catch(error => {
+            Swal.fire({
+                title: 'Error!',
+                text: error,
+                icon: 'error',
+                showCancelButton: false,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Close'
+            });
+        });
 
 
-        axios.put('')
-
-        
     });
+
+
+
+
+
+    $('#saveandupdate').on('click', function() {
+        var id = $('#hiddensaveup').val();
+        var txt =''; 
+        if(id == '0'){
+            txt='save';
+        }
+        else{
+            txt = 'update';
+        }
+    
+        var data = {
+            category: $('#category').val(),
+            amount: $('#amount').val(),
+            expenses_date: $('#expensedate').val()
+        };
+
+
+        if (!$('#category').val() || !$('#amount').val() || !$('#expensedate').val()) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Please fill in all required fields.',
+            });
+            return;
+        }
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you want to "+txt+" this expense(s)?",
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, save it!',
+            cancelButtonText: 'No, cancel!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.put('/expenses/' + id, data)
+                    .then(response => {
+                        var resp = response.data;
+    
+                        if (resp.success === true) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success!',
+                                text: resp.message
+                            }).then(() => {
+                                // window.location.href = '/order';
+                                // $('#expensesmodal').modal('show');
+                                if(id == '0'){
+                                    $('#exampleModalCenter').modal('hide');
+                                    $('#exampleModalCenter input').val('');
+                                    $('#expenses').DataTable().ajax.reload();
+
+                                    table.clear();
+
+                                    // Add new data
+                                    table.rows.add(items); // Replace 'items' with your data source
+                            
+                                    // Redraw the table
+                                    table.draw();
+                                }else{
+                                    $('#exampleModalCenter').modal('hide');
+                                    $('#exampleModalCenter input').val('');
+                                   $('#expenses').DataTable().ajax.reload();
+                                
+                                }
+
+
+                            });
+                        } 
+                    })
+                    .catch(error => {
+                        // Handle any errors from the request
+                        let errorMessage = 'An unexpected error occurred.';
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: errorMessage,
+                        });
+                    });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Cancelled',
+                    text: 'expense(s) was not saved.',
+                });
+            }
+        });
+    });
+    
+    table.on('click','.individualdelete',function(){
+        var id = $(this).data('indiid');
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you want to delete this expense(s)?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.delete('expenses/'+id)
+                    .then(response => {
+                        var resp = response.data;
+                        console.log(resp);
+                        if (resp.success === true) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success!',
+                                text: resp.message
+                            }).then(() => {
+                                $('#expensesmodal').modal('hide');
+                                $('#expenses').DataTable().ajax.reload();
+                            });
+                        } else {
+                       
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error!',
+                                text: resp.message
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Something went wrong! Please try again.',
+                        });
+                    });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Cancelled',
+                    text: ' Brand name was not deleted!',
+                });
+            }
+        });
+        alert(id);
+    }); 
+
+
+
 
     $('#amount').on('input',function(){
         if($(this).val() <= 0 ){

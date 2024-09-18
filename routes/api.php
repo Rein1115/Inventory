@@ -13,6 +13,7 @@ use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Order\TestController;
 use App\Http\Controllers\Freebies\FreebiesController;
 use App\Http\Controllers\Expenses\ExpensesController;
+use App\Http\Controllers\Email\EmailpaymentController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -42,6 +43,11 @@ Route::resource('user', UserController::class);
 Route::resource('freebies', FreebiesController::class);
 
 Route::resource('expenses', ExpensesController::class);
+
+
+Route::resource('paymentemail',EmailpaymentController::class)->names('paymentemail');
+
+Route::get('individualexpenses/{id}', [ExpensesController::class,'getIndividualexpenses'])->name('individualexpenses');
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

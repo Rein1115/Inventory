@@ -118,6 +118,17 @@
 
 
 
+                    <div class="row">
+                        <div class="form-group col-sm">
+                            <label for="suppliername">Email (<span class="text-muted">Optional</span>)</label>
+                            <input value="{{isset($data['email']) ? $data['email'] : '' }}" 
+                            class="form-control form-control-sm" type="text" id="email" name="email" placeholder="Enter Collected By">
+                        </div>
+
+                    </div>
+
+
+
 
                     {{-- start data table --}}
                     <div class="col-12" >

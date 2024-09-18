@@ -147,41 +147,6 @@ class ProductController extends Controller
             return response()->view('page-error-404', [], 404);
         }
 
-
-        
-
-        // try {
-        //     // Find the Product by $id
-        //     // $datas = Product::findOrFail($id);
-        //     $datas = DB::select('SELECT * FROM products WHERE id = ? AND quantity !=0',[$id]);
-
-        //     // Check if the product is associated with any orders
-        //     $hasOrder = DB::select('SELECT COUNT(*) AS count FROM orders WHERE product_id = ?', [$id]);
-            
-
-        //     $data = [
-        //         "data" => $datas,
-        //         "button" => $this->buttonPrivate("products",$id,'id'),
-        //         "readonly" => $hasOrder[0]->count > 0 ? 'readonly' : ''
-        //     ] ;
-
-        // // return dd($data);
-
-        //     // dd($data['data']);
-        //     if($request->ajax()){
-        //         return response()->json(['success' => true, 'response' => $data]);
-        //     }
-       
-        //     if(empty($data['data'])){  
-        //         return view('page-error-404');
-        //     }else{
-        //            return view('product.product-details',compact('data'));
-        //     }
-
-        // } catch (\Exception $e) {
-        //     // Return error response if Product not found or other exception occurs
-        //     return response()->json(['success' => false, 'message' => 'Product not found', 'error' => $e->getMessage()],500);
-        // }
     }
 
     /**
@@ -211,7 +176,6 @@ class ProductController extends Controller
                 'status' => 'required|string|max:50',
                 'brand_name' => 'required|string',
                 'quantity' => 'required|numeric',
-                'originalquan' => 'required|numeric',
                 'mg' => 'required|integer',
                 // 'created_by' => 'required|integer', //comment if they have Auth
             ]);
@@ -314,6 +278,7 @@ class ProductController extends Controller
         )
     ->groupBy('p.id', 'p.product_name', 'p.brand_name', 'p.mg', 'p.quantity', 'order_totals.total_orders_quantity', 'freebie_totals.total_freebies_quantity', 'p.selling_price',
     'p.original_price','p.created_by')
+    ->having('product_quantity', '=', 0)
     ->get();
 
 // return $data;

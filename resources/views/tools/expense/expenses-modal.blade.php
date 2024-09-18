@@ -1,6 +1,6 @@
 <!-- Modal -->
 <input type="hidden" value="0" id="hiddensaveup">
-<div class="modal fade" id="exampleModalCenter"  aria-hidden="true">
+<div class="modal fade" id="exampleModalCenter" data-id="0"  aria-hidden="true">
     
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -39,7 +39,7 @@
 
 {{-- modal expenses details --}}
 
-<div class="modal fade" id="expensesmodal"  aria-hidden="true">
+<div class="modal fade " id="expensesmodal"  aria-hidden="true">
     
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -50,7 +50,7 @@
         </button>
       </div>
       <div class="modal-body">
-          <table id="expenseslists">
+          <table class="table-responsive" id="expenseslists">
             <thead>
               <th></th>
               <th>Category</th>

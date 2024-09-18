@@ -28,7 +28,8 @@ class Order extends Model
         'payment_status',
         'created_by',
         'updated_by',
-        'created_id'
+        'created_id',
+        'email'
     ];
     
 }

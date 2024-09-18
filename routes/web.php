@@ -13,6 +13,7 @@ use App\Http\Controllers\Profile\ProfileController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Freebies\FreebiesController;
 use App\Http\Controllers\Expenses\ExpensesController;
+use App\Http\Controllers\Email\EmailpaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,22 +56,21 @@ Route::middleware(['auth','check.active'])->group(function () {
     Route::get('selectorderindi/{id}', [OrderController::class, 'selectorderindi']);
     Route::get('Productslist', [OrderController::class, 'Productslist']);
     Route::get('deleteupquan', [OrderController::class, 'deleteupquan']);
-
-
     Route::get('producthistory', [ProductController::class, 'producthistory'])->name('producthistory');
     Route::resource('payment', PaymentController::class);
 
     Route::post('destroymodification/{id}', [PaymentController::class, 'destroymodification']);
-
+    // profile
     Route::resource('profile', ProfileController::class);
 
+
+    // freebies
     Route::resource('freebies', FreebiesController::class);
 
 
     // dashboard
     Route::get('/home', [DashboardController::class, 'dashboardcard'])->name('dashboard');
     Route::get('/', [DashboardController::class, 'dashboardcard'])->name('dashboard');
-
     Route::get('dashboardgraph', [DashboardController::class, 'dashboardgraph'])->name('dashboardgraph');
     Route::get('dashdunot', [DashboardController::class, 'dashboardunot'])->name('dashdunot');
 
@@ -78,5 +78,13 @@ Route::middleware(['auth','check.active'])->group(function () {
 
 
 
+
     Route::resource('expenses', ExpensesController::class);
+    Route::get('individualexpenses/{id}', [ExpensesController::class,'getIndividualexpenses'])->name('individualexpenses');
+
+
+    // payment email individual 
+    Route::resource('paymentemail',EmailpaymentController::class)->names('paymentemail');
+
+
 });

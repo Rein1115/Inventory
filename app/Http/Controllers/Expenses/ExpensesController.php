@@ -37,6 +37,7 @@ class ExpensesController extends Controller
     public function create()
     {
         //
+        return response()->view('page-error-404', [], 404);
     }
 
     /**
@@ -56,23 +57,26 @@ class ExpensesController extends Controller
     {
         //  
 
-        $data['expenses'] = DB:: select('SELECT id, amount,  category,expenses_date,created_by ,DATE_FORMAT(expenses_date, "%M") AS monthname, YEAR(expenses_date) AS `year`  FROM expenses WHERE MONTH(expenses_date) =? ',[$id]);
+        $admin = DB::select('SELECT COUNT(*) AS count FROM users WHERE role = "Admin" AND id = ?' , [Auth::user()->id]);
 
-        $result = [];
-  
+        if($admin[0]->count > 0){
+            $data['expenses'] = DB:: select('SELECT id, amount,  category,expenses_date,created_by ,DATE_FORMAT(expenses_date, "%M") AS monthname, YEAR(expenses_date) AS `year`  FROM expenses WHERE MONTH(expenses_date) =? ',[$id]);
 
-        for($i = 0; $i<count($data['expenses']); $i++){
-
-
-
-
-            $result = [
-                "month" => $data['expenses'][$i]->monthname,
-                "year" => $data['expenses'][$i]->year,
-                "data"=> $data
-            ];
+            $result = [];
+            for($i = 0; $i<count($data['expenses']); $i++){
+    
+                $result = [
+                    "month" => $data['expenses'][$i]->monthname,
+                    "year" => $data['expenses'][$i]->year,
+                    "data"=> $data
+                ];
+            }
+            return response()->json($result);
         }
-        return response()->json($result);
+        else{
+            return response()->view('page-error-404', [], 404);
+        }
+        
     }
 
     /**
@@ -81,6 +85,7 @@ class ExpensesController extends Controller
     public function edit(string $id)
     {
         //
+
     }
 
     /**
@@ -92,26 +97,31 @@ class ExpensesController extends Controller
 
         try{
             $data = $request->all();
-            if($id == '0'){
-                $validator = Validator::make($data, [
-                    'category' => 'required|string',
-                    'amount' => 'required|numeric',
-                    'expenses_date' => 'required|date' 
-                ]);
-                if ($validator->fails()) {
-                    return response()->json([
-                        'success' => false,
-                        'message' => $validator->errors()
-                    ], 422); 
-                }
+
+            $validator = Validator::make($data, [
+                'category' => 'required|string',
+                'amount' => 'required|numeric',
+                'expenses_date' => 'required|date' 
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $validator->errors()
+                ], 422); 
+            }
+
+            if($id == 0){
+ 
 
                 Expense::create([
                     'category' => $data['category'],
                     'amount' => $data['amount'],
                     'expenses_date' => $data['expenses_date'],
-                    'created_by' => 'admin  ',
-                    'created_id' => 1,
+                    'created_by' => Auth::user()->fullname,
+                    'created_id' => Auth::user()->id,
                 ]);
+
                 return response()->json([
                     'success' => true,
                     'message' => 'Expense saved successfully!',
@@ -133,8 +143,8 @@ class ExpensesController extends Controller
                         'category' => $data['category'],
                         'amount' => $data['amount'],
                         'expenses_date' => $data['expenses_date'],
-                        'updated_by' => 'admin', 
-                        'created_id' => 1
+                        'updated_by' => Auth::user()->fullname,
+                        // 'created_id' => Auth::user()->id,s
                     ]);
 
                     return response()->json([
@@ -154,6 +164,25 @@ class ExpensesController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        //  
+        try{
+            $data = DB::delete('DELETE FROM expenses WHERE id = ?', [$id]);
+
+            if ($data) {
+                return response()->json(['success' => true, 'message' => 'Expense deleted successfully'], 200);
+            } else {
+                return response()->json(['success' => false, 'message' => 'Failed to delete this expense.'], 422);
+            }
+        }catch(Exception $e){
+            return response()->json(['success' => false, 'message' => $e->getMessage()],422);
+        }
+
+    
+    }
+
+
+    public function getIndividualexpenses(string $id){
+        $data = DB::select('SELECT * FROM expenses WHERE id = ? ',[$id]);
+        return response()->json($data);
     }
 }

@@ -275,7 +275,7 @@ $(document).ready(function(){
                         $('#quantity').val(item.quantity);
                         $('#status').val(item.status); expirationDate
                         $('#expirationDate').val(item.expiration_date);
-                        $('#createdby').val(item.ufname + ' ' + item.ulname);
+                        $('#createdby').val(item.created_by);
                     }
                 });
             },

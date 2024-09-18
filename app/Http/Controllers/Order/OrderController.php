@@ -59,6 +59,7 @@ class OrderController extends Controller
             "deliveredby" => 'string|required',  //done
             "or" => 'numeric|required', //done
             "cr" => 'numeric|required', //done
+            "email" =>'string|nullable',
             "collected_by" => 'string|required', //done
         ]);
 
@@ -139,7 +140,8 @@ class OrderController extends Controller
                     'collected_by' => $data['collected_by'],
                     'payment_status' => 'Unpaid',
                     'created_by' => Auth::user()->fullname,
-                    'created_id' => Auth::user()->id
+                    'created_id' => Auth::user()->id,
+                    'email' => $data['email']
 
                 ]);
             }
@@ -186,6 +188,7 @@ class OrderController extends Controller
                 "terms" =>   $result[$i]->terms,
                 "payment_status" => $result[$i]->payment_status,              
                 "collected_by" =>$result[$i]->collected_by ,
+                "email" => $result[$i]->email,
                 "lines" => db::select('SELECT p.product_name, o.trans_no,o.product_id, o.quantity, o.total_amount,p.mg,p.brand_name FROM orders AS o INNER JOIN products AS p ON o.product_id = p.id  WHERE o.trans_no = ? ', [$id]),
                 "button" => $this->buttonPrivate("orders",$id,'trans_no')
             ];
@@ -231,6 +234,7 @@ class OrderController extends Controller
             "deliveredby" => 'string|required',  //done
             "or" => 'numeric|required', //done
             "cr" => 'numeric|required', //done
+            "email" =>'string|nullable',
             "collected_by" => 'string|required', //done
         ]);
 
@@ -254,8 +258,8 @@ class OrderController extends Controller
         }
         
         try {
-                $update = DB::update('UPDATE orders SET deliveredto = ?, `address` = ? , delivered_date =?, po_no = ? , terms = ?,  deliveredby = ? , fullname =? , contact_num = ?, `or` =? , cr =? , collected_by = ?,updated_by = ?  WHERE trans_no = ? ', [
-                    $data['deliveredto'],$data['address'],$data['delivered_date'],$data['po_no'],$data['terms'],$data['deliveredby'],$data['fullname'],$data['contact_num'],$data['or'],$data['cr'],$data['collected_by'],Auth::user()->fullname,$id]
+                $update = DB::update('UPDATE orders SET deliveredto = ?, `address` = ? , delivered_date =?, po_no = ? , terms = ?,  deliveredby = ? , fullname =? , contact_num = ?, `or` =? , cr =? , collected_by = ?,updated_by = ?,email =? WHERE trans_no = ? ', [
+                    $data['deliveredto'],$data['address'],$data['delivered_date'],$data['po_no'],$data['terms'],$data['deliveredby'],$data['fullname'],$data['contact_num'],$data['or'],$data['cr'],$data['collected_by'],Auth::user()->fullname,$data['email'],$id]
                 );
                 return response()->json(['success' => true, 'message' => 'Order updated successfully.']);
         } catch (Exception $e) {

@@ -158,8 +158,8 @@
                                         <i class="fa fa-print"></i> Print Invoice
                                     </button>
                                     &nbsp;
-                                    <button class="btn btn-danger">
-                                        <i class="fa fa-envelope-o"></i> Mail Invoice
+                                    <button class="btn btn-danger" id="mail-sent">
+                                        <i class="fa fa-envelope-o" ></i> Mail Invoice
                                     </button>
                                 </div>
                             </div>

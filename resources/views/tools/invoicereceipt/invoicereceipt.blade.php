@@ -116,7 +116,9 @@
                                 @endforeach 
 
                                 @if(!empty($data['freebieslist']))
+                               
                                     @foreach($data['freebieslist'] AS $free)
+                                    <tr>
                                         <td>{{$count++}}</td>
                                         <td>{{$free->product_name}}</td>
                                         <td>{{$free->brand_name}}</td>
@@ -124,6 +126,7 @@
                                         <td>{{$free->quantity}}</td>
                                         <td>₱{{number_format($free->selling_price,2)}}</td>
                                         <td ><b>FREE</b></td>
+                                    </tr>
                                     @endforeach
 
                                 @else

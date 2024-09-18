@@ -20,7 +20,7 @@
                 <div class="card gradient-2">
                     <div class="card-body">
                         <h3 class="card-title text-white">Total Sales</h3>
-                        <div class="d-inline-block">
+                        <div class="">{{-- <div class="d-inline-block"> --}}
                             <h2 class="text-white">₱ <span id="totalsales">{{isset($data['totalsales'][0]->totalsales) ? $data['totalsales'][0]->totalsales : '0.00'}}</span></h2>
                             {{-- <p class="text-white mb-0">Jan - March 2019</p> --}}
                         </div>
@@ -35,7 +35,7 @@
                     <div class="card gradient-1">
                         <div class="card-body">
                             <h3 class="card-title text-white">Income Today</h3>
-                            <div class="d-inline-block">
+                            <div class="">
                                 <h2 class="text-white">₱ <span id="incometoday">{{isset($data['incometoday'][0]->total_payment) ? $data['incometoday'][0]->total_payment : '0.00'}}</span></h2>
                                 {{-- <p class="text-white mb-0">Jan - March 2019</p> --}}
                             </div>
@@ -50,7 +50,7 @@
                 <div class="card gradient-3">
                     <div class="card-body">
                         <h3 class="card-title text-white">Net Profit</h3>
-                        <div class="d-inline-block">
+                        <div class="">
                             <h2 class="text-white">₱ <span id="netprofit"> {{isset($data['finalnetprofit']) ? $data['finalnetprofit'] : '0.00'}} </span></h2>
                             {{-- <p class="text-white mb-0">Jan - March 2019</p> --}}
                         </div>
@@ -65,7 +65,8 @@
                 <div class="card gradient-3 h-55">
                     <div class="card-body ">
                         <h3 class="card-title text-white">Total Cost</h3>
-                        <div class="d-inline-block">
+                        <div class="">
+                            {{-- <div class="d-inline-block"> --}}
                             <h2 class="text-white">₱ <span id="totalcost"> {{isset($data['totalcost'][0]->total_cost) ? $data['totalcost'][0]->total_cost: '0.00'}} </span></h2>
                         </div>
                         <span class="float-right display-5 opacity-5"><i class="fa fa-money"></i></span>
@@ -79,7 +80,7 @@
                 <div class="card gradient-3 h-55">
                     <div class="card-body ">
                         <h3 class="card-title text-white">Total Expenses</h3>
-                        <div class="d-inline-block">
+                        <div class=""> {{--<div class="d-inline-block">--}}
                             <h2 class="text-white">₱ <span id="totalexpenses"> {{isset($data['expenses'][0]->amount) ? $data['expenses'][0]->amount: '0.00'}} </span></h2>
                         </div>
                         <span class="float-right display-5 opacity-5"><i class="fa fa-money"></i></span>

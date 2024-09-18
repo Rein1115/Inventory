@@ -414,6 +414,7 @@ $(document).ready(function(){
             or :$('#or').val(),
             cr:$('#cr').val(),
             collected_by:$('#collected_by').val(),
+            email : $('#email').val(),
             lines : items
         };
 
@@ -493,7 +494,8 @@ $(document).ready(function(){
                     deliveredby:$('#deliveredby').val(),
                     or :$('#or').val(),
                     cr:$('#cr').val(),
-                    collected_by:$('#collected_by').val()
+                    collected_by:$('#collected_by').val(),
+                    email : $('#email').val()
                     // lines : items,
                     // deleted : deletedItems
                 };

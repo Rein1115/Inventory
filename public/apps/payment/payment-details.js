@@ -347,11 +347,78 @@ $(document).ready(function(){
                     icon: 'info',
                     title: 'Cancelled',
                     text: 'Payment was not deleted',
-                });
+            });
             }
         });
 
     })
+
+
+
+    // mail invoice sent 
+    $('#mail-sent').on('click',function(){
+        var id = $('#payments').data('trans');
+
+      
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you want to send this invoice by email?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, mail it!',
+            cancelButtonText: 'No, cancel!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: 'Loading...',
+                    text: 'Please wait',
+                    icon: 'info',
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    willOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
+
+                axios.get('/paymentemail/' + id)
+                .then(response => {
+                    var resp = response.data;
+                    swal.close();
+                    if(resp.success == true){
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: resp.message
+                        }).then(() => {
+                            window.location.href = "/payment/"+ $('#payments').data('trans');
+                        });
+                    }else{
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'error!',
+                            text: resp.message
+                        }).then(() => {
+                            window.location.href = "/payment/"+ $('#payments').data('trans');
+                        });
+                    }
+        
+                }).catch(error => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Opppss!!!!',
+                        text: error
+                    }).then(() => {
+                        window.location.href = "/payment/"+ $('#payments').data('trans');
+                    });
+                })
+            }
+        });
+
+    }); 
 
 
 
