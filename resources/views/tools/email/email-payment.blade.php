@@ -85,6 +85,15 @@
                     <td > Total Amount </td>
                     <td style=" border:1px solid black; border-collapse: collapse;">₱ {{$data['exactAmount']}}</td>
                 </tr>
+
+                <tr>
+                    <td ></td>
+                    <td ></td>
+                    <td ></td>
+                    <td ></td>
+                    <td > Balance Remaining </td>
+                    <td style=" border:1px solid black; border-collapse: collapse;">₱ {{$data['balanceamount']}}</td>
+                </tr>
             </tbody>
           </table>
 
@@ -104,12 +113,20 @@
                 <tbody>
                     @foreach($data['payments'] AS $item)
                     <tr>
-                        <td style=" border:1px solid black; border-collapse: collapse;">{{number_format($item->payment,2)}}</th>
+                        
                         <td style=" border:1px solid black; border-collapse: collapse;">{{$item->payment_mode}}</th> 
                         <td style=" border:1px solid black; border-collapse: collapse;">{{!empty($item->number) ?$item->number : 'none'}}</th>
                         <td style=" border:1px solid black; border-collapse: collapse;">{{$item->pay_date}}</th>
+                        <td style=" border:1px solid black; border-collapse: collapse;">₱ {{number_format($item->payment,2)}}</th>
                     </tr>   
+
                     @endforeach
+                    <tr>
+                        <td ></td>
+                        <td ></td>
+                        <td >Total payment(s)</td>
+                        <td style=" border:1px solid black; border-collapse: collapse;">₱ {{$data['totalallpayment']}}</td>
+                    </tr>
                 </tbody>
             </tbody>
 

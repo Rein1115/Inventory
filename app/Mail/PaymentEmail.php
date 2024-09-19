@@ -30,10 +30,9 @@ class PaymentEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Payment Email',
+            subject: 'BDO',
         );
     }
-
     /**
      * Get the message content definition.
      */

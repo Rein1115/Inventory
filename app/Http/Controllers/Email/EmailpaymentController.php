@@ -56,9 +56,7 @@ class EmailpaymentController extends Controller
             }
 
 
-
-            // return $payments;
-
+            $overallbalance = $exactamount-$balanceamount;
             $result = [];
             for($i = 0; $i < count($orders); $i++){
                 $freebies = DB::select('SELECT p.product_name,f.quantity,p.mg,p.brand_name,p.selling_price, CONCAT("FREE") AS totalamount FROM freebies AS f INNER JOIN products AS p ON p.id = f.product_id WHERE f.trans_no =? ', [$id]);
@@ -76,7 +74,8 @@ class EmailpaymentController extends Controller
                     "freebies" => $freebies,
                     "payments" => $payments,
                     "exactAmount" => number_format($exactamount,2),
-                    "balanceamount" =>number_format($balanceamount,2)
+                    "balanceamount" =>number_format($overallbalance,2),
+                    "totalallpayment" => number_format($balanceamount,2)
                 ];
             }  
             // return response()->json($result);
