@@ -111,6 +111,7 @@ class PaymentController extends Controller
                 $resultorders = [
                     "trans_no" => $orders[$i]->trans_no, 
                     "or" => $orders[$i]->or,
+                    "email"=>$orders[$i]->email,
                     "po_no" => $orders[$i]->po_no,
                     "deliveredto" => $orders[$i]->deliveredto,
                     "delivered_date" => $orders[$i]->delivered_date,
@@ -126,9 +127,6 @@ class PaymentController extends Controller
 
 
             // dd($totalamounts);
-
-
-        //  return $resultorders;
             $payments = DB::select('SELECT p.* ,u.id AS userid, u.fname ,u.lname FROM payments AS p INNER JOIN users AS u ON u.id = p.created_by WHERE p.order_transno = ? ', [$id]);
 
 

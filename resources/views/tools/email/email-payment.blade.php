@@ -72,26 +72,24 @@
                         <td style=" border:1px solid black; border-collapse: collapse;">{{$item->mg}}</td>
                         <td style=" border:1px solid black; border-collapse: collapse;">{{$item->quantity}}</td>
                         <td style=" border:1px solid black; border-collapse: collapse;">{{number_format($item->selling_price,2)}}</td>
-                        <td style=" border:1px solid black; border-collapse: collapse;">{{number_format($item->totalamount,2)}}</td>
+                        <td style=" border:1px solid black; border-collapse: collapse;">{{$item->totalamount}}</td>
                     </tr>
                     @endforeach
-
-                    <tr>
-                        <td style=" border:1px solid black; border-collapse: collapse;"></td>
-                        <td style=" border:1px solid black; border-collapse: collapse;"></td>
-                        <td style=" border:1px solid black; border-collapse: collapse;"></td>
-                        <td style=" border:1px solid black; border-collapse: collapse;"></td>
-                        <td style=" border:1px solid black; border-collapse: collapse;"></td>
-                        <td style=" border:1px solid black; border-collapse: collapse;">₱ 120002</td>
-                    </tr>
                 @else
                 @endif
+                <tr>
+                    <td ></td>
+                    <td ></td>
+                    <td ></td>
+                    <td ></td>
+                    <td > Total Amount </td>
+                    <td style=" border:1px solid black; border-collapse: collapse;">₱ {{$data['exactAmount']}}</td>
+                </tr>
             </tbody>
           </table>
 
 
           @if(!empty($data['payments']))
-
             <h1 style="text-align:center;">Payment list</h1>
           <table style="width:100%; text-align:center; border:1px solid black; border-collapse: collapse;">
             <thead>
@@ -111,9 +109,6 @@
                         <td style=" border:1px solid black; border-collapse: collapse;">{{!empty($item->number) ?$item->number : 'none'}}</th>
                         <td style=" border:1px solid black; border-collapse: collapse;">{{$item->pay_date}}</th>
                     </tr>   
-
-
-
                     @endforeach
                 </tbody>
             </tbody>

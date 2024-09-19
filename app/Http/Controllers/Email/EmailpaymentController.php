@@ -40,11 +40,27 @@ class EmailpaymentController extends Controller
     public function show(string $id)
     {
         try{
-            $orders = DB::select('SELECT email,fullname,`or`,po_no,deliveredto,terms,payment_status,`address`,delivered_date FROM orders WHERE trans_no = ? ',[$id]);
+            $orders = DB::select('SELECT total_amount,email,fullname,`or`,po_no,deliveredto,terms,payment_status,`address`,delivered_date FROM orders WHERE trans_no = ?',[$id]);
+
+            $exactamount = 0;
+            foreach($orders AS $item){
+                $exactamount += $item->total_amount;
+            }
+
+            $payments = DB::select('SELECT * FROM payments WHERE order_transno = ? ',[$id]);
+
+
+            $balanceamount = 0;
+            foreach($payments AS $pay){
+                $balanceamount += $pay->payment;
+            }
+
+
+
+            // return $payments;
 
             $result = [];
             for($i = 0; $i < count($orders); $i++){
-    
                 $freebies = DB::select('SELECT p.product_name,f.quantity,p.mg,p.brand_name,p.selling_price, CONCAT("FREE") AS totalamount FROM freebies AS f INNER JOIN products AS p ON p.id = f.product_id WHERE f.trans_no =? ', [$id]);
                 $result = [
                     "OR" => $orders[$i]->or,
@@ -58,7 +74,9 @@ class EmailpaymentController extends Controller
                     "Payment_status" => $orders[$i]->payment_status,
                     "orders" => db::select('SELECT p.product_name,p.mg,p.brand_name,p.selling_price,o.quantity,o.total_amount FROM orders AS o INNER JOIN products AS p ON o.product_id = p.id WHERE o.trans_no = ? ', [$id]),
                     "freebies" => $freebies,
-                    "payments" => DB::select('SELECT * FROM payments WHERE order_transno = ? ',[$id])
+                    "payments" => $payments,
+                    "exactAmount" => number_format($exactamount,2),
+                    "balanceamount" =>number_format($balanceamount,2)
                 ];
             }  
             // return response()->json($result);

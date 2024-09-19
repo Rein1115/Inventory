@@ -26,9 +26,6 @@
 
                 <div class="basic-form">
                     <div class="row">
-                        
-
-                        
                             <div class="form-group col-sm">
                                 <label >OR no:</label>
                                 <span class="font-weight-bold text-white badge badge-info" id="or">{{isset( $data['orders']['or']) ?  $data['orders']['or']: ''}}</span>
@@ -37,10 +34,7 @@
                             <div class="form-group col-sm">
                                 <label >PO no:</label>
                                <span class="font-weight-bold  text-white badge badge-info" id="po"> {{isset( $data['orders']['po_no']) ?  $data['orders']['po_no']: ''}}</span>
-                            </div>
-
-                     
-                            
+                            </div>    
                     </div>
 
                     <div class="row">
@@ -98,7 +92,20 @@
                             <label >Balance Amount:</label>
                             <span class="font-weight-bold badge badge-primary" id="balance"></span>
                         </div>
+
+
+                        @if(!empty($data['orders']['email']))
+                        <div class="form-group col-sm">
+                            <label >Email: </label>
+                            <span class="font-weight-bold badge badge-primary" >{{ $data['orders']['email']}}</span>
+                        </div>
+                        @else
+
+                        @endif
+
+
                     </div>
+
 
                     {{-- start data table --}}
                     <div class="col-12" >
@@ -158,9 +165,13 @@
                                         <i class="fa fa-print"></i> Print Invoice
                                     </button>
                                     &nbsp;
-                                    <button class="btn btn-danger" id="mail-sent">
-                                        <i class="fa fa-envelope-o" ></i> Mail Invoice
-                                    </button>
+                                    @if(!empty($data['orders']['email']))
+                                        <button class="btn btn-danger" id="mail-sent">
+                                            <i class="fa fa-envelope-o" ></i> Mail Invoice
+                                        </button>
+                                    @else
+
+                                    @endif
                                 </div>
                             </div>
                         </div>
