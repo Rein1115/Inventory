@@ -38,7 +38,7 @@
         <p><strong>Terms:</strong> {{ $data['Terms'] }}</p>
         <p><strong>Address:</strong> {{ $data['Address'] }}</p>
         <p><strong>Payment Status:</strong> {{ $data['Payment_status'] }}</p>
-        <p><strong>Date Delivered:</strong> {{ $data['Deliveredto'] }}</p>
+        <p><strong>Date Delivered:</strong> {{ $data['Date_delivered'] }}</p>
         <p><strong>Fullname:</strong> {{ $data['fullname'] }}</p>
         <h1  style="text-align:center;">Check(s) Out Order</h1>
         <table  style="width:100%; text-align:center; border:1px solid black; border-collapse: collapse;">
@@ -71,7 +71,7 @@
                         <td style=" border:1px solid black; border-collapse: collapse;">{{$item->brand_name}}</td>
                         <td style=" border:1px solid black; border-collapse: collapse;">{{$item->mg}}</td>
                         <td style=" border:1px solid black; border-collapse: collapse;">{{$item->quantity}}</td>
-                        <td style=" border:1px solid black; border-collapse: collapse;">{{number_format($item->selling_price,2)}}</td>
+                        <td style=" border:1px solid black; border-collapse: collapse;">₱{{number_format($item->selling_price,2)}}</td>
                         <td style=" border:1px solid black; border-collapse: collapse;">{{$item->totalamount}}</td>
                     </tr>
                     @endforeach
@@ -103,10 +103,12 @@
           <table style="width:100%; text-align:center; border:1px solid black; border-collapse: collapse;">
             <thead>
                 <tr>
-                    <th style=" border:1px solid black; border-collapse: collapse;">Payment</th>
-                    <th style=" border:1px solid black; border-collapse: collapse;">Payment Method</th> 
-                    <th style=" border:1px solid black; border-collapse: collapse;">Serial Number</th>
+                    <th style=" border:1px solid black; border-collapse: collapse;">Payment Method</th>
+                    <th style=" border:1px solid black; border-collapse: collapse;">Serial Number</th> 
                     <th style=" border:1px solid black; border-collapse: collapse;">Payment Date</th>
+                    <th style=" border:1px solid black; border-collapse: collapse;">Payment</th>
+                    
+                    
                 </tr>               
             </thead>
             <tbody>
