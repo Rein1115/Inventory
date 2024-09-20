@@ -211,15 +211,11 @@ $(document).ready(function() {
                 });
             }
         });
-
-
-        
     });
-
-
+    
     $('#Btn-delete').on('click', function() {
         var id = $('#id').data('id');
-        alert(id);
+   
         Swal.fire({
             title: 'Are you sure?',
             text: "Do you want to delete this product?",

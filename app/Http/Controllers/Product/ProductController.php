@@ -116,17 +116,14 @@ class ProductController extends Controller
     
                 // Check if the product is associated with any orders
                 $hasOrder = DB::select('SELECT COUNT(*) AS count FROM orders WHERE product_id = ?', [$id]);
-                
+                $hasFreebies = DB::select('SELECT COUNT(*) AS count FROM freebies WHERE product_id = ? ',[$id]);
     
                 $data = [
                     "data" => $datas,
                     "button" => $this->buttonPrivate("products",$id,'id'),
-                    "readonly" => $hasOrder[0]->count > 0 ? 'readonly' : ''
+                    "readonly" => $hasOrder[0]->count > 0 ||  $hasFreebies[0]->count > 0? 'readonly' : ''
                 ] ;
     
-            // return dd($data);
-    
-                // dd($data['data']);
                 if($request->ajax()){
                     return response()->json(['success' => true, 'response' => $data]);
                 }
@@ -194,8 +191,9 @@ class ProductController extends Controller
             
                         // Check if the product is associated with any orders
                         $hasOrder = DB::select('SELECT COUNT(*) AS count FROM orders WHERE product_id = ?', [$id]);
+                        $hasFreebies = DB::select('SELECT COUNT(*) AS count FROM freebies WHERE product_id = ?',[$id]);
             
-                        if ($hasOrder[0]->count > 0) {
+                        if ($hasOrder[0]->count > 0 || $hasFreebies[0]->count > 0) {
                             // If the product is associated with orders, allow only the quantity field to be updated
                             $updateData = Arr::only($validator->validated(), ['quantity','status']);
                         } else {
@@ -207,7 +205,7 @@ class ProductController extends Controller
                         $product->fill($updateData);
             
                         // Uncomment if you want to update 'created_by' based on authenticated user
-                        $product->updated_by = Auth::user()->fname . ' ' . Auth::user()->lname;
+                        $product->updated_by = Auth::user()->fullname;
                         $product->save();
             
                         return response()->json(['success' => true, 'message' => 'Product updated successfully'], 200);
@@ -233,14 +231,14 @@ class ProductController extends Controller
                 // $prod = Product::findOrFail($id);
                 $prod = Product::findOrFail($id);
                 $orders = DB::select('SELECT * FROM orders WHERE product_id = ?', [$prod->id]);
-                
+                $freebies = DB::select('SELECT count(*) AS count FROM freebies WHERE product_id = ?', [$prod->id]);
                 // Check if there are any orders for this product
                 $checkorder = count($orders) > 0;
-                if ($prod->status == 'Available' || $checkorder) {
+                if ($prod->status == 'Available' || $checkorder || $freebies[0]->count) {
                     // Return a response indicating that deletion is not allowed
                     return response()->json([
                         'success' => false,
-                        'message' => 'Cannot delete if status is Available or if there are associated orders.'
+                        'message' => 'Cannot delete if status is Available or if there are associated orders and freebies.'
                     ]);
                 }
                 // Perform the deletion if the conditions are met
