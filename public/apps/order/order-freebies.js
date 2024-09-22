@@ -59,6 +59,22 @@ $(document).ready(function(){
     }
 
 
+    $('#freebies-quantity').on('input', function() {
+        const quantity = Number($(this).val());
+        const availableQuantity = Number($('#freebies-availablequan').val());
+    
+        if (quantity <= 0 || quantity > availableQuantity) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: 'Enter a positive number and less than or equal to the available quantity.'
+            });
+    
+            $(this).val('');
+            return;
+        }
+    });
+
     $('#freebies-prodname').select2({
         ajax: {
             url: '/Productslist',

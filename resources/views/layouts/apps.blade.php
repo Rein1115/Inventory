@@ -424,7 +424,8 @@
           <footer class="footer bg-light py-3">
             <div class="container">
                 <div class="text-center">
-                    <p class="mb-0">Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018</p>
+                    {{-- <p class="mb-0">Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018</p> --}}
+                    <p class="mb-0">Copyright © Designed & Developed by <a href=""> [Your Developer Name]</a>  2024 </p>
                 </div>
             </div>
          </footer>
