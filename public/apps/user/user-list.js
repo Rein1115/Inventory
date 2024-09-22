@@ -121,6 +121,7 @@ $(document).ready(function() {
         axios.get('/user/' + id)
         .then(response => {
             var resp = response.data;
+            console.log(resp);
             console.log(resp[0].fname);
 
             $('#fname').val(resp[0].fname);

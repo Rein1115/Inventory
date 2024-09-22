@@ -138,7 +138,7 @@
                                     
                                     <h4 class="card-title mb-0">Order(s) Checkout</h4>
                                     <div id="showfreebies">
-                                        <button id="btnfree" class="btn btn-success text-white d-none">Add Freebie(s)</button>
+                                        <button id="btnfree" class="btn btn-success text-white d-none">Add Free</button>
                                         {{-- <button id="btnview" class="btn btn-secondary text-white">view</button> --}}
                                     </div>
                                    

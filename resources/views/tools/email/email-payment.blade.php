@@ -30,7 +30,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Hello, {{ $data['fullname'] }}</h1>
+        <h1>Hello,Ms/Sir {{ $data['fullname'] }}</h1>
         
         <p><strong>OR:</strong> {{ $data['OR'] }}</p>
         <p><strong>PO:</strong> {{ $data['PO'] }}</p>

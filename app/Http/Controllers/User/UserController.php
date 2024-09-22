@@ -21,7 +21,7 @@ class UserController extends Controller
         //
         $admin = DB::select('SELECT COUNT(*) AS count FROM users WHERE role = "Admin" AND id = ?' , [Auth::user()->id]);
         if($admin[0]->count > 0){
-            $data = DB::select('SELECT * FROM users  WHERE  `role` != "Admin" ');
+            $data = DB::select('SELECT id,fname,lname,gender,status,email,created_by,created_at,fullname,role FROM users  WHERE  `role` != "Admin" ');
             // dd($data);
             if($request->ajax()){
                 return response()->json($data);
@@ -60,7 +60,7 @@ class UserController extends Controller
         //
 
 
-        $data = DB::select('SELECT * FROM users WHERE id = ? ',[$id]);
+        $data = DB::select('SELECT id,fname,lname,gender,status,email,created_by,created_at,fullname,role FROM users WHERE id = ? ',[$id]);
 
 
         return response()->json($data);

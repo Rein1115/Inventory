@@ -1,0 +1,34 @@
+
+    using gmail
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=your_email@gmail.com
+MAIL_PASSWORD=your_app_password
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS="your_email@gmail.com"
+MAIL_FROM_NAME="${APP_NAME}"
+
+
+    using mail
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.mail.yahoo.com
+MAIL_PORT=587
+MAIL_USERNAME=your_email@yahoo.com
+MAIL_PASSWORD=your_password_or_app_password
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS="your_email@yahoo.com"
+MAIL_FROM_NAME="${APP_NAME}"
+
+    using office
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.office365.com
+MAIL_PORT=587
+MAIL_USERNAME=your_email@outlook.com
+MAIL_PASSWORD=your_password
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS="your_email@outlook.com"
+MAIL_FROM_NAME="${APP_NAME}"
+
+
+
