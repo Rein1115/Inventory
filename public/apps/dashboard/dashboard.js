@@ -119,7 +119,7 @@ axios.get('dashdunot')
         var data = response.data;
 
         // Extract labels (product names) and data (quantities sold)
-        var labels = data.map(item => `${item.product_name} (${item.brandname})`);
+        var labels = data.map(item => `${item.product_name} ${item.mg}mg (${item.brandname})`);
         var salesData = data.map(item => item.total_quantity_sold);
 
         // Update chart data

@@ -1,20 +1,22 @@
 <div class="page-content container d-none" id="parentprintheaders">
     <div class="page-header text-blue-d2 mb-4">
         <h1 class="page-title text-secondary-d1">
-            <span class="text-primary-d1">[Shop Name]</span> <!-- Shop title here -->
+            <span class="text-primary-d1">EAGLESMED PET SUPPLIES AND ACCESSORIES TRADING</span> <!-- Shop title here -->
         </h1>
     
         <p class="text-secondary-d2 mb-1">
-            [Shop Address Line 1], [Shop Address Line 2] <!-- Shop address here -->
+           Sun-ok Ibabao 6017 Cordova Cebu Philippines <!-- Shop address here -->
         </p>
         <p class="text-secondary-d2 mb-1">
-            Contact: [Shop Contact Number] <!-- Shop contact number here -->
+            {{-- Contact: [Shop Contact Number] <!-- Shop contact number here --> --}}
+            NON-VAT REG. TIN: 292-810-773-00000
         </p>
         <p class="text-secondary-d2">
-            Owner: [Owner's Last Name] <!-- Shop owner's last name here -->
+            {{-- Owner: [Owner's Last Name] <!-- Shop owner's last name here --> --}}
+            Prop: Margie Cambongga Dinoy
         </p>
     
-        <div class="page-tools">
+        {{-- <div class="page-tools">
             <div class="action-buttons">
                 <a class="btn bg-white btn-light mx-1px text-95" href="#" data-title="Print">
                     <i class="mr-1 fa fa-print text-primary-m1 text-120 w-2"></i>
@@ -25,7 +27,7 @@
                     Export
                 </a>
             </div>
-        </div>
+        </div> --}}
     </div>
     
 
@@ -45,10 +47,6 @@
                     <!-- Left-aligned content -->
                     <div class="col-sm-6">
                         <div>
-                            <span class="text-sm text-grey-m2 align-middle">OR no.</span>
-                            <span class="text-600 text-110 text-black align-middle" style=" border-bottom: 1px solid black !important;" id="printor"></span>
-                        </div>
-                        <div>
                             <span class="text-sm text-grey-m2 align-middle">Delivered To :</span>
                             <span class="text-600 text-110 text-black align-middle" style=" border-bottom: 1px solid black !important;" id="printdeliveredto"></span>
                         </div>
@@ -57,8 +55,8 @@
                             <span class="text-600 text-110 text-black align-middle" style=" border-bottom: 1px solid black !important;" id="printaddress"></span>
                         </div>
                         <div>
-                            <span class="text-sm text-grey-m2 align-middle">Date Delivered:</span>
-                            <span class="text-600 text-110 text-black align-middle" style=" border-bottom: 1px solid black !important;" id="printdatedelivered"></span>
+                            <span class="text-sm text-grey-m2 align-middle">OR no.</span>
+                            <span class="text-600 text-110 text-black align-middle" style=" border-bottom: 1px solid black !important;" id="printor"></span>
                         </div>
                     </div>
                 
@@ -66,14 +64,21 @@
                     <div class="col-sm-6 d-flex justify-content-end">
                         <div class="text-grey-m2">
                             <div>
-                                <span class="text-sm text-grey-m2 align-middle">PO no.</span>
-                                <span class="text-600 text-110 text-black align-middle" style=" border-bottom: 1px solid black !important;" id="printpo"></span>
+                                <span class="text-sm text-grey-m2 align-middle">Date Delivered:</span>
+                                <span class="text-600 text-110 text-black align-middle" style=" border-bottom: 1px solid black !important;" id="printdatedelivered"></span>
                             </div>
-                           
+                            
                             <div>
                                 <span class="text-sm text-grey-m2 align-middle">Terms:</span>
                                 <span class="text-600 text-110 text-black align-middle" style=" border-bottom: 1px solid black !important;" id="printterms"></span>
                             </div>
+                            
+                            
+                            <div>
+                                <span class="text-sm text-grey-m2 align-middle">PO no.</span>
+                                <span class="text-600 text-110 text-black align-middle" style=" border-bottom: 1px solid black !important;" id="printpo"></span>
+                            </div>
+                           
                             
                             <div>
                                 <span class="text-sm text-grey-m2 align-middle">Payment Status:</span>
@@ -139,7 +144,7 @@
 
                     <div class="row mt-4">
                         <div class="col-sm-7 text-grey-d2">
-                            <p>Extra notes, company or payment details can be added here...</p>
+                            {{-- <p>Extra notes, company or payment details can be added here...</p> --}}
                         </div>
                         <div class="col-sm-5 text-right text-grey">
                             {{-- <div class="row mb-2 bg-primary-l3 py-2">

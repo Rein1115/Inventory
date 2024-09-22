@@ -29,17 +29,58 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container" style="max-width: 80%; margin: 0 auto;">
         <h1>Hello,Ms/Sir {{ $data['fullname'] }}</h1>
         
-        <p><strong>OR:</strong> {{ $data['OR'] }}</p>
-        <p><strong>PO:</strong> {{ $data['PO'] }}</p>
-        <p><strong>Delivered To:</strong> {{ $data['Deliveredto'] }}</p>
-        <p><strong>Terms:</strong> {{ $data['Terms'] }}</p>
-        <p><strong>Address:</strong> {{ $data['Address'] }}</p>
-        <p><strong>Payment Status:</strong> {{ $data['Payment_status'] }}</p>
-        <p><strong>Date Delivered:</strong> {{ $data['Date_delivered'] }}</p>
-        <p><strong>Fullname:</strong> {{ $data['fullname'] }}</p>
+        <table width="100%" cellspacing="0" cellpadding="0" border="0">
+            <tr>
+                <!-- Left-aligned content -->
+                <td width="50%" style="vertical-align: top;">
+                    <div>
+                        <span style="font-size: 14px; color: black;">Delivered To:</span>
+                        <span style="font-weight: 600; font-size: 16px; color: black; border-bottom: 1px solid black;" id="printdeliveredto">{{ $data['Deliveredto'] }}</span>
+                    </div>
+
+                    
+                    <div>
+                        <span style="font-size: 14px; color: black;">Address:</span>
+                        <span style="font-weight: 600; font-size: 16px; color: black; border-bottom: 1px solid black;" id="printaddress">{{ $data['Address'] }}</span>
+                    </div>
+
+                    <div>
+                        <span style="font-size: 14px; color: black;">OR no.</span>
+                        <span style="font-weight: 600; font-size: 16px; color: black; border-bottom: 1px solid black;" id="printor">{{ $data['OR'] }}</span>
+                    </div>
+         
+        
+                </td>
+                
+                <!-- Right-aligned content -->
+                <td width="50%" style="vertical-align: top; text-align: right;">
+
+                    <div>
+                        <span style="font-size: 14px; color: black;">Date Delivered:</span>
+                        <span style="font-weight: 600; font-size: 16px; color: black; border-bottom: 1px solid black;" id="printdatedelivered">{{ $data['Date_delivered'] }}</span>
+                    </div>
+
+                    <div>
+                        <span style="font-size: 14px; color: black;">Terms:</span>
+                        <span style="font-weight: 600; font-size: 16px; color: black; border-bottom: 1px solid black;" id="printterms">{{ $data['Terms'] }}</span>
+                    </div>
+
+                    <div>
+                        <span style="font-size: 14px; color: black;">PO no.</span>
+                        <span style="font-weight: 600; font-size: 16px; color: black; border-bottom: 1px solid black;" id="printpo">{{ $data['PO'] }}</span>
+                    </div>
+          
+                    <div>
+                        <span style="font-size: 14px; color: black;">Payment Status:</span>
+                        <span style="font-weight: 600; font-size: 16px; color: black; border-bottom: 1px solid black;" id="printstatus">{{ $data['Payment_status'] }}</span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
         <h1  style="text-align:center;">Check(s) Out Order</h1>
         <table  style="width:100%; text-align:center; border:1px solid black; border-collapse: collapse;">
             <thead>
