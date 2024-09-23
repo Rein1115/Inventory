@@ -84,7 +84,7 @@
                             <ul aria-expanded="false">
                                 <li><a href="{{route('product.index')}}"><i class="icon-notebook menu-icon" style="font-size:12px;"></i> Request Product
                                 </a></li>
-                                <li><a href="{{route('producthistory')}}"><i class="icon-notebook menu-icon" style="font-size:12px;"></i>Product History</a></li>
+                                <li><a href="{{route('producthistory.index')}}"><i class="icon-notebook menu-icon" style="font-size:12px;"></i>Product History</a></li>
                             </ul>
                         </li>
                     </li>

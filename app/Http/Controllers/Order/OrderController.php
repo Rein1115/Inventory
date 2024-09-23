@@ -341,93 +341,11 @@ class OrderController extends Controller
 
     }
 
-
-    public function deleteupquan(Request $request){
-
-        $data = $request->all();
-
-        $validator = Validator::make($data, [
-            "product_id" => 'integer|required',
-            "quantity" =>  'integer|required'
-        ]);
-
-        if($validator->fails()){
-            return response()->json(['success' => false,'response' => $validator->errors()]);
-        }
-
-
-        $update = DB::select('SELECT quantity FROM products WHERE id = ? ', [$data['product_id']]);
-
-        return $update;
-
-    }
-
-
-    public function selectorderall(){
-
-        $remainingQuantities = DB::select('SELECT 
-            p.id AS prod_id,
-            p.product_name,
-            p.quantity AS original_quan,
-            p.mg,
-            p.expiration_date,
-            p.brand_name,
-            p.selling_price,
-            IFNULL(o.total_quantity_ordered, 0) AS total_quantity_ordered,
-            (p.quantity - IFNULL(o.total_quantity_ordered, 0)) AS remaining_quantity
-        FROM 
-            products AS p
-        LEFT JOIN 
-            (SELECT 
-                product_id, 
-                SUM(quantity) AS total_quantity_ordered 
-            FROM 
-                orders 
-            GROUP BY 
-                product_id) AS o 
-        ON 
-            p.id = o.product_id;
-        ');
-
-        // return response()->json($remainingQuantities);
-        return view('order.order-details',compact('test'));
-    }
-
-    public function selectorderindi($id){
-            $remainingQuantities = DB::select('SELECT 
-            p.id AS prod_id,
-            p.product_name,
-            p.quantity AS original_quan,
-            p.mg,
-            p.expiration_date,
-            p.brand_name,
-            p.selling_price,
-           
-            IFNULL(o.total_quantity_ordered, 0) AS total_quantity_ordered,
-            (p.quantity - IFNULL(o.total_quantity_ordered, 0)) AS remaining_quantity
-        FROM 
-            products AS p
-        LEFT JOIN 
-            (SELECT 
-                product_id, 
-                SUM(quantity) AS total_quantity_ordered
-            FROM 
-                orders 
-            GROUP BY 
-                product_id) AS o 
-        ON 
-            p.id = o.product_id
-        WHERE 
-            p.id = ?
-    ', [$id]);
-
-
-        return response()->json($remainingQuantities);
-    }
+    
 
     public function Productslist(Request $request)
     {
-        // $sql = DB::select("SELECT selling_price,id AS id, product_name AS text, mg ,brand_name , expiration_date,quantity FROM products WHERE quantity != 0 AND status != 'Pending' " );
+    
 
         $sql = DB::select("SELECT selling_price, id AS id,CONCAT(product_name,' ','(',mg,'mg' ')',' ',(brand_name)) AS text, mg, brand_name, expiration_date, quantity FROM products WHERE (quantity != 0 AND status != 'Pending')
         AND product_name LIKE ?", ['%'.$request->search .'%']);

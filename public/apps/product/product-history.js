@@ -1,5 +1,5 @@
 $(document).ready(function(){
-
+    var id;
         $('#history').DataTable({
             dom             : 'Bflrtip',
             processing      : true,
@@ -59,10 +59,14 @@ $(document).ready(function(){
                     data : 'mg'
                  },
                  {
-                    data : 'selling_price'
+                    data: function (row) {
+                        return '₱' + row.selling_price;
+                    }
                  },
                  {
-                    data : 'original_price'
+                    data: function (row) {
+                        return '₱' + row.original_price;
+                    }
                  },
                  {
                     data: 'total_orders_quantity'
@@ -84,10 +88,86 @@ $(document).ready(function(){
                     render: function (data, type, row) {
                         return '<span class="text-warning">OUT OF STOCK(S)</span>' ;
                     }
+                  },
+                  {
+                    data: null,
+                    render: function (data, type, row) {
+                        return '<button  class="btn btn-primary text-white edit" data-id="'+row.product_id+'"><i class="icon-pencil pencil-icon"> </i></button>';
+                    }
                 }
             ],  
-            order: [[0, 'desc']],
+            // order: [[0, 'desc']],
             select: true
         });
+
+
+        $('#history').on('click','.edit',function(){
+
+            $('#exampleModalCenter').modal('show');
+
+            id =$(this).data('id');
+
+
+
+        });
+
+
+        $('#btn-submit').on('click',function(){
+            alert($('#quantity').val());  
+
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "Do you want to add quantity of this product?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, add it!',
+                cancelButtonText: 'No, cancel!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.put('/producthistory/' + id,{quantity : $('#quantity').val()})
+                        .then(response => {
+    
+                           
+                            var resp = response.data;
+                            console.log(resp);
+                            if (resp.success ==true) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Success!',
+                                    text: resp.message
+                                }).then(() => {
+                                    window.location.href = "/producthistory";
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error!',
+                                    text: resp.message
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: error,
+                            });
+                        });
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Cancelled',
+                         text: 'Canceled to add quantity'
+                    });
+                }
+            });
+
+
+           
+
+        })
 
 });

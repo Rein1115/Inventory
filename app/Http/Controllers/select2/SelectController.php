@@ -25,4 +25,11 @@ class SelectController extends Controller
         return response()->json($data);
     }
 
+    public function Productslist(Request $request)
+    {
+        $sql = DB::select("SELECT selling_price, id AS id,CONCAT(product_name,' ','(',mg,'mg' ')',' ',(brand_name)) AS text, mg, brand_name, expiration_date, quantity FROM products WHERE (quantity != 0 AND status != 'Pending')
+        AND product_name LIKE ?", ['%'.$request->search .'%']);
+        return response()->json($sql);
+    }
+
 }

@@ -38,6 +38,7 @@ Product(s) History
                                             <th style="text-align: center;">Total Quantity</th>
                                             <th style="text-align: center;">created_by</th>
                                             <th style="text-align: center;">Status</th>
+                                            <th style="text-align: center;"></th>
                                         </tr>
                                     </thead>
                                    
@@ -53,7 +54,7 @@ Product(s) History
 </div>          
 
 </div> 
-{{-- @include('tools.order.order-modal') --}}
+@include('tools.product.producthistory-modal')
 @endsection
 @section('script')
 <script src="../apps/product/product-history.js"></script>

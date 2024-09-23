@@ -26,28 +26,6 @@ use App\Http\Controllers\Email\EmailpaymentController;
 */
 
 
-Route::get('selectsupplier', [SelectController::class, 'supplier']);
-Route::get('selectbrand', [SelectController::class, 'brand']);
-Route::get('Productslist', [OrderController::class, 'Productslist']);
-Route::get('producthistory', [ProductController::class, 'producthistory']);
-
-Route::get('dashboard', [DashboardController::class, 'dashboardcard'])->name('dashboard');
-
-Route::get('dashboardgraph', [DashboardController::class, 'dashboardgraph'])->name('dashboardgraph');
-Route::get('dashdunot', [DashboardController::class, 'dashboardunot'])->name('dashdunot');
-
-Route::resource('payment', PaymentController::class);
-
-Route::resource('user', UserController::class);
-
-Route::resource('freebies', FreebiesController::class);
-
-Route::resource('expenses', ExpensesController::class);
-
-
-Route::resource('paymentemail',EmailpaymentController::class)->names('paymentemail');
-
-Route::get('individualexpenses/{id}', [ExpensesController::class,'getIndividualexpenses'])->name('individualexpenses');
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -57,8 +35,50 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Auth::routes();
 
 Route::get('home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::resource('supplier', SupplierController::class);
-Route::resource('clinic', ClinicController::class);
-Route::resource('brand', BrandController::class);
-Route::resource('order', OrderController::class);
-Route::resource('product', ProductController::class);
+
+    // DASHBOARD
+    Route::get('/', [DashboardController::class, 'dashboardcard'])->name('dashboard');
+    Route::get('/', [DashboardController::class, 'dashboardcard'])->name('dashboard');
+    Route::get('dashboardgraph', [DashboardController::class, 'dashboardgraph'])->name('dashboardgraph');
+    Route::get('dashdunot', [DashboardController::class, 'dashboardunot'])->name('dashdunot');
+
+    // SUPPLIER
+    Route::resource('supplier', SupplierController::class);
+
+    // BRAND
+    Route::resource('brand', BrandController::class)->names('brand');
+
+    // PRODUCT
+    Route::resource('product', ProductController::class);
+
+    // ORDER
+    Route::resource('order', OrderController::class);
+
+    // PRODUCT
+    Route::get('Productslist', [OrderController::class, 'Productslist']);
+    // Route::get('producthistory', [ProductController::class, 'producthistory'])->name('producthistory');
+
+    // PAYMENT
+    Route::resource('payment', PaymentController::class);
+    Route::post('destroymodification/{id}', [PaymentController::class, 'destroymodification']);
+
+    // PROFILE
+    Route::resource('profile', ProfileController::class);
+
+
+    // FREEBIES
+    Route::resource('freebies', FreebiesController::class);
+
+    // payment email individual 
+    Route::resource('paymentemail',EmailpaymentController::class)->names('paymentemail');
+
+    // USER
+    Route::resource('user', UserController::class);
+
+    // expenses
+    Route::resource('expenses', ExpensesController::class);
+    Route::get('individualexpenses/{id}', [ExpensesController::class,'getIndividualexpenses'])->name('individualexpenses');
+
+    // SELECT2
+    Route::get('selectsupplier', [SelectController::class, 'supplier']);
+    Route::get('selectbrand', [SelectController::class, 'brand']);
