@@ -90,8 +90,10 @@ class ProductController extends Controller
             $prod = new Product($validator->validated());
 
                 // uncomment if they have already Auth
-            $prod->created_by = Auth::user()->fullname;
-            $prod->created_id = Auth::user()->id;
+            // $prod->created_by = Auth::user()->fullname;
+            // $prod->created_id = Auth::user()->id;
+            $prod->created_by = 'Admin Admin';
+            $prod->created_id = 1;
             $prod->save();
 
             return response()->json(['success' => true, 'message' => 'Product created successfully'],200);

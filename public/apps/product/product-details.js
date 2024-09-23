@@ -1,5 +1,62 @@
 $(document).ready(function() {
-    var id ;
+
+
+
+
+    $('#originalp').on('input', function(){
+        let value = $(this).val();
+        
+        value = value.replace(/[^0-9.]/g, '');
+    
+       
+        if (parseFloat(value) <= 0 || isNaN(value)) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Please enter a positive number or greater then zero!',
+            });
+            value = ''; 
+        }
+    
+        $(this).val(value);
+    });
+    
+    $('#sellingp').on('input', function(){
+        let value = $(this).val();
+        
+        value = value.replace(/[^0-9.]/g, '');
+    
+       
+        if (parseFloat(value) <= 0 || isNaN(value)) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Please enter a positive number or greater then zero!',
+            });
+            value = ''; 
+        }
+    
+        $(this).val(value);
+    });
+    
+
+    $('#quantity').on('input', function(){
+        let value = $(this).val();
+        
+        value = value.replace(/[^0-9.]/g, '');
+    
+       
+        if (parseFloat(value) <= 0 || isNaN(value)) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Please enter a positive number or greater then zero!',
+            });
+            value = ''; 
+        }
+    
+        $(this).val(value);
+    });
 
 
 
