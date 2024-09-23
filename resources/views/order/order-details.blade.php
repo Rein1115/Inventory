@@ -5,7 +5,7 @@
 <div class="row">
 
 
-<div class="row page-titles mx-0 ml-3">
+<div class="row page-titles mx-0 ml-3" id="code" data-id="{{Auth::user()->id}}">
     <div class="col p-md-0">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>

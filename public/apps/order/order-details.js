@@ -2,6 +2,10 @@ var    select1 = [];
 var totalamount = 0;
 $(document).ready(function(){
   
+
+
+   
+
     var table ;
     var data = $('#dataval').data('data');
 
@@ -95,7 +99,7 @@ $(document).ready(function(){
             {
                 data: null,
                 render: function(data, type, row) {
-                    return '<button class="btn btn-primary text-white edit" data-prod ="'+row.product_id+'" id="edit" data-id="' + row.index + '"><i class="icon-eye eye-icon"></i></button> ' +
+                    return '<button class="btn btn-primary text-white edit " data-prod ="'+row.product_id+'" id="edit" data-id="' + row.index + '"><i class="icon-eye eye-icon"></i></button> ' +
                            '<button class="btn btn-danger text-white delete" id="delete" data-prod ="'+row.product_id+'" data-id="' + row.index + '"><i class="icon-trash trash-icon"></i></button>';
                 }
             }
