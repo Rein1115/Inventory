@@ -14,6 +14,7 @@ use App\Http\Controllers\Order\TestController;
 use App\Http\Controllers\Freebies\FreebiesController;
 use App\Http\Controllers\Expenses\ExpensesController;
 use App\Http\Controllers\Email\EmailpaymentController;
+use App\Http\Controllers\Payment\PaymenthistoryController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -27,6 +28,9 @@ use App\Http\Controllers\Email\EmailpaymentController;
 
 Route::resource('product', ProductController::class);
 
+
+// Route::resource('paymenthistory', PaymenthistoryController::class);
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -35,6 +39,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Auth::routes();
 
 Route::get('home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::resource('paymenthistory', PaymenthistoryController::class);
+
 
     // DASHBOARD
     Route::get('/', [DashboardController::class, 'dashboardcard'])->name('dashboard');

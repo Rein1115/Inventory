@@ -180,7 +180,6 @@
                     
                 
                 </div>
-                
             </div>
         </div>
     </div>
@@ -192,6 +191,6 @@
 @endsection
 @endsection
 @section('script')
-<script src="../apps/payment/payment-details.js"></script>
+<script src="../apps/payment/payment-history-details.js"></script>
 <script src="../apps/invoicereceipt/invoicereceipt.js"></script>
 @endsection

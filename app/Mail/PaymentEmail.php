@@ -30,7 +30,7 @@ class PaymentEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Payment',
+            subject: 'EAGLESMED PET SUPPLIES AND ACCESSORIES TRADING',
         );
     }
     /**

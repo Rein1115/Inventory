@@ -18,8 +18,7 @@ class PaymentController extends Controller
     public function index(Request $request)
     {
         //
-        $data = DB::select('SELECT `address`,trans_no,po_no,`or`,payment_status,created_at,created_by FROM orders  GROUP BY trans_no,po_no,`or`,payment_status,created_at,created_by,address');
-
+        $data = DB::select('SELECT `address`,trans_no,po_no,`or`,payment_status,created_at,created_by FROM orders WHERE payment_status = "Unpaid"  GROUP BY trans_no,po_no,`or`,payment_status,created_at,created_by,address');
         if($request->ajax()){
             return response()->json($data);
         }
@@ -101,7 +100,7 @@ class PaymentController extends Controller
         // return $id;
 
         try {
-            $orders = DB::select('SELECT * FROM orders WHERE trans_no = ?',[$id]);
+            $orders = DB::select('SELECT * FROM orders WHERE payment_status = "Unpaid" AND trans_no = ?',[$id]);
             $totalamounts =0 ;
             foreach($orders as $totalamount){
                 $totalamounts += $totalamount->total_amount;
@@ -190,24 +189,6 @@ class PaymentController extends Controller
     public function destroy(Request $request , string $id)
     {
         //
-
-
-        return $request->trans_No;
-
-        // return response()->json($request->trans_No);
-        try{
-            $del = DB::delete('DELETE FROM payments WHERE id = ? AND (created_by = ? OR EXISTS (SELECT 1 FROM users WHERE id = ? AND role = "Admin"))', [$id, Auth::user()->id, Auth::user()->id]);
-
-            if ($del > 0) {
-                return response()->json(['success' => true, 'response' => 'Payment deleted']);
-            } else {
-                return response()->json(['success' => false, 'response' => 'You don\'t have rights to delete this payment or the payment does not exist.']);
-            }
-
-
-        }catch(Exception $e){
-            return response()->json(['success' => false, 'response' => $e]);
-        }
         
     }
 

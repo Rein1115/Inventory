@@ -1,11 +1,6 @@
 var    select1 = [];
 var totalamount = 0;
 $(document).ready(function(){
-  
-
-
-   
-
     var table ;
     var data = $('#dataval').data('data');
 

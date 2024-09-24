@@ -105,7 +105,7 @@
                             <ul aria-expanded="false">
                                 <li><a href="{{route('payment.index')}}"><i class="icon-notebook menu-icon" style="font-size:12px;"></i> Payment
                                 </a></li>
-                                <li><a href="./page-error-404.html"><i class="icon-notebook menu-icon" style="font-size:12px;"></i> Invoice
+                                <li><a href="{{route('paymenthistory.index')}}"><i class="icon-notebook menu-icon" style="font-size:12px;"></i> Payment History
                                 </a></li>
                             </ul>
                         </li>

@@ -15,7 +15,7 @@ use App\Http\Controllers\Freebies\FreebiesController;
 use App\Http\Controllers\Expenses\ExpensesController;
 use App\Http\Controllers\Email\EmailpaymentController;
 use App\Http\Controllers\Producthistory\ProducthistoryController;
-
+use App\Http\Controllers\Payment\PaymenthistoryController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -40,9 +40,9 @@ Route::middleware(['auth','check.active'])->group(function () {
     Route::get('/', function () {
         return view('home');
     });
-
-
-
+ 
+Route::resource('paymenthistory', PaymenthistoryController::class);
+Route::post('modificationpaymenthistory/{id}', [PaymenthistoryController::class,'modificationpaymenthistory']);
 
 
     // DASHBOARD
