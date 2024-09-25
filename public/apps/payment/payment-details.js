@@ -3,7 +3,7 @@ $(document).ready(function(){
 
     var payments = $('#payments').data('payment');
     var items = [];
-    console.log(payments);
+ 
     var transNo ;
     var table;
     var count = 0;
@@ -87,9 +87,9 @@ $(document).ready(function(){
 
 
 
-    // console.log(items);
 
-    console.log(transNo);
+
+  
     table = $('#payment').DataTable({
         data: items,
         lengthMenu: [10, 25, 50],
@@ -105,7 +105,7 @@ $(document).ready(function(){
                 data: 'payment',
                 render: function(data, type, row) {
                     // var parse = formatNumber(parseFloat(data));
-                    console.log(data);
+                  
                     return '<span class="badge badge-primary">' + '₱'+data + '</span>';
                 }
             },
@@ -232,7 +232,11 @@ $(document).ready(function(){
                                             index : count++
                                     }
                                     items.push(appendarr);
-                                    // console.log(items);
+                             
+
+                                    if(empty(data.order_transno)){
+                                       return window.location.href = '/payment';
+                                    }
                                     window.location.href = '/payment/' + data.order_transno;
                                     table.clear();
                                     table.rows.add(items);
@@ -289,9 +293,8 @@ $(document).ready(function(){
             items.splice(foundIndex, 1); 
         
             orderitem = deletedItem.id; 
-            console.log('Item removed');
+        
         } else {
-            console.log('Item not found');
         }
         var totalall=0;
         items.forEach(item => {

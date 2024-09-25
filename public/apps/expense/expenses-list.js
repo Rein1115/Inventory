@@ -333,7 +333,7 @@ $(document).ready(function(){
                 axios.delete('expenses/'+id)
                     .then(response => {
                         var resp = response.data;
-                        console.log(resp);
+                   
                         if (resp.success === true) {
                             Swal.fire({
                                 icon: 'success',
@@ -367,7 +367,7 @@ $(document).ready(function(){
                 });
             }
         });
-        alert(id);
+    
     }); 
 
 

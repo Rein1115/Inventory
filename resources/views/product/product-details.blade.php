@@ -8,7 +8,7 @@
     <div class="col p-md-0">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-            <li class="breadcrumb-item"><a href="javascript:void(0)">Product</a></li>
+            <li class="breadcrumb-item"><a href="javascript:void(0)">Product Details</a></li>
             <li class="breadcrumb-item active"><a href="javascript:void(0)">{{isset($data['data']['id']) ? 'Update Product' : 'Create Product'}}</a></li>
         </ol>
     </div>

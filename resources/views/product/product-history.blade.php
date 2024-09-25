@@ -11,8 +11,8 @@ Product(s) History
     <div class="col p-md-0">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-            <li class="breadcrumb-item"><a href="javascript:void(0)">Product</a></li>
-            <li class="breadcrumb-item active"><a href="javascript:void(0)">Product history</a></li>
+            <li class="breadcrumb-item"><a href="{{route('producthistory.index')}}">Product</a></li>
+            <li class="breadcrumb-item active"><a href="javascript:void(0)">Product History</a></li>
         </ol>
     </div>
 </div>

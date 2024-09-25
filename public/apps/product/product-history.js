@@ -113,7 +113,6 @@ $(document).ready(function(){
 
 
         $('#btn-submit').on('click',function(){
-            alert($('#quantity').val());  
 
 
             Swal.fire({
@@ -132,7 +131,7 @@ $(document).ready(function(){
     
                            
                             var resp = response.data;
-                            console.log(resp);
+                     
                             if (resp.success ==true) {
                                 Swal.fire({
                                     icon: 'success',

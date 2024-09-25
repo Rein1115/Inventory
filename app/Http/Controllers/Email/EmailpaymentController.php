@@ -49,7 +49,6 @@ class EmailpaymentController extends Controller
 
             $payments = DB::select('SELECT * FROM payments WHERE order_transno = ? ',[$id]);
 
-
             $balanceamount = 0;
             foreach($payments AS $pay){
                 $balanceamount += $pay->payment;
@@ -77,7 +76,7 @@ class EmailpaymentController extends Controller
                     "balanceamount" =>number_format($overallbalance,2),
                     "totalallpayment" => number_format($balanceamount,2)
                 ];
-            }  
+            } 
             // return response()->json($result);
             Mail::to($result['email'])->send(new PaymentEmail($result));
             return response()->json(['success' => true, 'message' => 'Invoice mail sent successfully.']);

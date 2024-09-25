@@ -15,7 +15,7 @@
                 <div class="col-12" >
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Order(s) List</h4>
+                            <h4 class="card-title">Order(s) History</h4>
                             <div class="table-responsive">
                                 <table id= "order"  style="text-align:center; width:100%; border-collapse:collapse;">
                                     <thead >

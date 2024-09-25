@@ -13,8 +13,8 @@
     <div class="col p-md-0">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-            <li class="breadcrumb-item"><a href="javascript:void(0)">Payment</a></li>
-            <li class="breadcrumb-item active"><a href="javascript:void(0)">{{$data['orders']['trans_no']}}</a></li>
+            <li class="breadcrumb-item"><a href="javascript:void(0)">Payment Details</a></li>
+            <li class="breadcrumb-item active"><a href="javascript:void(0)">{{$data['orders']['or']}}</a></li>
         </ol>
     </div>
 </div>

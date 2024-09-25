@@ -125,10 +125,6 @@ $(document).ready(function() {
             mg : $('#mg').val()
         };
 
-        // axios.post('/product',data)
-        // .then(response => {
-        //     console.log(response);
-        // });
 
         Swal.fire({
             title: 'Are you sure?',
@@ -144,7 +140,6 @@ $(document).ready(function() {
                 axios.post('/product/', data)
                     .then(response => {
 
-                        console.log(response);
                         var resp = response.data;
                
                         if (resp.success === true) {
@@ -288,10 +283,7 @@ $(document).ready(function() {
             if (result.isConfirmed) {
                 axios.delete('/product/'+id)
                     .then(response => {
-
-                        console.log(response);
                         var resp = response.data;
-                
                         if (resp.success === true) {
                             Swal.fire({
                                 icon: 'success',

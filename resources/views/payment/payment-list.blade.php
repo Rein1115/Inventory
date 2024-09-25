@@ -1,4 +1,4 @@
-@extends('layouts.appsåååå')
+@extends('layouts.apps')
 @section('title')
 Payment(s) List
 @endsection

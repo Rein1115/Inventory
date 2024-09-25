@@ -99,7 +99,7 @@ $(document).ready(function() {
         axios.get('brand/' + id)
         .then(response => {
             var resp = response.data.response;
-            console.log(resp);
+       
             $('#brandName').val(resp.brand_name);
         });
     });
@@ -121,7 +121,7 @@ $(document).ready(function() {
                 axios.delete('brand/'+id)
                     .then(response => {
                         var resp = response.data;
-                        console.log(resp);
+            
                         if (resp.success === true) {
                             Swal.fire({
                                 icon: 'success',
@@ -188,7 +188,6 @@ $(document).ready(function() {
                 axios.put('brand/' + Id, data)
                     .then(response => {
                         var resp = response.data;
-                        console.log(resp);
                         if (resp.success === true) {
                             Swal.fire({
                                 icon: 'success',

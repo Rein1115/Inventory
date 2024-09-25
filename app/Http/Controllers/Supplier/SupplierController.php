@@ -107,7 +107,7 @@ class SupplierController extends Controller
             "lname" => 'required|string|max:100',
             "company" => 'required|string|max:100',
             "gender" => 'required|string|max:100',
-            "contact_no" => 'required|digits_between:10,15',
+            "contact_no" => 'required|digits_between:1,15',
             "address" => 'required|string|max:100',
         ]);
     

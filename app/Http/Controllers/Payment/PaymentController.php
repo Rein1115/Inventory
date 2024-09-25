@@ -152,7 +152,7 @@ class PaymentController extends Controller
             }
        
             if(empty($data['orders'])){  
-                return view('page-error-404');
+                return view('payment.payment-details');
             }else{
                    return view('payment.payment-details',compact('data'));
             }

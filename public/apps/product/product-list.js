@@ -215,7 +215,7 @@ $(document).ready(function(){
                 axios.delete('/product/'+id)
                     .then(response => {
 
-                        console.log(response);
+                   
                         var resp = response.data;
                 
                         if (resp.success === true) {
@@ -262,9 +262,9 @@ $(document).ready(function(){
             type: 'GET',
             success: function(response) {
                 response.forEach(item => {
-                    // console.log(item.id);
+                 
                     if(id === item.id){
-                        console.log(item.ulname + ' ' + item.brand_name);
+                        
 
                         $('#prodname').val(item.product_name);
                         $('#suppliername').val(item.supplier_name);
