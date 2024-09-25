@@ -47,4 +47,6 @@ Brand(s) List
 @endsection
 @section('script')
 <script src="../apps/brand/brand-list.js"></script>
+
+
 @endsection

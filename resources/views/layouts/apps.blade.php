@@ -462,7 +462,7 @@
       ***********************************-->
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-      {{-- <script src="../plugins/common/common.min.js"></script> --}}
+      <script src="../plugins/common/common.min.js"></script>
       <script src="../js/custom.min.js"></script>
       <script src="../js/settings.js"></script>
       <script src="../js/gleek.js"></script>
