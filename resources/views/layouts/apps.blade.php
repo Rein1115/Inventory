@@ -460,7 +460,9 @@
       <!--**********************************
           Scripts
       ***********************************-->
-      <script src="../plugins/common/common.min.js"></script>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+      {{-- <script src="../plugins/common/common.min.js"></script> --}}
       <script src="../js/custom.min.js"></script>
       <script src="../js/settings.js"></script>
       <script src="../js/gleek.js"></script>
@@ -471,7 +473,7 @@
 
       {{-- practice cdn only for development --}}
 
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      
     
       <!-- DataTables CSS -->
       <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
@@ -532,6 +534,6 @@
                     $('#logout-form').submit(); // Submit the form
                 });
             });
-                </script>
+        </script>
 </body>
 </html>
