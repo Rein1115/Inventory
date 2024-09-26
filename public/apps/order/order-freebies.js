@@ -48,10 +48,7 @@ $(document).ready(function(){
                 },
                 { data: 'created_by' },
                 {
-                    data: null,
-                    render: function(data, type, row) {
-                        return '<button class="btn btn-danger text-white freedelete" data-freequantity="'+row.quantity+'" data-freeid="' + row.id + '"><i class="icon-trash trash-icon"></i></button>';
-                    }
+                    data: 'btn',
                 }
             ],
        

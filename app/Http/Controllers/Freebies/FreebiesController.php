@@ -83,8 +83,6 @@ class FreebiesController extends Controller
                 'trans_No' => $data['trans_No'],
                 'product_id' => $data['product_id'],
                 'quantity' => $data['quantity'],
-                // 'created_by' => Auth::user()->fullname,
-                // 'created_id' => Auth::user()->id
                 'created_by' => Auth::user()->fullname,
                 'created_id' => Auth::user()->id
             ]);
@@ -109,9 +107,13 @@ class FreebiesController extends Controller
     public function show(string $id)
     {
         //
-        $data = DB::select('SELECT f.created_by,p.id AS product_id ,p.product_name,p.mg,p.brand_name,f.quantity,f.id FROM products AS p INNER JOIN freebies AS f ON f.product_id = p.id WHERE f.trans_No = ? ',[$id]);
-
-
+        $data = DB::select('SELECT 
+            CASE 
+                WHEN f.created_id= ? OR ? = "Admin" 
+                THEN CONCAT("<button class=\"btn btn-danger text-white freedelete\" data-freequantity=\"", f.quantity, "\" data-freeid=\"", f.id, "\"><i class=\"icon-trash trash-icon\"></i></button>")
+                ELSE "" 
+            END AS btn, 
+        f.created_by,p.id AS product_id ,p.product_name,p.mg,p.brand_name,f.quantity,f.id FROM products AS p INNER JOIN freebies AS f ON f.product_id = p.id WHERE f.trans_No = ? ',[Auth::user()->id,Auth::user()->role,$id]);
         return response()->json($data);
     }
 

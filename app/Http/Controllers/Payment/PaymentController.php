@@ -103,10 +103,10 @@ class PaymentController extends Controller
             $orders = DB::select('SELECT * FROM orders WHERE payment_status = "Unpaid" AND trans_no = ?',[$id]);
             
             if (count($orders) === 0) {
-                return response()->view('page-error-404', [], 404);
+                return redirect()->route('payment.index'); 
             }
 
-            
+
             $totalamounts =0 ;
             foreach($orders as $totalamount){
                 $totalamounts += $totalamount->total_amount;

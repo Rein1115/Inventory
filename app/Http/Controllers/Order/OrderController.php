@@ -190,10 +190,13 @@ class OrderController extends Controller
                 "payment_status" => $result[$i]->payment_status,              
                 "collected_by" =>$result[$i]->collected_by ,
                 "email" => $result[$i]->email,
+                "readonly" => $result[$i]->created_id == Auth::user()->id || Auth::user()->role === "Admin" || $result[$i]->payment_status === "Unpaid"  ? " " : 
+                "readonly",
                 "lines" => db::select('SELECT p.product_name, o.trans_no,o.product_id, o.quantity, o.total_amount,p.mg,p.brand_name FROM orders AS o INNER JOIN products AS p ON o.product_id = p.id  WHERE o.trans_no = ? ', [$id]),
                 "button" => $this->buttonPrivate("orders",$id,'trans_no')
             ];
         }
+
 
 
         // return dd($data);

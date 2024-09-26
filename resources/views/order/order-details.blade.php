@@ -32,13 +32,13 @@
                             <div class="form-group col-sm">
                                 <label for="suppliername">OR No. <span class="text-danger">*</span></label>
                                 <input value="{{isset($data['or']) ? $data['or'] : '' }}" 
-                                class="form-control form-control-sm" type="number" id="or" name="or" placeholder="Enter OR No.">
+                                class="form-control form-control-sm" type="number" id="or" name="or" placeholder="Enter OR No." {{isset($data['readonly']) ?$data['readonly'] : "" }}>
                             </div>
 
                             <div class="form-group col-sm">
                                 <label for="suppliername">CR No. <span class="text-danger">*</span></label>
                                 <input value="{{isset($data['cr']) ? $data['cr'] : '' }}" 
-                                class="form-control form-control-sm" type="number" id="cr" name="cr"placeholder="Enter CR No.">
+                                class="form-control form-control-sm" type="number" id="cr" name="cr"placeholder="Enter CR No." {{isset($data['readonly']) ?$data['readonly'] : "" }}>
                             </div>
                             
                     </div>
@@ -47,13 +47,13 @@
                         <div class="form-group col-sm">
                             <label for="suppliername">PO No. <span class="text-danger">*</span></label>
                             <input value="{{isset($data['po_no']) ? $data['po_no'] : '' }}" 
-                            class="form-control form-control-sm" type="number" id="po_no" name="po_no" placeholder="Enter PO No.">
+                            class="form-control form-control-sm" type="number" id="po_no" name="po_no" placeholder="Enter PO No." {{isset($data['readonly']) ?$data['readonly'] : "" }}>
                         </div>
 
                         <div class="form-group col-sm">
                             <label for="suppliername">Terms <span class="text-danger">*</span></label>
                             <input value="{{isset($data['terms']) ? $data['terms']: '' }}" 
-                            class="form-control form-control-sm" type="number" id="terms" name="cr"placeholder="Enter Terms">
+                            class="form-control form-control-sm" type="number" id="terms" name="cr"placeholder="Enter Terms" {{isset($data['readonly']) ?$data['readonly'] : "" }}>
                         </div>
 
                     </div>
@@ -62,13 +62,13 @@
                         <div class="form-group col-sm">
                             <label for="suppliername">Fullname <span class="text-danger">*</span></label>
                             <input value="{{isset($data['fullname']) ? $data['fullname'] : '' }}" 
-                            class="form-control form-control-sm" type="text" id="fullname" name="fullname" placeholder="Enter Fullname">
+                            class="form-control form-control-sm" type="text" id="fullname" name="fullname" placeholder="Enter Fullname" {{isset($data['readonly']) ?$data['readonly'] : "" }}>
                         </div>
 
                         <div class="form-group col-sm">
                             <label for="suppliername">Contact No. <span class="text-danger">*</span></label>
                             <input value="{{isset($data['contact_num']) ? $data['contact_num'] : '' }}" 
-                            class="form-control form-control-sm" type="number" id="contact_num" name="contact_num"placeholder="Enter Contact No.">
+                            class="form-control form-control-sm" type="number" id="contact_num" name="contact_num"placeholder="Enter Contact No." {{isset($data['readonly']) ?$data['readonly'] : "" }}>
                         </div>
                     </div>
 
@@ -76,13 +76,13 @@
                         <div class="form-group col-sm">
                             <label for="suppliername">Delivered To. <span class="text-danger">*</span></label>
                             <input value="{{isset($data['deliveredto']) ? $data['deliveredto']: '' }}" 
-                            class="form-control form-control-sm" type="text" id="deliveredto" name="deliveredto" placeholder="Enter Delivered To.">
+                            class="form-control form-control-sm" type="text" id="deliveredto" name="deliveredto" placeholder="Enter Delivered To." {{isset($data['readonly']) ?$data['readonly'] : "" }}>
                         </div>
 
                         <div class="form-group col-sm">
                             <label for="suppliername">Delivered Date <span class="text-danger">*</span></label>
                             <input value="{{isset($data['delivered_date']) ? $data['delivered_date'] : '' }}" 
-                            class="form-control form-control-sm" type="date" id="delivered_date" name="delivered_date">
+                            class="form-control form-control-sm" type="date" id="delivered_date" name="delivered_date" {{isset($data['readonly']) ?$data['readonly'] : "" }}>
                         </div>
                     </div>
 
@@ -90,12 +90,12 @@
                         <div class="form-group col-sm">
                             <label for="suppliername">Address <span class="text-danger">*</span></label>
                             <input value="{{isset($data['address']) ? $data['address'] : '' }}" 
-                            class="form-control form-control-sm" type="text" id="address" name="address" placeholder="Enter Address">
+                            class="form-control form-control-sm" type="text" id="address" name="address" placeholder="Enter Address" {{isset($data['readonly']) ?$data['readonly'] : "" }}>
                         </div>
                         <div class="form-group col-sm">
                             <label for="suppliername">Delivered By <span class="text-danger">*</span></label>
                             <input value="{{isset($data['deliveredby']) ?$data['deliveredby']: '' }}" 
-                            class="form-control form-control-sm" type="text" id="deliveredby" name="deliveredby" placeholder="Enter Delivered By">
+                            class="form-control form-control-sm" type="text" id="deliveredby" name="deliveredby" placeholder="Enter Delivered By" {{isset($data['readonly']) ?$data['readonly'] : "" }}>
                         </div>
 
                     </div>
@@ -106,7 +106,7 @@
                         <div class="form-group col-sm">
                             <label for="suppliername">Collected By <span class="text-danger">*</span></label>
                             <input value="{{isset($data['collected_by']) ? $data['collected_by'] : '' }}" 
-                            class="form-control form-control-sm" type="text" id="collected_by" name="collected_by" placeholder="Enter Collected By">
+                            class="form-control form-control-sm" type="text" id="collected_by" name="collected_by" placeholder="Enter Collected By" {{isset($data['readonly']) ?$data['readonly'] : "" }}>
                         </div>
 
                         <div class="form-group col-sm {{!empty($data['payment_status']) ? $data['payment_status'] : 'd-none'}}">
@@ -122,7 +122,7 @@
                         <div class="form-group col-sm">
                             <label for="suppliername">Email (<span class="text-muted">Optional</span>)</label>
                             <input value="{{isset($data['email']) ? $data['email'] : '' }}" 
-                            class="form-control form-control-sm" type="text" id="email" name="email" placeholder="Enter Collected By">
+                            class="form-control form-control-sm" type="text" id="email" name="email" placeholder="Enter Collected By" {{isset($data['readonly']) ?$data['readonly'] : "" }}>
                         </div>
 
                     </div>
