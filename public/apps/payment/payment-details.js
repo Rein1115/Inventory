@@ -232,15 +232,9 @@ $(document).ready(function(){
                                             index : count++
                                     }
                                     items.push(appendarr);
-                             
 
-                                    if(empty(data.order_transno)){
-                                       return window.location.href = '/payment';
-                                    }
-                                    window.location.href = '/payment/' + data.order_transno;
-                                    table.clear();
-                                    table.rows.add(items);
-                                    table.draw();
+
+                                    location.reload();
                                 });
                             } else {
                                 var errorMessage = 'Error!';
