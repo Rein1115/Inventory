@@ -22,7 +22,7 @@ return new class extends Migration
             $table->integer('quantity');
             $table->integer('total_amount');
             $table->integer('po_no');
-            $table->integer('terms');
+            $table->string('terms');
 
             $table->string('deliveredby');
             $table->string('fullname');

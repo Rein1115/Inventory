@@ -53,7 +53,7 @@
                         <div class="form-group col-sm">
                             <label for="suppliername">Terms <span class="text-danger">*</span></label>
                             <input value="{{isset($data['terms']) ? $data['terms']: '' }}" 
-                            class="form-control form-control-sm" type="number" id="terms" name="cr"placeholder="Enter Terms" {{isset($data['readonly']) ?$data['readonly'] : "" }}>
+                            class="form-control form-control-sm" type="text" id="terms" name="cr"placeholder="Enter Terms" {{isset($data['readonly']) ?$data['readonly'] : "" }}>
                         </div>
 
                     </div>

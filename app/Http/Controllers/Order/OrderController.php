@@ -51,7 +51,7 @@ class OrderController extends Controller
         $data = $request->all();
         $validator = Validator::make($data,[
             "po_no" => 'numeric|required', //done
-            "terms" => 'numeric|required',  //done
+            "terms" => 'string|required',  //done
             "address" => 'string|required', //done
             "delivered_date" => 'string|required', //done
             "deliveredto" => 'string|required', //done
@@ -229,7 +229,7 @@ class OrderController extends Controller
 
         $validator = Validator::make($data,[
             "po_no" => 'numeric|required', //done
-            "terms" => 'numeric|required',  //done
+            "terms" => 'string|required',  //done
             "address" => 'string|required', //done
             "delivered_date" => 'string|required', //done
             "deliveredto" => 'string|required', //done
