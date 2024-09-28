@@ -122,7 +122,7 @@ $(document).ready(function() {
             brand_name : $('#brandname').val(),
             quantity :  $('#quantity').val(),
             originalquan : $('#quantity').val(),
-            mg : $('#mg').val()
+            unit : $('#unit').val()
         };
 
 
@@ -203,7 +203,7 @@ $(document).ready(function() {
             brand_name : $('#brandname').val(),
             quantity :  $('#quantity').val(),
             originalquan : $('#quantity').val(),
-            mg : $('#mg').val()
+            unit : $('#unit').val()
         };
 
 

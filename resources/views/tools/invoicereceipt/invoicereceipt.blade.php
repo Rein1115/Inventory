@@ -97,7 +97,7 @@
                                 <th>#</th>
                                 <th>Product</th>
                                 <th>Brand</th>
-                                <th>Mg</th>
+                                <th>Unit</th>
                                 <th>Qty</th>
                                 <th>Unit Price</th>
                                 <th>Total Amount</th>
@@ -113,7 +113,7 @@
                                     <td>{{$count++}}</td>
                                     <td>{{$productlist->product_name}}</td>
                                     <td>{{$productlist->brand_name}}</td>
-                                    <td>{{$productlist->mg}}</td>
+                                    <td>{{$productlist->unit}}</td>
                                     <td>{{$productlist->quantity}}</td>
                                     <td>₱{{number_format($productlist->selling_price,2)}}</td>
                                     <td >₱{{number_format($productlist->total_amount, 2)}}</td>
@@ -127,7 +127,7 @@
                                         <td>{{$count++}}</td>
                                         <td>{{$free->product_name}}</td>
                                         <td>{{$free->brand_name}}</td>
-                                        <td>{{$free->mg}}</td>
+                                        <td>{{$free->unit}}</td>
                                         <td>{{$free->quantity}}</td>
                                         <td>₱{{number_format($free->selling_price,2)}}</td>
                                         <td ><b>FREE</b></td>

@@ -135,13 +135,13 @@ class PaymentController extends Controller
             $payments = DB::select('SELECT p.* ,u.id AS userid, u.fname ,u.lname FROM payments AS p INNER JOIN users AS u ON u.id = p.created_by WHERE p.order_transno = ? ', [$id]);
 
 
-            $productlist = DB::select('SELECT p.product_name,o.quantity,o.total_amount,p.selling_price,p.brand_name,p.mg FROM orders AS o LEFT JOIN products AS p ON p.id = o.product_id WHERE o.trans_no = ?' ,[$id]);
+            $productlist = DB::select('SELECT p.product_name,o.quantity,o.total_amount,p.selling_price,p.brand_name,p.unit FROM orders AS o LEFT JOIN products AS p ON p.id = o.product_id WHERE o.trans_no = ?' ,[$id]);
 
             $data = [
                 "orders" => $resultorders,
                 "payments" => $payments,
                 "productlist" => $productlist,
-                "freebieslist" => DB::select('SELECT p.product_name,f.quantity,p.selling_price,p.brand_name,p.mg FROM freebies AS f INNER JOIN products AS p ON p.id = f.product_id WHERE f.trans_No =? ',[$id])
+                "freebieslist" => DB::select('SELECT p.product_name,f.quantity,p.selling_price,p.brand_name,p.unit FROM freebies AS f INNER JOIN products AS p ON p.id = f.product_id WHERE f.trans_No =? ',[$id])
                 // "button" => $this->buttonPrivate("orders",$id,'trans_no')
             ] ;
 

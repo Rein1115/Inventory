@@ -150,7 +150,7 @@
                                                 <th></th> <!-- This is for the row number -->
                                                 <th style="text-align: center;">Product Name</th>
                                                 <th style="text-align: center;">Brand</th>
-                                                <th style="text-align: center;">Mg</th>
+                                                <th style="text-align: center;">Unit</th>
                                                 <th style="text-align: center;">Quantity</th>
                                                 <th style="text-align: center;">Total Amount</th>
                                                 <th style="text-align: center;">Actions</th>

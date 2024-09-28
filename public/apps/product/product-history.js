@@ -56,7 +56,7 @@ $(document).ready(function(){
                     data : 'brand_name'
                  },
                  {
-                    data : 'mg'
+                    data : 'unit'
                  },
                  {
                     data: function (row) {

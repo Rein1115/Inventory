@@ -25,8 +25,8 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <label for="freebies-mg">Mg</label>
-                                <input type="text" class="form-control" id="freebies-mg" readonly>
+                                <label for="freebies-unit">Unit</label>
+                                <input type="text" class="form-control" id="freebies-unit" readonly>
                             </div>
                         </div>
                         <div class="col">
@@ -75,7 +75,7 @@
                                 <th>#</th>
                                 <th>Product Name</th>
                                 <th>Brand</th>
-                                <th>Mg</th>
+                                <th>Unit</th>
                                 <th>Quantity</th>
                                 <th>Total Amount</th>
                                 <th>Created By</th>

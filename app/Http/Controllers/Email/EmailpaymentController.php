@@ -58,7 +58,7 @@ class EmailpaymentController extends Controller
             $overallbalance = $exactamount-$balanceamount;
             $result = [];
             for($i = 0; $i < count($orders); $i++){
-                $freebies = DB::select('SELECT p.product_name,f.quantity,p.mg,p.brand_name,p.selling_price, CONCAT("FREE") AS totalamount FROM freebies AS f INNER JOIN products AS p ON p.id = f.product_id WHERE f.trans_no =? ', [$id]);
+                $freebies = DB::select('SELECT p.product_name,f.quantity,p.unit,p.brand_name,p.selling_price, CONCAT("FREE") AS totalamount FROM freebies AS f INNER JOIN products AS p ON p.id = f.product_id WHERE f.trans_no =? ', [$id]);
                 $result = [
                     "OR" => $orders[$i]->or,
                     "email" =>$orders[$i]->email,
@@ -69,7 +69,7 @@ class EmailpaymentController extends Controller
                     "Address" => $orders[$i]->address,
                     "Date_delivered"=>$orders[$i]->delivered_date,
                     "Payment_status" => $orders[$i]->payment_status,
-                    "orders" => db::select('SELECT p.product_name,p.mg,p.brand_name,p.selling_price,o.quantity,o.total_amount FROM orders AS o INNER JOIN products AS p ON o.product_id = p.id WHERE o.trans_no = ? ', [$id]),
+                    "orders" => db::select('SELECT p.product_name,p.unit,p.brand_name,p.selling_price,o.quantity,o.total_amount FROM orders AS o INNER JOIN products AS p ON o.product_id = p.id WHERE o.trans_no = ? ', [$id]),
                     "freebies" => $freebies,
                     "payments" => $payments,
                     "exactAmount" => number_format($exactamount,2),

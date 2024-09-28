@@ -75,10 +75,10 @@
                             <input value="{{isset($data['data'][0]->quantity) ? $data['data'][0]->quantity : ''}}" class="form-control form-control-sm" type="number" id="quantity" name="quantity" placeholder="Enter quantity">
                         </div>
 
-                        <!-- mg -->
+                        <!-- unit -->
                         <div class="form-group col-sm">
-                            <label for="sellingp">Mg <span class="text-danger">*</span></label>
-                            <input value="{{isset($data['data'][0]->mg) ? $data['data'][0]->mg : ''}}" class="form-control form-control-sm" type="number" step="0.01" id="mg" name="mg" placeholder="Enter MG"  {{ isset($data['readonly']) && $data['readonly'] ? 'disabled' : '' }}>
+                            <label for="quantity">Quantity (mg, ml, syrup, etc.):</label>
+                            <input value="{{isset($data['data'][0]->unit) ? $data['data'][0]->unit : ''}}" class="form-control form-control-sm" type="text" id="unit" name="unit" placeholder="Enter value">
                         </div>
                     </div>
                     <!-- Status -->

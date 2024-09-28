@@ -22,7 +22,7 @@ $(document).ready(function(){
                 prod_name: dat.product_name,
                 quantity: dat.quantity,
                 brand_name:dat.brand_name,
-                mg: dat.mg,
+                unit: dat.unit,
                 total_amount: parseFloat(dat.total_amount)
             };
             items.push(array);
@@ -52,13 +52,15 @@ $(document).ready(function(){
     }).on('select2:select',function(e){
           
         var datas = e.params.data;
+
+        // console.log(datas);
   
 
         $('#prodname').html(`<option value="${datas.id}"> ${datas.text}</option>`);
         $('#expirationdate').val(datas.expiration_date);
         $('#availablequan').val(datas.quantity);
         $('#sellprice').val(datas.selling_price);
-        $('#mg').val(datas.mg);
+        $('#unit').val(datas.unit);
         $('#brandname').val(datas.brand_name);
 
     });
@@ -78,7 +80,7 @@ $(document).ready(function(){
             },
             { data: 'prod_name' },
             { data: 'brand_name' },
-            { data: 'mg' },
+            { data: 'unit' },
             {
                 data: 'quantity',
                 render: function(data, type, row) {
@@ -142,7 +144,7 @@ $(document).ready(function(){
                 else {
 
 
-                    if ($('#prodname').val() && $('#mg').val() && $('#brandname').val() && $('#expirationdate').val() && $('#availablequan').val() && $('#sellprice').val() && $('#quantity').val() && parseFloat($('#totalpri').val())){
+                    if ($('#prodname').val() && $('#unit').val() && $('#brandname').val() && $('#expirationdate').val() && $('#availablequan').val() && $('#sellprice').val() && $('#quantity').val() && parseFloat($('#totalpri').val())){
 
                 
                     
@@ -151,7 +153,7 @@ $(document).ready(function(){
                             product_id: productId,
                             prod_name: $('#prodname option:selected').text(),
                             brand_name : $('#brandname').val(), 
-                            mg : $('#mg').val(),
+                            unit : $('#unit').val(),
                             quantity: $('#quantity').val(),
                             total_amount: parseFloat($('#totalpri').val()) 
                         };
@@ -182,7 +184,7 @@ $(document).ready(function(){
 
 
 
-                if ($('#prodname').val() && $('#mg').val() && $('#brandname').val() && $('#expirationdate').val() && $('#availablequan').val() && $('#sellprice').val() && $('#quantity').val() && parseFloat($('#totalpri').val()) ) {
+                if ($('#prodname').val() && $('#unit').val() && $('#brandname').val() && $('#expirationdate').val() && $('#availablequan').val() && $('#sellprice').val() && $('#quantity').val() && parseFloat($('#totalpri').val()) ) {
                     if (found) {
                     
                         found.prod_name = $('#prodname option:selected').text();
@@ -246,7 +248,7 @@ $(document).ready(function(){
                     product_id: productId,
                     prod_name: $('#prodname option:selected').text(), 
                     brand_name : $('#brandname').val(), 
-                    mg : $('#mg').val(),
+                    unit : $('#unit').val(),
                     quantity: $('#quantity').val(),
                     total_amount: parseFloat($('#totalpri').val())
                 };
@@ -263,7 +265,7 @@ $(document).ready(function(){
      $('#expirationdate').val(null);
      $('#availablequan').val(null);
      $('#sellprice').val(null);
-     $('#mg').val(null);
+     $('#unit').val(null);
      $('#brandname').val(null);
      $('#quantity').val(null);
      $('#prodname').val(null);
@@ -322,7 +324,7 @@ $(document).ready(function(){
         $('#expirationdate').val(null);
         $('#availablequan').val(null);
         $('#sellprice').val(null);
-        $('#mg').val(null);
+        $('#unit').val(null);
         $('#brandname').val(null);
         $('#quantity').val(null);
       
@@ -337,7 +339,7 @@ $(document).ready(function(){
         $('#expirationdate').val(p.expiration_date);
         $('#availablequan').val(p.quantity);
         $('#sellprice').val(p.selling_price);
-        $('#mg').val(p.mg);
+        $('#unit').val(p.unit);
         $('#brandname').val(p.brand_name);
 
    

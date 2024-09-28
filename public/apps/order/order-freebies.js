@@ -33,7 +33,7 @@ $(document).ready(function(){
                 },
                 { data: 'product_name' },
                 { data: 'brand_name' },
-                { data: 'mg' },
+                { data: 'unit' },
                 {
                     data: 'quantity',
                     render: function(data, type, row) {
@@ -100,7 +100,7 @@ $(document).ready(function(){
         $('#freebies-expirationdate').val(datas.expiration_date);
         $('#freebies-availablequan').val(datas.quantity);
         $('#freebies-sellprice').val(datas.selling_price);
-        $('#freebies-mg').val(datas.mg);
+        $('#freebies-unit').val(datas.unit);
         $('#freebies-brandname').val(datas.brand_name);
 
     });

@@ -36,8 +36,8 @@
                 </div>
                 <div class="col">
                     <div class="form-group">
-                        <label for="company"> MG</label>
-                        <input type="text" class="form-control" id="mg" placeholder="Enter company" readonly>
+                        <label for="company"> Quantity (mg, ml, syrup, etc.)</label>
+                        <input type="text" class="form-control" id="unit" placeholder="Enter company" readonly>
                     </div>
                 </div>
             </div>

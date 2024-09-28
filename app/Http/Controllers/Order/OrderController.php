@@ -192,7 +192,7 @@ class OrderController extends Controller
                 "email" => $result[$i]->email,
                 "readonly" => $result[$i]->created_id == Auth::user()->id || Auth::user()->role === "Admin" || $result[$i]->payment_status === "Unpaid"  ? " " : 
                 "readonly",
-                "lines" => db::select('SELECT p.product_name, o.trans_no,o.product_id, o.quantity, o.total_amount,p.mg,p.brand_name FROM orders AS o INNER JOIN products AS p ON o.product_id = p.id  WHERE o.trans_no = ? ', [$id]),
+                "lines" => db::select('SELECT p.product_name, o.trans_no,o.product_id, o.quantity, o.total_amount,p.unit,p.brand_name FROM orders AS o INNER JOIN products AS p ON o.product_id = p.id  WHERE o.trans_no = ? ', [$id]),
                 "button" => $this->buttonPrivate("orders",$id,'trans_no')
             ];
         }
@@ -347,15 +347,6 @@ class OrderController extends Controller
 
     
 
-    public function Productslist(Request $request)
-    {
-    
-
-        $sql = DB::select("SELECT selling_price, id AS id,CONCAT(product_name,' ','(',mg,'mg' ')',' ',(brand_name)) AS text, mg, brand_name, expiration_date, quantity FROM products WHERE (quantity != 0 AND status != 'Pending')
-        AND product_name LIKE ?", ['%'.$request->search .'%']);
-        return response()->json($sql);
-    }
-    
 
 
 

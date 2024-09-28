@@ -87,7 +87,7 @@
                 <tr>
                     <th style=" border:1px solid black; border-collapse: collapse;">Product</th>
                     <th style=" border:1px solid black; border-collapse: collapse;">Brand</th> 
-                    <th style=" border:1px solid black; border-collapse: collapse;">Mg</th>
+                    <th style=" border:1px solid black; border-collapse: collapse;">Unit</th>
                     <th style=" border:1px solid black; border-collapse: collapse;">Qty</th>
                     <th style=" border:1px solid black; border-collapse: collapse;">Unit Price</th>
                     <th style=" border:1px solid black; border-collapse: collapse;">Total Amount</th>
@@ -98,7 +98,7 @@
                 <tr>
                 <td style=" border:1px solid black; border-collapse: collapse;">{{$item->product_name}}</td>
                 <td style=" border:1px solid black; border-collapse: collapse;">{{$item->brand_name}}</td>
-                <td style=" border:1px solid black; border-collapse: collapse;">{{$item->mg}}</td>
+                <td style=" border:1px solid black; border-collapse: collapse;">{{$item->unit}}</td>
                 <td style=" border:1px solid black; border-collapse: collapse;">{{$item->quantity}}</td>
                 <td style=" border:1px solid black; border-collapse: collapse;"> ₱ {{number_format($item->selling_price,2)}}</td>
                 <td style=" border:1px solid black; border-collapse: collapse;"> ₱ {{number_format($item->total_amount,2)}}</td>
@@ -110,7 +110,7 @@
                     <tr>
                         <td style=" border:1px solid black; border-collapse: collapse;">{{$item->product_name}}</td>
                         <td style=" border:1px solid black; border-collapse: collapse;">{{$item->brand_name}}</td>
-                        <td style=" border:1px solid black; border-collapse: collapse;">{{$item->mg}}</td>
+                        <td style=" border:1px solid black; border-collapse: collapse;">{{$item->unit}}</td>
                         <td style=" border:1px solid black; border-collapse: collapse;">{{$item->quantity}}</td>
                         <td style=" border:1px solid black; border-collapse: collapse;">₱{{number_format($item->selling_price,2)}}</td>
                         <td style=" border:1px solid black; border-collapse: collapse;">{{$item->totalamount}}</td>

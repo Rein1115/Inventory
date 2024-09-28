@@ -29,7 +29,7 @@ Product(s) List
                                             <th style="text-align: center;">Product(s) Name</th>
                                             <th style="text-align: center;">Brand Name</th>
                                             <th style="text-align: center;">Quantity</th>
-                                            <th style="text-align: center;">Mg</th>
+                                            <th style="text-align: center;">Unit</th>
                                             <th style="text-align: center;">Expiration Date</th>
                                             <th style="text-align: center;">Status</th>
                                             <th style="text-align: center;">Created By</th>

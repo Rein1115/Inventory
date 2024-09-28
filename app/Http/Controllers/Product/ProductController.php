@@ -77,7 +77,7 @@ class ProductController extends Controller
             'status' => 'required|string|max:50',
             'brand_name' => 'required|string',
             'quantity' => 'required|numeric',
-            'mg' => 'required|integer',
+            'unit' => 'required|string',
             // 'created_by' => 'required|integer', //comment if they have Auth
         ]);
          if ($validator->fails()) {
@@ -175,7 +175,7 @@ class ProductController extends Controller
                 'status' => 'required|string|max:50',
                 'brand_name' => 'required|string',
                 'quantity' => 'required|numeric',
-                'mg' => 'required|integer',
+                'unit' => 'required|string',
                 // 'created_by' => 'required|integer', //comment if they have Auth
             ]);
 

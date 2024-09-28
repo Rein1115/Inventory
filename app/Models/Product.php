@@ -18,7 +18,7 @@ class Product extends Model
         'brand_name',
         'quantity',
         'originalquan',
-        'mg',
+        'unit',
         'created_by',
         'updated_by',
         'created_id'

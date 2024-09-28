@@ -30,7 +30,7 @@ Product(s) History
                                             <th style="text-align: center;"></th>
                                             <th style="text-align: center;">Product Name</th>
                                             <th style="text-align: center;">Brand Name</th>
-                                            <th style="text-align: center;">Mg</th>
+                                            <th style="text-align: center;">Unit</th>
                                             <th style="text-align: center;">Selling Price</th>
                                             <th style="text-align: center;">Original Price</th>
                                             <th style="text-align: center;">Orders Quantity</th>

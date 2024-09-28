@@ -64,7 +64,7 @@ $(document).ready(function(){
                     return '<span class="badge badge-warning">' + row.quantity + '</span>';
                 }
             },
-            { data: 'mg'},
+            { data: 'unit'},
             { 
                 data: null,
                 render: function (data, type, row) {
@@ -269,7 +269,7 @@ $(document).ready(function(){
                         $('#prodname').val(item.product_name);
                         $('#suppliername').val(item.supplier_name);
                         $('#brandname').val(item.brand_name);
-                        $('#mg').val(item.mg);
+                        $('#unit').val(item.unit);
                         $('#origprice').val( '₱'+ ' ' + item.original_price);
                         $('#sellprice').val('₱'+' ' + item.selling_price);
                         $('#quantity').val(item.quantity);

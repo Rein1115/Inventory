@@ -25,8 +25,8 @@
             <div class="row">
                 <div class="col">
                     <div class="form-group">
-                        <label for="mg">Mg</label>
-                        <input type="text" class="form-control" id="mg" readonly>
+                        <label for="unit">Unit</label>
+                        <input type="text" class="form-control" id="unit" readonly>
                       </div>
                 </div>
                 <div class="col">

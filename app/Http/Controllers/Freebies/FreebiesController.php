@@ -113,7 +113,7 @@ class FreebiesController extends Controller
                 THEN CONCAT("<button class=\"btn btn-danger text-white freedelete\" data-freequantity=\"", f.quantity, "\" data-freeid=\"", f.id, "\"><i class=\"icon-trash trash-icon\"></i></button>")
                 ELSE "" 
             END AS btn, 
-        f.created_by,p.id AS product_id ,p.product_name,p.mg,p.brand_name,f.quantity,f.id FROM products AS p INNER JOIN freebies AS f ON f.product_id = p.id WHERE f.trans_No = ? ',[Auth::user()->id,Auth::user()->role,$id]);
+        f.created_by,p.id AS product_id ,p.product_name,p.unit,p.brand_name,f.quantity,f.id FROM products AS p INNER JOIN freebies AS f ON f.product_id = p.id WHERE f.trans_No = ? ',[Auth::user()->id,Auth::user()->role,$id]);
         return response()->json($data);
     }
 

@@ -29,7 +29,7 @@ class ProducthistoryController extends Controller
                 'p.id as product_id',
                 'p.product_name',
                 'p.brand_name',
-                'p.mg',
+                'p.unit',
                 'p.selling_price',
                 'p.original_price',
                 'p.created_by',
@@ -39,7 +39,7 @@ class ProducthistoryController extends Controller
                 DB::raw('COALESCE(p.quantity, 0) as product_quantity'),
                 DB::raw('(COALESCE(p.quantity, 0) + COALESCE(order_totals.total_orders_quantity, 0) + COALESCE(freebie_totals.total_freebies_quantity, 0)) as total_quantity')
             )
-            ->groupBy('p.id', 'p.product_name', 'p.brand_name', 'p.mg', 'p.quantity', 'order_totals.total_orders_quantity', 'freebie_totals.total_freebies_quantity', 'p.selling_price',
+            ->groupBy('p.id', 'p.product_name', 'p.brand_name', 'p.unit', 'p.quantity', 'order_totals.total_orders_quantity', 'freebie_totals.total_freebies_quantity', 'p.selling_price',
             'p.original_price','p.created_by')
             ->having('product_quantity', '=', 0)
             ->get();
