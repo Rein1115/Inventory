@@ -4,7 +4,7 @@
 
 <link href="../css/invoicereceipt.css" rel="stylesheet">
 
-</style>
+
 
 @endsection
 @section('content')
@@ -187,9 +187,13 @@
 </div>
 </div>
 @include('tools.payment.payment-modal')
+
+
 @section('print')
 @include('tools.invoicereceipt.invoicereceipt')
 @endsection
+
+
 @endsection
 @section('script')
 <script src="../apps/payment/payment-details.js"></script>

@@ -23,7 +23,7 @@ class Controller extends BaseController
 
             $button = [
                 [
-                    "class" => "btn btn-secondary mr-2", 
+                    "class" => "btn btn-secondary text-white mr-2", 
                     "id" => "Btn-back",
                     "text" => "Back"
                 ]
@@ -37,14 +37,19 @@ class Controller extends BaseController
                 ];
             } elseif (!empty($createdByExists) || $isAdmin) {
                 $button[] = [
-                    "class" => "btn btn-success mr-2", 
+                    "class" => "btn btn-success text-white mr-2", 
                     "id" => "Btn-update",
                     "text" => "Update"
                 ];
                 $button[] = [
-                    "class" => "btn btn-danger", 
+                    "class" => "btn btn-danger text-white mr-2", 
                     "id" => "Btn-delete",
                     "text" => "Delete"
+                ];
+                $button[] = [
+                    "class" => "btn btn-warning text-white mr-2", 
+                    "id" => "invoice-print",
+                    "text" => "Print"
                 ];
             }
             return $button;

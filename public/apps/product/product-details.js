@@ -330,6 +330,6 @@ $(document).ready(function() {
         window.location.href = '/product';
     })
     
-
+    $('#Btn-print').addClass('d-none');
 
 });

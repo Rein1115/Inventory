@@ -152,10 +152,10 @@
                                 <div class="col-5" id="printtotalamount">0.00</div>
                             </div> --}}
                             <div class="row mb-2">
-                                <div class="col-7">Exact Amount</div>
+                                <div class="col-7" id="supportorderandpayment">Exact Amount</div>
                                 <div class="col-5" id="printexactamount">$0.00</div>
                             </div>
-                            <div class="row mb-2">
+                            <div class="row mb-2" id="remainbalance_parent">
                                 <div class="col-7">Remaining Balance</div>
                                 <div class="col-5" id="printremainingbalance">0.00</div>
                             </div>

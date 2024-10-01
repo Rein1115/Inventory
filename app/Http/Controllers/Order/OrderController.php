@@ -37,7 +37,7 @@ class OrderController extends Controller
     {
         //
         $products = DB::select('SELECT * FROM products');
-        $data = ["button" => $this->buttonPrivate("orders",0,'trans_no')];
+        $data = ["button" => $this->buttonPrivate("orders",0,'trans_no'),"productlist" => []];
         return view('order.order-details',compact('data','products'));
 
     }
@@ -159,56 +159,65 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
+   
 
-        
-
-
-        $result = DB::select('SELECT * FROM orders WHERE trans_no = ? ',[$id]);
-        if (empty($result)) {
-            
-            return response()->view('page-error-404', [], 404);
-        }
-
-        $datas = [] ; 
-        for($i = 0; $i<count($result); $i++){
+     public function show(string $id)
+     {
+         $result = DB::select('SELECT * FROM orders WHERE trans_no = ? ',[$id]);
+         if (empty($result)) {
+             
+             return response()->view('page-error-404', [], 404);
+         }
+         $productlist = DB::select('SELECT p.product_name,o.quantity,o.total_amount,p.selling_price,p.brand_name,p.unit FROM orders AS o LEFT JOIN products AS p ON p.id = o.product_id WHERE o.trans_no = ?' ,[$id]);
+         $datas = [] ; 
 
 
-            $data = [
-                "transNo" => $result[$i]->trans_no,
-                "po_no" => $result[$i]->po_no,
-                "address" => $result[$i]->address, 
-                "delivered_date" => $result[$i]->delivered_date,
-                "deliveredto" => $result[$i]->deliveredto,
-                "fullname" => $result[$i]->fullname,
-                "contact_num" => $result[$i]->contact_num,
-                "deliveredby"  => $result[$i]->deliveredby,
-                "or" => $result[$i]->or,
-                "cr" => $result[$i]->cr, 
-                "terms" =>   $result[$i]->terms,
-                "payment_status" => $result[$i]->payment_status,              
-                "collected_by" =>$result[$i]->collected_by ,
-                "email" => $result[$i]->email,
-                "readonly" => $result[$i]->created_id == Auth::user()->id || Auth::user()->role === "Admin" || $result[$i]->payment_status === "Unpaid"  ? " " : 
-                "readonly",
-                "lines" => db::select('SELECT p.product_name, o.trans_no,o.product_id, o.quantity, o.total_amount,p.unit,p.brand_name FROM orders AS o INNER JOIN products AS p ON o.product_id = p.id  WHERE o.trans_no = ? ', [$id]),
-                "button" => $this->buttonPrivate("orders",$id,'trans_no')
-            ];
-        }
+         $orders =  db::select('SELECT p.product_name, o.trans_no,o.product_id, o.quantity, o.total_amount,p.unit,p.brand_name FROM orders AS o INNER JOIN products AS p ON o.product_id = p.id  WHERE o.trans_no = ? ', [$id]);
+
+
+         $overalltotal = 0;
+         foreach($orders AS $totalamount){
+            $overalltotal += $totalamount->total_amount;
+         }
 
 
 
-        // return dd($data);
 
-            $products = DB::select('SELECT * FROM products');
-
-        return view('order.order-details',compact('data','products'));
-        // return $result;
-
-
-    }
-
+         for($i = 0; $i<count($result); $i++){
+ 
+ 
+             $data = [
+                 "transNo" => $result[$i]->trans_no,
+                 "po_no" => $result[$i]->po_no,
+                 "address" => $result[$i]->address, 
+                 "delivered_date" => $result[$i]->delivered_date,
+                 "deliveredto" => $result[$i]->deliveredto,
+                 "fullname" => $result[$i]->fullname,
+                 "contact_num" => $result[$i]->contact_num,
+                 "deliveredby"  => $result[$i]->deliveredby,
+                 "or" => $result[$i]->or,
+                 "cr" => $result[$i]->cr, 
+                 "terms" =>   $result[$i]->terms,
+                 "payment_status" => $result[$i]->payment_status,              
+                 "collected_by" =>$result[$i]->collected_by ,
+                 "email" => $result[$i]->email,
+                 "readonly" => $result[$i]->created_id == Auth::user()->id || Auth::user()->role === "Admin"  ? " " : 
+                 "readonly",
+                 "lines" =>$orders,
+                 "productlist" => $productlist,
+                 "freebieslist" => DB::select('SELECT p.product_name,f.quantity,p.selling_price,p.brand_name,p.unit FROM freebies AS f INNER JOIN products AS p ON p.id = f.product_id WHERE f.trans_No =? ',[$id]),
+                 "totalall" => $overalltotal,
+                 "button" => $this->buttonPrivate("orders",$id,'trans_no')
+             ];
+         }
+ 
+             $products = DB::select('SELECT * FROM products');
+ 
+         return view('order.order-details',compact('data','products'));
+         // return $result;
+ 
+ 
+     }
     /**
      * Show the form for editing the specified resource.
     */

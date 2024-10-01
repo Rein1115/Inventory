@@ -22,6 +22,8 @@ class ProductController extends Controller
         $admin = DB::select('SELECT COUNT(*) AS count FROM users WHERE role = "Admin" AND id = ?' , [Auth::user()->id]);
         if($admin[0]->count > 0){
             $data = DB::select('SELECT p.* , u.fname AS ufname , u.lname AS ulname FROM products p LEFT JOIN users AS u ON u.id = p.created_by  WHERE p.quantity != 0');
+
+            // dd($data);
             if ($request->ajax()) {
                 return response()->json($data);
             }

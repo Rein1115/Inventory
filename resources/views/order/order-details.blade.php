@@ -1,6 +1,9 @@
 @extends('layouts.apps')
 
 @section('title') {{isset($data['transNo']) ? 'Update Order' : 'Create Order'}} @endsection
+@section('link')
+<link href="../css/invoicereceipt.css" rel="stylesheet">
+@endsection
 @section('content')
 <div class="row">
 
@@ -127,11 +130,9 @@
 
                     </div>
 
-
-
-
                     {{-- start data table --}}
-                    <div class="col-12" >
+                    <div class="col-12" id="totalall" data-totalall="{{ isset($data['totalall']) ? '₱' . number_format($data['totalall'], 2) : '' }}">
+
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between mb-3 col-12">
@@ -205,11 +206,18 @@
 </div>
 @include('tools.order.order-modal')
 @include('tools.order.freebies-modal')
+
+@section('print')
+@include('tools.invoicereceipt.invoicereceipt')
+@endsection
+
+
 @endsection
 @section('script')
+
 <script src="../apps/order/order-details.js"></script>
-
-
-
 <script src="../apps/order/order-freebies.js"></script>
+<script src="../apps/invoicereceipt/invoicereceipt.js"></script>
+
+
 @endsection

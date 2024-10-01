@@ -642,7 +642,14 @@ $(document).ready(function(){
 
 
     totalamounts(items)
-    
+
+
+
+    $('#supportorderandpayment').text('Total amount');
+    $('#remainbalance_parent').addClass('d-none');
+  
+
+
 });
 
 

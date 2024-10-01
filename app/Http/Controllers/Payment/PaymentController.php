@@ -142,12 +142,7 @@ class PaymentController extends Controller
                 "payments" => $payments,
                 "productlist" => $productlist,
                 "freebieslist" => DB::select('SELECT p.product_name,f.quantity,p.selling_price,p.brand_name,p.unit FROM freebies AS f INNER JOIN products AS p ON p.id = f.product_id WHERE f.trans_No =? ',[$id])
-                // "button" => $this->buttonPrivate("orders",$id,'trans_no')
             ] ;
-
-            // foreach($data['freebieslist'] AS $item){
-            //     return $item->product_name;
-            // }
 
 
             // dd($data['freebieslist']);
