@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Login</title>
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./logonibayicon.png">
     <link href="css/style.css" rel="stylesheet">
 </head>
 
@@ -34,8 +34,10 @@
                     <div class="form-input-content">
                         <div class="card login-form mb-0">
                             <div class="card-body pt-5">
-                                <a class="text-center" href="index.html"> <h4>Inventory</h4></a>
-
+                                <div class="text-center">
+                                    <img src="./logonibay.png" alt="Logo" class="img-fluid text-center" style="max-height: 150px; width: auto;"> <!-- Added img-fluid class -->
+                                </div>
+                              
 
                                 @if (session('message'))
                                     <div class="alert alert-danger text-center" role="alert">

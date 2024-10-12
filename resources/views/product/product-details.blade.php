@@ -58,13 +58,13 @@
                         <!-- original Price -->
                         <div class="form-group col-sm">
                             <label for="originalp">Original Price <span class="text-danger">*</span></label>
-                            <input value="{{isset($data['data'][0]->original_price) ? $data['data'][0]->original_price : ''}}" class="form-control form-control-sm" type="number" id="originalp" name="originalp" placeholder="Enter Original Price"  {{ isset($data['readonly']) && $data['readonly'] ? 'disabled' : '' }}>
+                            <input value="{{isset($data['data'][0]->original_price) ? $data['data'][0]->original_price : ''}}" class="form-control form-control-sm" type="text" id="originalp" name="originalp" placeholder="Enter Original Price"  {{ isset($data['readonly']) && $data['readonly'] ? 'disabled' : '' }}>
                         </div>
 
                         <!-- selling price -->
                         <div class="form-group col-sm">
                             <label for="sellingp">Selling Price <span class="text-danger">*</span></label>
-                            <input value="{{isset($data['data'][0]->selling_price) ? $data['data'][0]->selling_price : ''}}" class="form-control form-control-sm" type="number" id="sellingp" name="sellingp " placeholder="Enter Selling Price"  {{ isset($data['readonly']) && $data['readonly'] ? 'disabled' : '' }}>
+                            <input value="{{isset($data['data'][0]->selling_price) ? $data['data'][0]->selling_price : ''}}" class="form-control form-control-sm" type="text" id="sellingp" name="sellingp " placeholder="Enter Selling Price"  {{ isset($data['readonly']) && $data['readonly'] ? 'disabled' : '' }}>
                         </div>
                     </div>
 

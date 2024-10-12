@@ -59,8 +59,8 @@ $(document).ready(function() {
             url: 'brand',
             dataSrc: ''
         },
-        lengthMenu: [10, 25, 500], // Pagination options
-        pageLength: 500, // Default page length
+        lengthMenu: [10, 25,50, 500], // Pagination options
+        pageLength: 50, // Default page length
         columns: [
             {
                 data: null,

@@ -2,8 +2,7 @@
 
 @section('title') Home @endsection
 @section('link')
-  <!-- Favicon icon -->
-  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
+
   <!-- Pignose Calender -->
   <link href="./plugins/pg-calendar/css/pignose.calendar.min.css" rel="stylesheet">
   <!-- Chartist -->
