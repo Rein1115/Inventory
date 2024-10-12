@@ -40,7 +40,7 @@
 </style> --}}
   </head>
   
-  <body style="background-color: #F9F9F9 !important;    ">
+  <body>
   
       <div id="main-wrapper" >
   
@@ -156,20 +156,20 @@
               Nav header start
           ***********************************-->
           <div style="background-color:rgb(247, 232, 210)" class="nav-header">
-            <div class="brand-logo" style="display: flex; justify-content: center; align-items: center; height: 100%;">
-                <a href="{{ route('home') }}">
-                    <b class="logo-abbr">
-                        {{-- <img src="../images/logo.png" alt="Main Logo"> --}}
-                    </b>
-                    <span class="logo-compact">
-                        <img src="./images/logo-compact.png" alt="Compact Logo">
-                    </span>
-                    <span class="brand-title" style="text-align: center;">
-                        <img style="width: 80px; height: auto;" src="../logonibay.png" alt="Logo">
-                    </span>
-                </a>
-            </div>
-        </div>
+                <div class="brand-logo" style="display: flex; justify-content: center; align-items: center; height: 100%;">
+                    <a href="{{ route('home') }}">
+                        <b class="logo-abbr">
+                            <img style="width: 80px; height: auto;" src="../logonibayicon.png" alt="Logo">
+                        </b>
+                        <span class="logo-compact">
+                            <img style="width: 80px; height: auto;" src="../logonibayicon.png" alt="Logo">
+                        </span>
+                        <span class="brand-title" style="text-align: center;">
+                            <img style="width: 80px; height: auto;" src="../logonibay.png" alt="Logo">
+                        </span>
+                    </a>
+                </div>
+           </div>
           <!--**********************************
               Nav header end
           ***********************************-->
