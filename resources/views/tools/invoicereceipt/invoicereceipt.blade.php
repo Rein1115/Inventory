@@ -1,35 +1,30 @@
 <div class="page-content container d-none" id="parentprintheaders">
     <div class="page-header text-blue-d2 mb-4">
-        <h1 class="page-title text-secondary-d1">
-            <span class="text-primary-d1">EAGLESMED PET SUPPLIES AND ACCESSORIES TRADING</span> <!-- Shop title here -->
-        </h1>
-    
-        <p class="text-secondary-d2 mb-1">
-           Sun-ok Ibabao 6017 Cordova Cebu Philippines <!-- Shop address here -->
-        </p>
-        <p class="text-secondary-d2 mb-1">
-            {{-- Contact: [Shop Contact Number] <!-- Shop contact number here --> --}}
-            NON-VAT REG. TIN: 292-810-773-00000
-        </p>
-        <p class="text-secondary-d2">
-            {{-- Owner: [Owner's Last Name] <!-- Shop owner's last name here --> --}}
-            Prop: Margie Cambongga Dinoy
-        </p>
-    
-        {{-- <div class="page-tools">
-            <div class="action-buttons">
-                <a class="btn bg-white btn-light mx-1px text-95" href="#" data-title="Print">
-                    <i class="mr-1 fa fa-print text-primary-m1 text-120 w-2"></i>
-                    Print
-                </a>
-                <a class="btn bg-white btn-light mx-1px text-95" href="#" data-title="PDF">
-                    <i class="mr-1 fa fa-file-pdf-o text-danger-m1 text-120 w-2"></i>
-                    Export
-                </a>
+        <div class="row align-items-center">
+            <!-- Logo Section (Left) -->
+            <div class="col-2 text-left">
+                <img src="../logonibay.png" alt="Logo" style="width: 100px; height: auto;"> <!-- Adjust size as needed -->
             </div>
-        </div> --}}
+            <!-- Title and Details Section (Centered) -->
+            <div class="col-8 text-center">
+                <h1 class="page-title text-secondary-d1">
+                    <span class="text-primary-d1">EAGLESMED PET SUPPLIES AND ACCESSORIES TRADING</span>
+                </h1>
+                <p class="text-secondary-d2 mb-1">
+                    Sun-ok Ibabao 6017 Cordova Cebu Philippines
+                </p>
+                <p class="text-secondary-d2 mb-1">
+                    NON-VAT REG. TIN: 292-810-773-00000
+                </p>
+                <p class="text-secondary-d2">
+                    Prop: Margie Cambongga Dinoy
+                </p>
+            </div>
+
+            <!-- Empty Space for Layout (Right) -->
+            <div class="col-2"></div>
+        </div>
     </div>
-    
 
     <div class="container px-0">
         <div class="row mt-4">

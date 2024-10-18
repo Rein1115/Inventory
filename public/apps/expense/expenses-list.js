@@ -310,7 +310,7 @@ $(document).ready(function(){
                 Swal.fire({
                     icon: 'info',
                     title: 'Cancelled',
-                    text: 'expense(s) was not saved.',
+                    text: `expense(s) was not ${txt}d.`,
                 });
             }
         });
@@ -363,7 +363,7 @@ $(document).ready(function(){
                 Swal.fire({
                     icon: 'info',
                     title: 'Cancelled',
-                    text: ' Brand name was not deleted!',
+                    text: ' Expense was not deleted!',
                 });
             }
         });
