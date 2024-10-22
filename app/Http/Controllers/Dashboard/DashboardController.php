@@ -38,6 +38,7 @@ class DashboardController extends Controller
         // return $data['finalnetprofit'];
 
 
+        // ORIGINAL CODE
         $data['totalcost'] = db::select('SELECT 
                 p.id AS product_id,
                 p.product_name,
@@ -59,6 +60,8 @@ class DashboardController extends Controller
             ) AS freebie_totals ON p.id = freebie_totals.product_id
             GROUP BY p.id, p.product_name, p.quantity, p.original_price, order_totals.orders_quantity, freebie_totals.freebies_quantity;
         ');
+
+
         
         // return response()->json($data['totalcost']);
 

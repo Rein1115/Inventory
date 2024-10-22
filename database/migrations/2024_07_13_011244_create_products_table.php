@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('supplier_name');
             $table->date('expiration_date');
             $table->decimal('original_price', 8, 2);
+            // $table->decimal('original_price', 10, 5);
             $table->decimal('selling_price', 8, 2);
             $table->string('status');
             $table->string('brand_name');
@@ -25,7 +26,6 @@ return new class extends Migration
             $table->string('created_by');
             $table->string('updated_by')->nullable();
             $table->integer('created_id');
-
             $table->timestamps();
         });
     }

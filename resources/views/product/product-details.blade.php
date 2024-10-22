@@ -78,7 +78,7 @@
                         <!-- unit -->
                         <div class="form-group col-sm">
                             <label for="quantity">Quantity (mg, ml, syrup, etc.):</label>
-                            <input value="{{isset($data['data'][0]->unit) ? $data['data'][0]->unit : ''}}" class="form-control form-control-sm" type="text" id="unit" name="unit" placeholder="Enter value">
+                            <input value="{{isset($data['data'][0]->unit) ? $data['data'][0]->unit : ''}}" class="form-control form-control-sm" type="text" id="unit" name="unit" placeholder="Enter value"  {{ isset($data['readonly']) && $data['readonly'] ? 'disabled' : '' }}>
                         </div>
                     </div>
                     <!-- Status -->

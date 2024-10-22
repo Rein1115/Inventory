@@ -227,9 +227,11 @@ $(document).ready(function(){
                                 title: 'Success!',
                                 text: resp.message
                             }).then(() => {
+                                location.reload();
                                 $('#freebiestable').DataTable().ajax.reload();
                                 $('#freebies-quantity').val('');
                                 $('#freebies-prodname').empty();
+                                // $('#modalfreebies').modal('show');
                             });
                         } else {
                             var errorMessage = 'Error!';

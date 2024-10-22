@@ -1,7 +1,7 @@
 <!-- New Modal -->
 <input type="hidden" value="0" id="hiddenSaveUpNew">
 <div class="modal fade" id="modalfreebies" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document"> <!-- Added modal-lg class here -->
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="newModalTitle">Freebies</h5>
@@ -15,7 +15,7 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="freebies-prodname">Product Name <span class="text-danger">*</span></label><br>
-                                <select class="form-control form-control-sm" style="width: 100%;" id="freebies-prodname" name="prodname">
+                                <select class="form-control form-control-sm" style="width: 100%;" id="freebies-prodname" name="prodname" >
                                     <!-- Options will be dynamically added here -->
                                 </select>
                             </div>

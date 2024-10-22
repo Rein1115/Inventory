@@ -50,7 +50,7 @@
                     <div class="card-body">
                         <h3 class="card-title text-white">Net Profit</h3>
                         <div class="">
-                            <h2 class="text-white">₱ <span id="netprofit"> {{isset($data['finalnetprofit']) ? $data['finalnetprofit'] : '0.00'}} </span></h2>
+                            <h2 class="text-white">₱ <span id="netprofit"> {{isset($data['finalnetprofit']) ? ROUND($data['finalnetprofit']) : '0.00'}} </span></h2>
                             {{-- <p class="text-white mb-0">Jan - March 2019</p> --}}
                         </div>
                         <span class="float-right display-5 opacity-5"><i class="fa fa-money"></i></span>
@@ -66,7 +66,7 @@
                         <h3 class="card-title text-white">Total Cost</h3>
                         <div class="">
                             {{-- <div class="d-inline-block"> --}}
-                            <h2 class="text-white">₱ <span id="totalcost"> {{isset($data['totalcost'][0]->total_cost) ? $data['totalcost'][0]->total_cost: '0.00'}} </span></h2>
+                            <h2 class="text-white">₱ <span id="totalcost"> {{isset($data['totalcost'][0]->total_cost) ? ROUND($data['totalcost'][0]->total_cost): '0.00'}} </span></h2>
                         </div>
                         <span class="float-right display-5 opacity-5"><i class="fa fa-money"></i></span>
                     </div>
