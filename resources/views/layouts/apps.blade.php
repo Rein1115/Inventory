@@ -53,12 +53,16 @@
 
 
                 @if(isset(Auth::user()->role) > 0 )
-                {{-- Dashboard --}}
+ 
+                @if(Auth::user()->role === 'Admin'  )
+                        {{-- Dashboard --}}
                     <li>
                         <a href="{{ route('home') }}"><i class="icon-speedometer menu-icon"></i><span class="nav-text">Dashboard</span></a>
                     </li>
-                {{-- End Dashboard --}}
-                @if(Auth::user()->role === 'Admin'  )
+                        {{-- End Dashboard --}}
+
+                  
+
                     <li>
                         <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="fa fa-truck menu-icon"></i><span class="nav-text">Supplier</span></a>
                             <ul aria-expanded="false">
@@ -110,15 +114,30 @@
                             </ul>
                         </li>
                     </li>
+
+                    @if(isset(Auth::user()->role) && Auth::user()->role === 'Admin')
+                    <li>
+                        <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="fa fa-book menu-icon"></i><span class="nav-text">Summary</span></a>
+                            <ul aria-expanded="false">
+                                <li><a href="{{route('brand.index')}}"><i class="icon-notebook menu-icon" style="font-size:12px;"></i> Annual Sales
+                                </a></li>
+                                
+                            </ul>
+                        </li>
+                    </li>
+                    @endif
             
                     @if(isset(Auth::user()->role) && Auth::user()->role === 'Admin')
                     <hr>
+
                     <li>
                         <a href="{{route('user.index')}}"><i class="fa fa-users"></i><span class="nav-text">User</span></a>
                     </li>
                     <li>
                         <a href="{{route('expenses.index')}}"><i class="fa fa-money"></i><span class="nav-text">Expenses</span></a>
                     </li>
+
+               
 
                     @else
                     
