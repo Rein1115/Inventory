@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Summary;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use DB;
 
-class AnuasalesController extends Controller
+class AnualsalesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,6 +14,9 @@ class AnuasalesController extends Controller
     public function index()
     {
         //
+        $data = DB::select('SELECT YEAR(created_at) AS year FROM payments GROUP BY YEAR(created_at)');
+        return response()->json($data);
+
     }
 
     /**
@@ -37,6 +41,21 @@ class AnuasalesController extends Controller
     public function show(string $id)
     {
         //
+
+        $payment= DB::select('SELECT sum(payment) AS totalsales FROM payments WHERE YEAR(created_at) = ?' , [$id]);
+
+        $result = [];
+        for($p = 0; $p<count($payment); $p++){
+
+
+
+            $result =[
+                
+                "totalsales" => $payment[$p]->totalsales
+            ];
+        }
+        return response()->json($result);
+        
     }
 
     /**

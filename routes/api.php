@@ -15,6 +15,7 @@ use App\Http\Controllers\Freebies\FreebiesController;
 use App\Http\Controllers\Expenses\ExpensesController;
 use App\Http\Controllers\Email\EmailpaymentController;
 use App\Http\Controllers\Payment\PaymenthistoryController;
+use App\Http\Controllers\Summary\AnualsalesController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -27,7 +28,7 @@ use App\Http\Controllers\Payment\PaymenthistoryController;
 */
 
 Route::resource('product', ProductController::class);
-
+Route::resource('anualsales', AnualsalesController::class);
 
 // Route::resource('paymenthistory', PaymenthistoryController::class);
 
