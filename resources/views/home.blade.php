@@ -1,8 +1,8 @@
 @extends('layouts.apps')
 
 @section('title') Home @endsection
-@section('link')
 
+@section('link')
   <!-- Pignose Calender -->
   <link href="./plugins/pg-calendar/css/pignose.calendar.min.css" rel="stylesheet">
   <!-- Chartist -->
