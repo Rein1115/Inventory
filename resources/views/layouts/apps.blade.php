@@ -119,7 +119,7 @@
                     <li>
                         <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="fa fa-book menu-icon"></i><span class="nav-text">Summary</span></a>
                             <ul aria-expanded="false">
-                                <li><a href="{{route('brand.index')}}"><i class="icon-notebook menu-icon" style="font-size:12px;"></i> Annual Sales
+                                <li><a href="{{route('anualsales.index')}}"><i class="icon-notebook menu-icon" style="font-size:12px;"></i> Annual Sales
                                 </a></li>
                                 
                             </ul>

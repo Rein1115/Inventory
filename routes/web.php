@@ -16,6 +16,7 @@ use App\Http\Controllers\Expenses\ExpensesController;
 use App\Http\Controllers\Email\EmailpaymentController;
 use App\Http\Controllers\Producthistory\ProducthistoryController;
 use App\Http\Controllers\Payment\PaymenthistoryController;
+use App\Http\Controllers\Summary\AnualsalesController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -78,6 +79,10 @@ Route::post('modificationpaymenthistory/{id}', [PaymenthistoryController::class,
     // payment email individual 
     Route::resource('paymentemail',EmailpaymentController::class)->names('paymentemail');
 
+
+    // anualsales
+    Route::resource('anualsales', AnualsalesController::class);
+
     // USER
     Route::resource('user', UserController::class);
 
@@ -90,5 +95,8 @@ Route::post('modificationpaymenthistory/{id}', [PaymenthistoryController::class,
     Route::get('selectsupplier', [SelectController::class, 'supplier']);
     Route::get('selectbrand', [SelectController::class, 'brand']);
     Route::get('Productslist', [SelectController::class, 'Productslist']);
+
+
+    
 
 });
