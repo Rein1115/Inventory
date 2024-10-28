@@ -17,22 +17,17 @@ class DashboardController extends Controller
 
         $date =  Carbon::now()->toDateString();
 
-        $data['totalsales'] = DB::select('SELECT sum(payment) AS totalsales FROM payments');
+        $data['totalsales'] = DB::select('SELECT sum(payment) AS totalsales FROM payments WHERE ? = "Admin" OR created_id = ? ', [Auth::user()->role , Auth::user()->id]);
 
-        $data['incometoday'] = DB::select('SELECT SUM(payment) as total_payment FROM payments WHERE DATE(created_at) = ?', [$date]);
-
-
-        $data['expenses'] = DB::select('SELECT SUM(amount) AS amount FROM expenses');
+        $data['incometoday'] = DB::select('SELECT SUM(payment) as total_payment FROM payments WHERE DATE(created_at) = ? AND (? = "Admin" OR created_id = ? )', [$date,Auth::user()->role , Auth::user()->id]);
 
 
-        // return  $data['expenses'][0]->amount;
-  
+        $data['expenses'] = DB::select('SELECT SUM(amount) AS amount FROM expenses ');
 
         $data['netprofit'] = DB::select(' SELECT SUM((p.selling_price - p.original_price) * o.quantity) AS net_profit
         FROM orders AS o
         LEFT JOIN products AS p ON p.id = o.product_id
         WHERE o.payment_status = "Paid"');
-
         $data['finalnetprofit'] =   $data['netprofit'][0]->net_profit - $data['expenses'][0]->amount;
 
         // return $data['finalnetprofit'];
@@ -61,8 +56,6 @@ class DashboardController extends Controller
             GROUP BY p.id, p.product_name, p.quantity, p.original_price, order_totals.orders_quantity, freebie_totals.freebies_quantity;
         ');
 
-
-        
         // return response()->json($data['totalcost']);
 
 
@@ -77,9 +70,8 @@ class DashboardController extends Controller
         SUM(payment) AS total, 
         MONTHNAME(pay_date) AS formatted_date ,
         YEAR(pay_date) AS `year`
-    FROM payments WHERE YEAR(pay_date) = ?
-    
-    GROUP BY YEAR(pay_date),MONTHNAME(pay_date)  ORDER BY MONTH(pay_date)",[$date]);
+        FROM payments WHERE YEAR(pay_date) = ? AND (? = 'Admin' OR created_id = ?)
+        GROUP BY YEAR(pay_date),MONTHNAME(pay_date)  ORDER BY MONTH(pay_date)",[$date, Auth::user()->role,Auth::user()->id]);
     
 
         return response()->json($data);

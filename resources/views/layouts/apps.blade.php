@@ -55,13 +55,14 @@
 
 
                 @if(isset(Auth::user()->role) > 0 )
- 
-                @if(Auth::user()->role === 'Admin'  )
-                        {{-- Dashboard --}}
+                    {{-- Dashboard --}}
                     <li>
                         <a href="{{ route('home') }}"><i class="icon-speedometer menu-icon"></i><span class="nav-text">Dashboard</span></a>
                     </li>
                         {{-- End Dashboard --}}
+ 
+                @if(Auth::user()->role === 'Admin'  )
+
 
                   
 
