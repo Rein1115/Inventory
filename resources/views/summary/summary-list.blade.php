@@ -44,5 +44,13 @@
 @include('tools.summary.summary-modal')
 @endsection
 @section('script')
-<script src="../apps/summary/summary-list.js"></script>
+
+
+{{-- OLD --}}
+{{-- <script src="../apps/summary/summary-list.js"></script> --}}
+
+{{-- NEW --}}
+@vite(['resources/js/apps/summary/summary-list.js'])
+
+
 @endsection

@@ -51,5 +51,10 @@ Product(s) List
 @include('tools.product.product-modal')
 @endsection
 @section('script')
-<script src="../apps/product/product-list.js"></script>
+
+{{-- OLD --}}
+{{-- <script src="../apps/product/product-list.js"></script> --}}
+
+{{-- NEW --}}
+@vite('resources/js/apps/product/product-list.js')
 @endsection

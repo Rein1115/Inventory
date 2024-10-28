@@ -1,5 +1,10 @@
 $(document).ready(function() {
-    $('#brand').DataTable({
+
+    
+    $('#gender').select2();
+    $('#role').select2();
+    $('#status').select2();
+    $('#user').DataTable({
 
         dom             : 'Bflrtip',
         processing      : true,
@@ -18,7 +23,7 @@ $(document).ready(function() {
                 className: 'btn px-2 py-1',
                 attr    : { 'data-toggle': 'tooltip', 'title': 'Reload' },
                 action  : function(e,dt,node,config){ 
-                    $('#supplier').DataTable().ajax.reload(); 
+                    $('#user').DataTable().ajax.reload(); 
                    
                 } 
             },
@@ -33,12 +38,12 @@ $(document).ready(function() {
                     });
                     $('#exampleModalLongTitle').text('');
                     $('#saveandupdate').removeClass('btn btn-success');
-                    $('#brandName').val('');
+                   
                     $('#exampleModalCenter').modal('show');
                     $('#saveandupdate').text('Save');
                     $('#saveandupdate').addClass('btn btn-primary');
                     $('#hiddensaveup').val('0');
-                    $('#exampleModalLongTitle').text('Create Brand Name');
+                    $('#exampleModalLongTitle').text('Create User');
                 } 
             },
             {
@@ -56,11 +61,11 @@ $(document).ready(function() {
             },
         ],
         ajax: {
-            url: 'brand',
+            url: 'user',
             dataSrc: ''
         },
-        lengthMenu: [10, 25,50, 500], // Pagination options
-        pageLength: 50, // Default page length
+        lengthMenu: [10, 25, 500], // Pagination options
+        pageLength: 500, // Default page length
         columns: [
             {
                 data: null,
@@ -68,18 +73,33 @@ $(document).ready(function() {
                     return meta.row + 1;
                 }
             },
-            { data: 'brand_name' },
             { 
                 data: null,
                 render: function (data, type, row) {
-                    return '<span class="badge badge-info">' + row.fname + ' ' + row.lname + '</span>';
+                    return '<span class="badge badge-info">' + row.fullname + '</span>';
                 }
             },
+            { 
+                data: 'gender'
+            },
+            { 
+                data: null,
+                render: function (data, type, row) {
+                    return '<span class="badge badge-info">' + row.role + '</span>';
+                }
+            },
+            { 
+                data: null,
+                render: function (data, type, row) {
+                    return '<span class="badge badge-info">' + row.email + '</span>';
+                }
+            },
+            {data: 'created_by'},
             {data: 'created_at'},
             {
                 data: null,
                 render: function (data, type, row) {
-                    var showUrl = '/brand/' + row.id;
+                    
                     return '<button  class="btn btn-primary edit" id="edit" data-id="'+row.id+'"><i class="icon-pencil pencil-icon"> </i></button>' + ' ' +
                            '<button  class="btn btn-danger delete" data-id="'+row.id+'"><i class="icon-trash trash-icon"> </i></button>';
                 }
@@ -87,29 +107,53 @@ $(document).ready(function() {
         ]
     });
 
-    $('#brand').on('click', '.edit', function() {
-        $('#brandName').val('');
-        $('#exampleModalLongTitle').text('Update Brand Name');
+    $('#user').on('click', '.edit', function() {
+  
+        $('#exampleModalLongTitle').text('Update Branch Name');
         var id = $(this).data('id');
         $('#exampleModalCenter').modal('show');
         $('#saveandupdate').text('Update');
         $('#saveandupdate').addClass('btn btn-success');
 
         $('#hiddensaveup').val(id);
-        axios.get('brand/' + id)
-        .then(response => {
-            var resp = response.data.response;
+
        
-            $('#brandName').val(resp.brand_name);
+        axios.get('/user/' + id)
+        .then(response => {
+            var resp = response.data;
+            console.log(resp);
+            console.log(resp[0].fname);
+
+            $('#fname').val(resp[0].fname);
+            $('#lname').val(resp[0].lname);
+
+            $('#gender').html(`
+                <option value="Male" ${resp[0].gender === 'Male' ? 'selected' : ''}>Male</option>
+                <option value="Female" ${resp[0].gender === 'Female' ? 'selected' : ''}>Female</option>
+            `);
+
+            // $('#role').html(`
+            //     <option value="Admin" ${resp[0].role === 'Admin' ? 'selected' : ''}>Admin</option>
+            //     <option value="User" ${resp[0].role === 'User' ? 'selected' : ''}>User</option>
+            // `);
+            
+
+            console.log(resp.status);
+            $('#status').html(`
+                <option value="Inactive" ${resp[0].status === 'Inactive' ? 'selected' : ''}>Inactive</option>
+                <option value="Active" ${resp[0].status === 'Active' ? 'selected' : ''}>Active</option>
+            `);
+
+            $('#email').val(resp[0].email);
+            
         });
     });
 
-    $('#brand').on('click', '.delete', function() {
+    $('#user').on('click', '.delete', function() {
         var id = $(this).data('id');
-        
         Swal.fire({
             title: 'Are you sure?',
-            text: "Do you want to delete this brand name?",
+            text: "Do you want to delete this user?",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -118,26 +162,25 @@ $(document).ready(function() {
             cancelButtonText: 'No, cancel!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete('brand/'+id)
+                axios.delete('user/'+id)
                     .then(response => {
                         var resp = response.data;
-            
+                        console.log(resp);
                         if (resp.success === true) {
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Success!',
-                                text: resp.message
+                                text: resp.response
                             }).then(() => {
-                                $('#brandName').val('');
-                                $('#brand').DataTable().ajax.reload();
+                                $('#exampleModalCenter').find('input, select').val('');
+                                $('#user').DataTable().ajax.reload();
 
                             });
                         } else {
-                       
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Error!',
-                                text: resp.message
+                                text: resp.response
                             });
                         }
                     })
@@ -152,7 +195,7 @@ $(document).ready(function() {
                 Swal.fire({
                     icon: 'info',
                     title: 'Cancelled',
-                    text: ' Brand name was not deleted!',
+                    text: ' User was not deleted!',
                 });
             }
         });
@@ -162,7 +205,6 @@ $(document).ready(function() {
 
 
     $('#saveandupdate').on('click',function() {
-
         var Id =  $('#hiddensaveup').val();
         var textm = '';
         if(Id === '0'){
@@ -170,13 +212,21 @@ $(document).ready(function() {
         }else{
             textm = 'update';
         }
-
-        var data = {
-            brand_name: $('#brandName').val()
+        const userData = {
+            fname: $('#fname').val(),
+            lname: $('#lname').val(),
+            gender: $('#gender').val(),
+            role: $('#role').val(),
+            status: $('#status').val(),
+            email: $('#email').val(),
+            password: $('#password').val(),
+            password_confirmation: $('#password_confirmation').val(),
         };
+
+
         Swal.fire({
             title: 'Are you sure?',
-            text: "Do you want to "+textm+" this brand name?",
+            text: "Do you want to "+textm+" this user?",
             icon: 'info',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -185,18 +235,19 @@ $(document).ready(function() {
             cancelButtonText: 'No, cancel!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.put('brand/' + Id, data)
+                axios.put('user/' + Id, userData)
                     .then(response => {
                         var resp = response.data;
+                        console.log(resp);
                         if (resp.success === true) {
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Success!',
-                                text: resp.message
+                                text: resp.response
                             }).then(() => {
-                                $('#brandName').val('');
                                 $('#exampleModalCenter').modal('hide');
-                                $('#brand').DataTable().ajax.reload();
+                                $('#user').DataTable().ajax.reload();
+                                $('#exampleModalCenter').find('input, select').val('');
                             });
                         } else {
                             var errorMessage = 'Error!';
@@ -229,7 +280,7 @@ $(document).ready(function() {
                 Swal.fire({
                     icon: 'info',
                     title: 'Cancelled',
-                    text: 'Your brand name was not '+textm+' ',
+                    text: 'User was not '+textm+' ',
                 });
             }
         });

@@ -46,7 +46,12 @@ Brand(s) List
 @include('tools.brand.brand-modal')
 @endsection
 @section('script')
-<script src="../apps/brand/brand-list.js"></script>
+{{-- OLD --}}
+{{-- <script src="../apps/brand/brand-list.js"></script> --}}
+
+
+{{-- NEW --}}
+@vite(['resources/js/apps/brand/brand-list.js'])
 
 
 @endsection

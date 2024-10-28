@@ -52,5 +52,13 @@
 @include('tools.supplier.supplier-modal')
 @endsection
 @section('script')
-<script src="../apps/supplier/supplier-list.js"></script>
+
+{{-- OLD --}}
+{{-- <script src="../apps/supplier/supplier-list.js"></script> --}}
+
+
+{{-- NEW --}}
+@vite(['resources/js/apps/supplier/supplier-list.js'])
+
+
 @endsection

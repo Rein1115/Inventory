@@ -6,6 +6,7 @@
 
 </style>
 
+
 @endsection
 @section('content')
 <div class="row">
@@ -192,6 +193,14 @@
 @endsection
 @endsection
 @section('script')
-<script src="../apps/payment/payment-history-details.js"></script>
-<script src="../apps/invoicereceipt/invoicereceipt.js"></script>
+
+
+{{-- OLD --}}
+{{-- <script src="../apps/payment/payment-history-details.js"></script>
+<script src="../apps/invoicereceipt/invoicereceipt.js"></script> --}}
+
+
+{{-- NEW --}}
+@vite(['resources/js/apps/payment/payment-history-details.js','resources/js/apps/invoicereceipt/invoicereceipt.js'])
+
 @endsection

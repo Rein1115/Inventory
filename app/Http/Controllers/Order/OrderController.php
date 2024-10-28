@@ -149,7 +149,7 @@ class OrderController extends Controller
         
             DB::commit(); // Commit the transaction
         
-            return response()->json(['success' => true, 'message' => 'Data inserted successfully']);
+            return response()->json(['success' => true, 'message' => 'Order(s) checkout successfully']);
         } catch (\Exception $e) {
             DB::rollBack(); // Rollback the transaction in case of error
             return response()->json(['success' => false, 'message' => 'An error occurred during insertion', 'error' => $e->getMessage()]);
@@ -274,9 +274,9 @@ class OrderController extends Controller
                 $update = DB::update('UPDATE orders SET deliveredto = ?, `address` = ? , delivered_date =?, po_no = ? , terms = ?,  deliveredby = ? , fullname =? , contact_num = ?, `or` =? , cr =? , collected_by = ?,updated_by = ?,email =? WHERE trans_no = ? ', [
                     $data['deliveredto'],$data['address'],$data['delivered_date'],$data['po_no'],$data['terms'],$data['deliveredby'],$data['fullname'],$data['contact_num'],$data['or'],$data['cr'],$data['collected_by'],Auth::user()->fullname,$data['email'],$id]
                 );
-                return response()->json(['success' => true, 'message' => 'Order updated successfully.']);
+                return response()->json(['success' => true, 'message' => 'Order information updated successfully.']);
         } catch (Exception $e) {
-            return response()->json(['success' => false, 'message' => 'Failed to update order.', 'error' => $e->getMessage()]);
+            return response()->json(['success' => false, 'message' => 'Failed to update information order.', 'error' => $e->getMessage()]);
         }
     }   
 

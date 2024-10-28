@@ -48,5 +48,11 @@ Payment(s) History
 {{-- @include('tools.order.order-modal') --}}
 @endsection
 @section('script')
-<script src="../apps/payment/payment-history-list.js"></script>
+
+{{-- OLD --}}
+{{-- <script src="../apps/payment/payment-history-list.js"></script> --}}
+
+
+{{-- NEW --}}
+@vite(['resources/js/apps/payment/payment-history-list.js'])
 @endsection

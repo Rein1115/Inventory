@@ -1,6 +1,5 @@
 $(document).ready(function(){
-    $('#supplier').DataTable({
-
+    $('#product').DataTable({
         dom             : 'Bflrtip',
         processing      : true,
         // serverSide      : true,
@@ -18,7 +17,7 @@ $(document).ready(function(){
                 className: 'btn px-2 py-1',
                 attr    : { 'data-toggle': 'tooltip', 'title': 'Reload' },
                 action  : function(e,dt,node,config){ 
-                    $('#supplier').DataTable().ajax.reload(); 
+                    $('#product').DataTable().ajax.reload(); 
                    
                 } 
             },
@@ -27,18 +26,7 @@ $(document).ready(function(){
                 className: 'btn px-2 py-1',
                 attr    : {'data-toggle': 'tooltip', 'title': 'Create New'},
                 action  : function(e,dt,node,config){
-                    $('#exampleModalCenter').find('input').val('');
-                    $('#exampleModalCenter').find('select').each(function() {
-                        this.selectedIndex = 0; 
-                    });
-                    var id = $('#hiddensaveup').val('0');
-                    $('#exampleModalLongTitle').text('');
-                    $('#saveandupdate').removeClass('btn btn-success');
-                    $('#exampleModalCenter').modal('show');
-                    $('#saveandupdate').text('Save');
-                    $('#saveandupdate').addClass('btn btn-primary');
-                    $('#hiddensaveup').val('0');
-                    $('#exampleModalLongTitle').text('Create Supplier');
+                    window.location.href = '/product/create';
                 } 
             },
             {
@@ -47,16 +35,16 @@ $(document).ready(function(){
                 className: 'btn px-2 py-1',
                 attr    : {'data-toggle': 'tooltip', 'title': 'Export'},
                 buttons: [
-                    {extend: 'pdf', exportOptions: {columns: [1, 2, 3, 4, 5, 6,7]}},
-                    {extend: 'excel', exportOptions: {columns: [1, 2, 3, 4, 5, 6,7]}},
-                    {extend: 'print', exportOptions: {columns: [1, 2, 3, 4, 5, 6,7]}},
-                    {extend: 'copy', exportOptions: {columns: [1, 2, 3, 4, 5, 6,7]}},
-                    {extend: 'csv', exportOptions: {columns: [1, 2, 3, 4, 5, 6,7]}},
+                    {extend: 'pdf', exportOptions: {columns: [1, 2, 3, 4, 5, 6,7,8,9]}},
+                    {extend: 'excel', exportOptions: {columns: [1, 2, 3, 4, 5, 6,7,8,9]}},
+                    {extend: 'print', exportOptions: {columns: [1, 2, 3, 4, 5, 6,7,8,9]}},
+                    {extend: 'copy', exportOptions: {columns: [1, 2, 3, 4, 5, 6,7,8,9]}},
+                    {extend: 'csv', exportOptions: {columns: [1, 2, 3, 4, 5, 6,7,8,9]}},
                 ]
             },
         ],
         ajax: {
-            url: 'supplier',
+            url: '/product',
             dataSrc: ''
         },
         lengthMenu: [10, 25, 50], 
@@ -68,36 +56,48 @@ $(document).ready(function(){
                     return meta.row + 1;
                 }
             },
-            {   
-                data: null,
-                render: function (data, type, row) {
-                    return '<span class="badge badge-info">' + row.fname + ' ' + row.lname + '</span>';
-                }},
+            {  data:'product_name' },
+            {  data:'brand_name' },
             { 
                 data: null,
                 render: function (data, type, row) {
-                    return '<span class="badge badge-info">' + row.company + '</span>';
+                    return '<span class="badge badge-warning">' + row.quantity + '</span>';
                 }
             },
-            {data:'gender'},
-            {data: 'contact_no'},
-            {data:'address'},
+            { data: 'unit'},
+            { 
+                data: null,
+                render: function (data, type, row) {
+                    return '<span class="badge badge-info text-white">' +row.expiration_date +'</span>';
+                }
+            },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    // Use a ternary operator to choose the class based on row.status
+                    var badgeClass = row.status === "Pending" ? "badge-danger" : "badge-success";
+                    
+                    // Return the HTML with the chosen class
+                    return '<span class="badge ' + badgeClass + '">' + row.status + '</span>';
+                }
+            },
             { 
                 data: null,
                 render: function (data, type, row) {
                     return '<span class="badge badge-info">' +row.created_by+'</span>';
                 }
             },
-            
             {data:'created_at'},
             {
                 data: null,
                 render: function (data, type, row) {
-                    return '<button  class="btn btn-primary edit" id="edit" data-id="'+row.id+'"><i class="icon-pencil pencil-icon"> </i></button>' + ' ' +
-                           '<button  class="btn btn-danger delete" data-id="'+row.id+'"><i class="icon-trash trash-icon"> </i></button>';
+                    return '<a href="/product/'+row.id+'" class="btn btn-primary text-white edit" id="edit"     data-id="'+row.id+'"><i class="icon-pencil pencil-icon"> </i></a>' + ' ' +
+                           '<button  class="btn btn-danger text-white delete" data-id="'+row.id+'"><i class="icon-trash trash-icon"> </i></button>' + ' '+ '<button  class="btn btn-secondary text-white view" data-id="'+row.id+'"><i class="icon-eye eye-icon"> </i></button>';
                 }
             }
-        ]
+        ],
+        // order: [[0, 'desc']],
+        // select: true
     });
 
     $('#supplier').on('click','.edit',function(){
@@ -124,7 +124,6 @@ $(document).ready(function(){
 
     $('#saveandupdate').on('click',function(){
        var id = $('#hiddensaveup').val();
-       var textm;
        if(id === '0'){
         textm = 'save';
         }else{
@@ -200,12 +199,11 @@ $(document).ready(function(){
             });
     });
 
-    $('#supplier').on('click', '.delete', function() {
+    $('#product').on('click', '.delete', function() {
         var id = $(this).data('id');
-        
         Swal.fire({
             title: 'Are you sure?',
-            text: "Do you want to delete this supplier?",
+            text: "Do you want to delete this product?",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -214,8 +212,10 @@ $(document).ready(function(){
             cancelButtonText: 'No, cancel!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete('supplier/'+id)
+                axios.delete('/product/'+id)
                     .then(response => {
+
+                   
                         var resp = response.data;
                 
                         if (resp.success === true) {
@@ -224,7 +224,7 @@ $(document).ready(function(){
                                 title: 'Success!',
                                 text: resp.message
                             }).then(() => {
-                                $('#supplier').DataTable().ajax.reload();
+                                $('#product').DataTable().ajax.reload();
 
                             });
                         } else {
@@ -246,12 +246,51 @@ $(document).ready(function(){
                 Swal.fire({
                     icon: 'info',
                     title: 'Cancelled',
-                    text: 'Supplier was not deleted',
+                    text: 'Product was not deleted',
                 });
             }
         });
-
     });
+
+
+    $('#product').on('click', '.view', function() {
+        var id = $(this).data('id');
+        $('#exampleModalCenter').find('input').val('');
+        $('#exampleModalCenter').modal('show');
+        $.ajax({
+            url: '/product',
+            type: 'GET',
+            success: function(response) {
+                response.forEach(item => {
+                 
+                    if(id === item.id){
+                        
+
+                        $('#prodname').val(item.product_name);
+                        $('#suppliername').val(item.supplier_name);
+                        $('#brandname').val(item.brand_name);
+                        $('#unit').val(item.unit);
+                        $('#origprice').val( '₱'+ ' ' + item.original_price);
+                        $('#sellprice').val('₱'+' ' + item.selling_price);
+                        $('#quantity').val(item.quantity);
+                        $('#status').val(item.status); expirationDate
+                        $('#expirationDate').val(item.expiration_date);
+                        $('#createdby').val(item.created_by);
+                    }
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('There was an error!', error);
+            }
+        });
+    });
+
+
+
+
+
+
+
 
 
 });

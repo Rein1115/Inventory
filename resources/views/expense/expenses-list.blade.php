@@ -45,5 +45,11 @@
 @include('tools.expense.expenses-modal')
 @endsection
 @section('script')
-<script src="../apps/expense/expenses-list.js"></script>
+
+{{-- OLD --}}
+{{-- <script src="../apps/expense/expenses-list.js"></script> --}}
+
+
+{{-- NEW --}}
+@vite(['resources/js/apps/expense/expenses-list.js'])
 @endsection

@@ -42,5 +42,11 @@
 {{-- @include('tools.order.order-modal') --}}
 @endsection
 @section('script')
-<script src="../apps/order/order-list.js"></script>
+
+{{-- OLD --}}
+{{-- <script src="../apps/order/order-list.js"></script> --}}
+
+
+{{-- NEW --}}
+@vite(['resources/js/apps/order/order-list.js'])
 @endsection

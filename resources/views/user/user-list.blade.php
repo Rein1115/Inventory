@@ -44,5 +44,11 @@
 @include('tools.user.user-modal')
 @endsection
 @section('script')
-<script src="../apps/user/user-list.js"></script>
+
+{{-- OLD --}}
+{{-- <script src="../apps/user/user-list.js"></script> --}}
+
+{{-- NEW --}}
+@vite(['resources/js/apps/user/user-list.js'])
+
 @endsection

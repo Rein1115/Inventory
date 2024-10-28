@@ -196,6 +196,13 @@
 
 @endsection
 @section('script')
-<script src="../apps/payment/payment-details.js"></script>
-<script src="../apps/invoicereceipt/invoicereceipt.js"></script>
+
+{{-- OLD --}}
+{{-- <script src="../apps/payment/payment-details.js"></script>
+<script src="../apps/invoicereceipt/invoicereceipt.js"></script> --}}
+
+
+{{-- NEW --}}
+@vite(['resources/js/apps/invoicereceipt/invoicereceipt.js','resources/js/apps/payment/payment-details.js'])
+
 @endsection

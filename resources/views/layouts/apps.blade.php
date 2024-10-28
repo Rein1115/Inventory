@@ -11,6 +11,8 @@
 
       <!-- Favicon icon -->
       <link rel="icon" type="image/png" sizes="16x16" href="../logonibayicon.png">
+
+      
       <!-- Custom Stylesheet -->
       <link href="../css/style.css" rel="stylesheet">
 
@@ -309,9 +311,6 @@
       <script src="../js/styleSwitcher.js"></script>
       <script src="../apps/tools/customizefunction.js"></script>
 
-
-
-      {{-- practice cdn only for development --}}
 
       
     

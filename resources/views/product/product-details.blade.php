@@ -110,5 +110,10 @@
 {{-- @include('tools.supplier.supplier-modal') --}}
 @endsection
 @section('script')
-<script src="../apps/product/product-details.js"></script>
+
+{{-- OLD --}}
+{{-- <script src="../apps/product/product-details.js"></script> --}}
+
+{{-- NEW --}}
+@vite(['resources/js/apps/product/product-details.js'])
 @endsection

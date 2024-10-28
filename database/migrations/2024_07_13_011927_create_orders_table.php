@@ -18,17 +18,17 @@ return new class extends Migration
             $table->string('deliveredto');
             $table->string('address');
             $table->string('delivered_date');
-
+        
             $table->integer('quantity');
             $table->integer('total_amount');
-            $table->integer('po_no');
+            $table->bigInteger('po_no'); // Change to BIGINT to handle larger values
             $table->string('terms');
-
+        
             $table->string('deliveredby');
             $table->string('fullname');
             $table->string('contact_num');
-            $table->integer('or');
-            $table->integer('cr');
+            $table->bigInteger('or'); // Change to BIGINT if needed
+            $table->bigInteger('cr'); // Change to BIGINT if needed
             $table->string('collected_by');
             $table->string('payment_status');
             $table->string('created_by');
@@ -37,6 +37,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->timestamps();
         });
+        
     }
 
     /**

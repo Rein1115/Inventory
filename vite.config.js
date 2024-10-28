@@ -8,7 +8,53 @@ export default defineConfig({
             input: [
                 'resources/sass/app.scss',
                 'resources/js/app.js',
-                'resources/js/apps/brand/brand-details.js'
+
+                // DASHBOARD
+                'resources/js/apps/dashboard/dashboard.js',
+
+
+                // SUPPLIER
+                 'resources/js/apps/supplier/supplier-list.js',
+
+                //  BRAND
+                'resources/js/apps/brand/brand-list.js',
+
+                // PRODUCT 
+                'resources/js/apps/product/product-list.js',
+                'resources/js/apps/product/product-history.js',
+                'resources/js/apps/product/product-details.js',
+
+                // ORDER
+                'resources/js/apps/order/order-list.js',
+                'resources/js/apps/order/order-details.js',
+                'resources/js/apps/order/order-freebies.js',
+                
+
+
+                // RECEIPT
+                'resources/js/apps/invoicereceipt/invoicereceipt.js',
+
+                // PAYMENT 
+                'resources/js/apps/payment/payment-list.js',
+                'resources/js/apps/payment/payment-details.js',
+                'resources/js/apps/payment/payment-history-list.js',
+                'resources/js/apps/payment/payment-history-details.js',
+
+
+                // SUMMARY 
+                'resources/js/apps/summary/summary-list.js',
+
+
+                // USER 
+                'resources/js/apps/user/user-list.js',
+
+
+                // EXPENSES
+                'resources/js/apps/expense/expenses-list.js',
+
+                // PROFILE
+                'resources/js/apps/profile/profile-details.js'
+
             ],
             refresh: true,
         }),

@@ -246,8 +246,11 @@
 @section('script')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-   
-   <script src="../apps/dashboard/dashboard.js"></script>
+     {{-- OLD --}}
+   {{-- <script src="../apps/dashboard/dashboard.js"></script> --}}
+
+   {{-- NEW --}}
+   @vite(['resources/js/apps/dashboard/dashboard.js']) 
 
 
 

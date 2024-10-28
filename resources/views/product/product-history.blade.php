@@ -57,5 +57,9 @@ Product(s) History
 @include('tools.product.producthistory-modal')
 @endsection
 @section('script')
-<script src="../apps/product/product-history.js"></script>
+{{-- OLD --}}
+{{-- <script src="../apps/product/product-history.js"></script> --}}
+
+{{-- NEW --}}
+@vite(['resources/js/apps/product/product-history.js'])
 @endsection

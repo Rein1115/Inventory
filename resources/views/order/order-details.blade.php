@@ -215,9 +215,15 @@
 @endsection
 @section('script')
 
-<script src="../apps/order/order-details.js"></script>
+
+{{-- OLD --}}
+{{-- <script src="../apps/order/order-details.js"></script>
 <script src="../apps/order/order-freebies.js"></script>
-<script src="../apps/invoicereceipt/invoicereceipt.js"></script>
+<script src="../apps/invoicereceipt/invoicereceipt.js"></script> --}}
+
+
+{{-- NEW --}}
+@vite(['resources/js/apps/order/order-details.js','resources/js/apps/order/order-freebies.js','resources/js/apps/invoicereceipt/invoicereceipt.js'])
 
 
 @endsection

@@ -72,5 +72,9 @@
 {{-- @include('tools.supplier.supplier-modal') --}}
 @endsection
 @section('script')
-<script src="../apps/profile/profile-details.js"></script>
+{{-- OLD --}}
+{{-- <script src="../apps/profile/profile-details.js"></script> --}}
+
+{{-- NEW --}}
+@vite(['resources/js/apps/profile/profile-details.js'])
 @endsection
