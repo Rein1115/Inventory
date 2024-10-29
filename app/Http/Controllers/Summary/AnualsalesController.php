@@ -49,43 +49,50 @@ class AnualsalesController extends Controller
      */
     public function show(string $id)
     {
-        // Fetch total sales for the specified year
-        $data['payment'] = DB::select('SELECT SUM(payment) AS totalsales, YEAR(pay_date) AS year 
+        
+        $admin = DB::select('SELECT COUNT(*) AS count FROM users WHERE role = "Admin" AND id = ?' , [Auth::user()->id]);
+        if($admin[0]->count > 0){
+            // Fetch total sales for the specified year
+            $data['payment'] = DB::select('SELECT SUM(payment) AS totalsales, YEAR(pay_date) AS year 
             FROM payments 
             WHERE YEAR(pay_date) = ? 
             GROUP BY YEAR(pay_date)', 
             [$id]
-        );
-    
-        // Fetch total expenses for the specified year
-        $data['expenses'] = DB::select('SELECT SUM(amount) AS total_expenses 
+            );
+
+            // Fetch total expenses for the specified year
+            $data['expenses'] = DB::select('SELECT SUM(amount) AS total_expenses 
             FROM expenses 
             WHERE YEAR(expenses_date) = ?', 
             [$id]
-        );
-    
-        // Fetch net profit for the specified year
-        $data['netprofit'] = DB::select('SELECT SUM((p.selling_price - p.original_price) * o.quantity) AS net_profit
+            );
+
+            // Fetch net profit for the specified year
+            $data['netprofit'] = DB::select('SELECT SUM((p.selling_price - p.original_price) * o.quantity) AS net_profit
             FROM orders AS o
             LEFT JOIN products AS p ON p.id = o.product_id
             WHERE o.payment_status = "Paid" AND YEAR(o.created_at) = ?', 
             [$id]
-        );
-    
-        // Calculate final net profit
-        $totalExpenses = $data['expenses'][0]->total_expenses ?? 0;
-        $netProfit = $data['netprofit'][0]->net_profit ?? 0;
-        $data['finalnetprofit'] = $netProfit - $totalExpenses;
-    
-        // Prepare the result
-        $result = [
+            );
+
+            // Calculate final net profit
+            $totalExpenses = $data['expenses'][0]->total_expenses ?? 0;
+            $netProfit = $data['netprofit'][0]->net_profit ?? 0;
+            $data['finalnetprofit'] = $netProfit - $totalExpenses;
+
+            // Prepare the result
+            $result = [
             "Year" => $data['payment'][0]->year ?? $id, // Default to $id if not found
             "totalsales" => $data['payment'][0]->totalsales ?? 0,
             "total_expenses" => $totalExpenses,
             "finalnetprofit" => $data['finalnetprofit']
-        ];
-    
-        return response()->json($result);
+            ];
+
+            return response()->json($result);
+        }
+        else{
+            return response()->view('page-error-404', [], 404);
+        }
     }
     
     

@@ -1,7 +1,6 @@
 $(document).ready(function(){
 
     var product = $('#productlist').data('data');
-    console.log(product);
     $('#invoice-print').on('click',function(){
         formatNumber(parseFloat($('#printtotalamounts').text()));
         // $('#parentprintheaders').removeClass('d-none');

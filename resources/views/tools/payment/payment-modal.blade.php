@@ -31,7 +31,7 @@
                           <option id="Gcash" value="Gcash">Gcash</option>
                           <option id="Paymaya" value="Paymaya">Paymaya</option>    
                           <option id="Paypal" value="Paypal">Paypal</option>
-                          <option id="banktransfer" value="banktransfer">Bank Transfers</option>
+                          <option id="Banktransfer" value="banktransfer">Bank Transfers</option>
                       </select>
                     </div>
                 </div>
