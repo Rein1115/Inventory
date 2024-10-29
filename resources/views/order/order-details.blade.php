@@ -8,16 +8,16 @@
 <div class="row">
 
 
-<div class="row page-titles mx-0 ml-3" id="code" data-id="{{Auth::user()->id}}" data-role = "{{Auth::user()->role}}">
-    <div class="col p-md-0">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-            <li class="breadcrumb-item"><a href="javascript:void(0)">Order Details</a></li>
-            <li class="breadcrumb-item active"><a href="javascript:void(0)">{{isset($data['transNo']) ? 'Update Order' : 'Create Order'}}</a></li>
-        </ol>
+    <div class="row page-titles mx-0 ml-3" id="code" data-id="{{Auth::user()->id}}" data-role = "{{Auth::user()->role}}">
+        <div class="col p-md-0">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Order Details</a></li>
+                <li class="breadcrumb-item active"><a href="javascript:void(0)">{{isset($data['transNo']) ? 'Update Order' : 'Create Order'}}</a></li>
+            </ol>
+        </div>
     </div>
-</div>
-<div class="container-fluid">
+    <div class="container-fluid">
     <div class="col-lg-12">
         <div class="card col-sm" data-transNo= "{{isset($data['transNo']) ? $data['transNo']: '' }}" id="products" data-products ="{{isset($products) ? json_encode($products): '' }}">
             <div class="card-body" id="freebiesorder">
@@ -204,13 +204,13 @@
     </div>
 </div>
 </div>
+</div>
 @include('tools.order.order-modal')
 @include('tools.order.freebies-modal')
 
 @section('print')
 @include('tools.invoicereceipt.invoicereceipt')
 @endsection
-
 
 @endsection
 @section('script')

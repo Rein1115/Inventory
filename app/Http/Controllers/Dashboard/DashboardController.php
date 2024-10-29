@@ -24,13 +24,18 @@ class DashboardController extends Controller
 
         $data['expenses'] = DB::select('SELECT SUM(amount) AS amount FROM expenses ');
 
+
+        // ORIGINAL CODE
         $data['netprofit'] = DB::select(' SELECT SUM((p.selling_price - p.original_price) * o.quantity) AS net_profit
         FROM orders AS o
         LEFT JOIN products AS p ON p.id = o.product_id
-        WHERE o.payment_status = "Paid"');
+        WHERE  o.payment_status = "Paid"');
+
+
+
         $data['finalnetprofit'] =   $data['netprofit'][0]->net_profit - $data['expenses'][0]->amount;
 
-        // return $data['finalnetprofit'];
+        // return $data['netprofit'];
 
 
         // ORIGINAL CODE

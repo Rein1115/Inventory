@@ -78,7 +78,7 @@ class AnualsalesController extends Controller
             // Calculate final net profit
             $totalExpenses = $data['expenses'][0]->total_expenses ?? 0;
             $netProfit = $data['netprofit'][0]->net_profit ?? 0;
-            $data['finalnetprofit'] = $netProfit - $totalExpenses;
+            $data['finalnetprofit'] = ROUND($netProfit) - $totalExpenses;
 
             // Prepare the result
             $result = [
