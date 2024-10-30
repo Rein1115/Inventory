@@ -68,16 +68,30 @@ class AnualsalesController extends Controller
             );
 
             // Fetch net profit for the specified year
-            $data['netprofit'] = DB::select('SELECT SUM((p.selling_price - p.original_price) * o.quantity) AS net_profit
+            // ORIGINAL CODE
+            // $data['netprofit'] = DB::select('SELECT SUM((p.selling_price - p.original_price) * o.quantity) AS net_profit
+            // FROM orders AS o
+            // LEFT JOIN products AS p ON p.id = o.product_id
+            // WHERE o.payment_status = "Paid" AND YEAR(o.created_at) = ?', 
+            // [$id]
+            // );
+
+            // REVISED CODE
+            $data['cost'] = DB::select('SELECT o.trans_no, o.product_id,o.total_amount - SUM(p.original_price * (o.quantity + COALESCE(f.quantity, 0))) AS net_profit
             FROM orders AS o
             LEFT JOIN products AS p ON p.id = o.product_id
-            WHERE o.payment_status = "Paid" AND YEAR(o.created_at) = ?', 
-            [$id]
-            );
+            LEFT JOIN freebies AS f ON p.id = f.product_id
+            WHERE o.payment_status = "Paid" AND YEAR(o.created_at)
+            GROUP BY o.trans_no, o.product_id, o.total_amount');
+    
+            $cost= 0;
+            foreach($data['cost'] AS $net_profit){
 
+                $cost +=  $net_profit->net_profit;
+            }
             // Calculate final net profit
             $totalExpenses = $data['expenses'][0]->total_expenses ?? 0;
-            $netProfit = $data['netprofit'][0]->net_profit ?? 0;
+            $netProfit = $cost ?? 0;
             $data['finalnetprofit'] = ROUND($netProfit) - $totalExpenses;
 
             // Prepare the result
