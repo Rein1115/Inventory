@@ -26,16 +26,31 @@ class DashboardController extends Controller
 
 
         // ORIGINAL CODE
-        $data['netprofit'] = DB::select(' SELECT SUM((p.selling_price - p.original_price) * o.quantity) AS net_profit
+        // $data['netprofit'] = DB::select(' SELECT SUM((p.selling_price - p.original_price) * o.quantity) AS net_profit
+        // FROM orders AS o
+        // LEFT JOIN products AS p ON p.id = o.product_id
+        // WHERE  o.payment_status = "Paid"');
+
+
+        // revised code
+        $data['cost'] = DB::select('SELECT 
+            o.trans_no, 
+            o.product_id,
+            o.total_amount - SUM(p.original_price * (o.quantity + COALESCE(f.quantity, 0))) AS net_profit
         FROM orders AS o
         LEFT JOIN products AS p ON p.id = o.product_id
-        WHERE  o.payment_status = "Paid"');
+        LEFT JOIN freebies AS f ON p.id = f.product_id
+        WHERE o.payment_status = "Paid"
+        GROUP BY o.trans_no, o.product_id, o.total_amount');
+    
+        $result= 0;
+        foreach($data['cost'] AS $net_profit){
 
+            $result +=  $net_profit->net_profit;
+        }
 
+        $data['finalnetprofit'] =   $result- $data['expenses'][0]->amount;
 
-        $data['finalnetprofit'] =   $data['netprofit'][0]->net_profit - $data['expenses'][0]->amount;
-
-        // return $data['netprofit'];
 
 
         // ORIGINAL CODE
