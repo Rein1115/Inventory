@@ -1,7 +1,7 @@
 @extends('layouts.apps')
 
 @section('title') 
- Expense(s) List 
+Annual Sales List
 @endsection
 @section('content')
 <div class="row">
@@ -10,7 +10,8 @@
         <div class="col p-md-0">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-                <li class="breadcrumb-item"><a href="javascript:void(0)">Expenses</a></li>
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Summary</a></li>
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Annual Sales</a></li>
             </ol>
         </div>
     </div>
@@ -20,7 +21,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Monthly Expenses</h4>
+                            <h4 class="card-title">Annual Sales</h4>
                             <div class="table-responsive">
                                 <table id= "annualsales" class="table" style="text-align:center; width:100%; border-collapse:collapse;">
                                     <thead >

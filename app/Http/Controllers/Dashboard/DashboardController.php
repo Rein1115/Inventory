@@ -83,17 +83,29 @@ class DashboardController extends Controller
     }
 
 
-    public function dashboardgraph(){
+    public function dashboardgraph(Request $request){
+        // ORIGINAL CODE
+        // $date =  date("Y");
+        // $data = DB::select("SELECT 
+        // SUM(payment) AS total, 
+        // MONTHNAME(pay_date) AS formatted_date ,
+        // YEAR(pay_date) AS `year`
+        // FROM payments WHERE YEAR(pay_date) = ? AND (? = 'Admin' OR created_id = ?)
+        // GROUP BY YEAR(pay_date),MONTHNAME(pay_date)  ORDER BY MONTH(pay_date)",[$date, Auth::user()->role,Auth::user()->id]);
 
-        $date =  date("Y");
+
+
+        // REVISED
+        $date = date("Y");
+        $year = $request->year ?? $date; // Use requested year if available, otherwise use current year
+        
+
         $data = DB::select("SELECT 
         SUM(payment) AS total, 
         MONTHNAME(pay_date) AS formatted_date ,
         YEAR(pay_date) AS `year`
         FROM payments WHERE YEAR(pay_date) = ? AND (? = 'Admin' OR created_id = ?)
-        GROUP BY YEAR(pay_date),MONTHNAME(pay_date)  ORDER BY MONTH(pay_date)",[$date, Auth::user()->role,Auth::user()->id]);
-    
-
+        GROUP BY YEAR(pay_date),MONTHNAME(pay_date)  ORDER BY MONTH(pay_date)",[$year, Auth::user()->role,Auth::user()->id]);
         return response()->json($data);
     }
     

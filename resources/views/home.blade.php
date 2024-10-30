@@ -61,7 +61,7 @@
                 </div>
             </a>
         </div>
-        
+
         <div class="col-lg-3 col-sm-3">
             <a href="" class="text-white">
                 <div class="card gradient-3 h-55">
@@ -97,11 +97,30 @@
 
     <div class="row">
         <!-- Column for Monthly Sales Bar Chart -->
-        <div class="col-lg-6">
+        {{-- <div class="col-lg-6">
             <div class="card">
                 <div class="card-body pb-0" style="padding-bottom: 0;">
                     <h4 class="mb-1">Monthly Sales</h4>
                     <p class="text-muted">Overview of sales for the current month</p>
+                </div>
+                <div class="chart-wrapper mb-4" style="height: 300px;">
+                    <canvas id="chart_widget_2" style="height: 100%;"></canvas>
+                </div>
+            </div>
+        </div> --}}
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body pb-0" style="padding-bottom: 0;">
+                    
+                    <h4 class="mb-1">Monthly Sales</h4>
+                    <p class="text-muted">Overview of sales for the selected year</p>
+                    <!-- Smaller Year Input and Search Button -->
+                    <div class="input-group mb-3" style="width: 200px;"> <!-- Adjust width as needed -->
+                        <input type="number" id="yearInput" class="form-control form-control-sm" placeholder="Year" min="2000" max="2100" value="{{ date('Y') }}" style="height: 20px;"> <!-- Adjust height here -->
+                        <div class="input-group-append">
+                            <button class="btn btn-primary btn-sm" id="searchButton" type="button" style="height: 36px;">Search</button> <!-- Adjust height here -->
+                        </div>
+                    </div>
                 </div>
                 <div class="chart-wrapper mb-4" style="height: 300px;">
                     <canvas id="chart_widget_2" style="height: 100%;"></canvas>
@@ -123,7 +142,7 @@
         </div>
     </div>
 
-    </div>
+    {{-- </div> --}}
 
 @endsection
 @section('script')

@@ -58,26 +58,66 @@ $(document).ready(function(){
      });
  
      // Fetch data using Axios
-     axios.get('dashboardgraph')
-         .then(function (response) {
-             // Process the data
-             var data = response.data;
-             var labels = [];
-             var values = [];
+    //  ORIGINAL CODE
+    //  axios.get('dashboardgraph')
+    //      .then(function (response) {
+    //          // Process the data
+    //          var data = response.data;
+    //          var labels = [];
+    //          var values = [];
  
-             data.forEach(function (item) {
-                 labels.push(item.formatted_date + ' ' + item.year);
-                 values.push(parseFloat(item.total)); // Convert total to float
-             });
+    //          data.forEach(function (item) {
+    //              labels.push(item.formatted_date + ' ' + item.year);
+    //              values.push(parseFloat(item.total)); // Convert total to float
+    //          });
  
-             // Update chart data
-             myBarChart.data.labels = labels;
-             myBarChart.data.datasets[0].data = values;
-             myBarChart.update(); // Update the chart
-         })
-         .catch(function (error) {
-             console.error('Error fetching data:', error);
-         });
+    //          // Update chart data
+    //          myBarChart.data.labels = labels;
+    //          myBarChart.data.datasets[0].data = values;
+    //          myBarChart.update(); // Update the chart
+    //      })
+    //      .catch(function (error) {
+    //          console.error('Error fetching data:', error);
+    //      });
+
+
+    // Function to fetch and update chart data
+    function fetchData(year) {
+        axios.get('dashboardgraph', {
+            params: {
+                year: year // Include the year as a query parameter
+            }
+        })
+        .then(function (response) {
+            // Process the data
+            var data = response.data;
+            var labels = [];
+            var values = [];
+
+            data.forEach(function (item) {
+                labels.push(item.formatted_date + ' ' + item.year);
+                values.push(parseFloat(item.total)); // Convert total to float
+            });
+
+            // Update chart data
+            myBarChart.data.labels = labels;
+            myBarChart.data.datasets[0].data = values;
+            myBarChart.update(); // Update the chart
+        })
+        .catch(function (error) {
+            console.error('Error fetching data:', error);
+        });
+    }
+
+    // Load initial data for the current year
+    fetchData('');
+
+    // Event handler for search button
+    $('#searchButton').on('click', function() {
+        var selectedYear = $('#yearInput').val();
+        fetchData(selectedYear); // Fetch data for the selected year
+    });
+
 
 // Initialize the doughnut chart
 var ctxDonut = document.getElementById('chart_widget_donut').getContext('2d');
