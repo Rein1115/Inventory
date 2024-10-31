@@ -1,6 +1,16 @@
 var    select1 = [];
 var totalamount = 0;
 $(document).ready(function(){
+
+
+  
+    // if($('#payment_status').val() === 'Paid'){
+
+    //     $('#Btn-update').addClass('d-none');
+    //     console.log($('#payment_status').val());
+    // }
+  
+
     var table ;
     var data = $('#dataval').data('data');
 
@@ -647,7 +657,9 @@ $(document).ready(function(){
 
     $('#supportorderandpayment').text('Total amount');
     $('#remainbalance_parent').addClass('d-none');
-  
+
+
+
 
 
 });

@@ -417,6 +417,4 @@ $(document).ready(function(){
 
     }); 
 
-
-
 });

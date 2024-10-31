@@ -165,7 +165,6 @@ class OrderController extends Controller
      {
          $result = DB::select('SELECT * FROM orders WHERE trans_no = ? ',[$id]);
          if (empty($result)) {
-             
              return response()->view('page-error-404', [], 404);
          }
          $productlist = DB::select('SELECT p.product_name,o.quantity,o.total_amount,p.selling_price,p.brand_name,p.unit FROM orders AS o LEFT JOIN products AS p ON p.id = o.product_id WHERE o.trans_no = ?' ,[$id]);
@@ -271,10 +270,22 @@ class OrderController extends Controller
         }
         
         try {
-                $update = DB::update('UPDATE orders SET deliveredto = ?, `address` = ? , delivered_date =?, po_no = ? , terms = ?,  deliveredby = ? , fullname =? , contact_num = ?, `or` =? , cr =? , collected_by = ?,updated_by = ?,email =? WHERE trans_no = ? ', [
+            DB::beginTransaction();
+                $update = DB::update('UPDATE orders SET deliveredto = ?, `address` = ? , delivered_date =?, po_no = ? , terms = ?,  deliveredby = ? , fullname =? , contact_num = ?, `or` =? , cr =? , collected_by = ?,updated_by = ?,email =? WHERE trans_no = ?  ', [
                     $data['deliveredto'],$data['address'],$data['delivered_date'],$data['po_no'],$data['terms'],$data['deliveredby'],$data['fullname'],$data['contact_num'],$data['or'],$data['cr'],$data['collected_by'],Auth::user()->fullname,$data['email'],$id]
                 );
-                return response()->json(['success' => true, 'message' => 'Order information updated successfully.']);
+                if ($update) {
+                    // Commit transaction
+                    DB::commit();
+                    return response()->json(['success' => true, 'message' => 'Order information updated successfully.']);
+                } else {
+                    // Rollback if no rows were affected
+                    DB::rollBack();
+                    return response()->json(['success' => false, 'message' => 'No updates made.'], 400);
+                }
+
+
+                // return response()->json(['success' => true, 'message' => 'Order information updated successfully.']);
         } catch (Exception $e) {
             return response()->json(['success' => false, 'message' => 'Failed to update information order.', 'error' => $e->getMessage()]);
         }

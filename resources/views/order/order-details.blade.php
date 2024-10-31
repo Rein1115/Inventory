@@ -114,7 +114,7 @@
 
                         <div class="form-group col-sm {{!empty($data['payment_status']) ? $data['payment_status'] : 'd-none'}}">
                             <label for="payment_status">Payment Status <span class="text-danger">*</span></label>
-                            <input value=" {{!empty($data['payment_status']) ? $data['payment_status'] : 'Unpaid'}}" 
+                            <input value="{{!empty($data['payment_status']) ? $data['payment_status'] : 'Unpaid'}}" 
                             class="form-control form-control-sm " type="text" id="payment_status" name="payment_status"  readonly>
                         </div>
                     </div>
