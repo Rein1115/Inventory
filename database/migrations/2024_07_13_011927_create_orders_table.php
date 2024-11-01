@@ -21,14 +21,14 @@ return new class extends Migration
         
             $table->integer('quantity');
             $table->integer('total_amount');
-            $table->bigInteger('po_no'); // Change to BIGINT to handle larger values
+            $table->string('po_no'); // Change to BIGINT to handle larger values
             $table->string('terms');
         
             $table->string('deliveredby');
             $table->string('fullname');
             $table->string('contact_num');
-            $table->bigInteger('or'); // Change to BIGINT if needed
-            $table->bigInteger('cr'); // Change to BIGINT if needed
+            $table->string('or'); // Change to BIGINT if needed
+            $table->string('cr'); // Change to BIGINT if needed
             $table->string('collected_by');
             $table->string('payment_status');
             $table->string('created_by');

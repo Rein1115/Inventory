@@ -64,6 +64,7 @@ class OrderController extends Controller
             "collected_by" => 'string|required', //done
         ]);
 
+
         if($validator->fails()){
             return response()->json(['success' => false, 'Detect' => 'Header' , 'response' => $validator->errors()]);
         }
@@ -249,6 +250,7 @@ class OrderController extends Controller
             "email" =>'string|nullable',
             "collected_by" => 'string|required', //done
         ]);
+
 
         if($validator->fails()){
             return response()->json(['success' => false, 'Detect' => 'Header' , 'response' => $validator->errors()]);
