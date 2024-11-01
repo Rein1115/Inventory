@@ -2,9 +2,9 @@
     <div class="page-header text-blue-d2 mb-4">
         <div class="row align-items-center">
             <!-- Logo Section (Left) -->
-            <div class="col-2 text-left">
-                <img src="../logonibay.png" alt="Logo" style="width: 100px; height: auto;"> <!-- Adjust size as needed -->
-            </div>
+                <div class="col-2 text-left" style="width: 100px; height: auto; margin-left: 50px;">
+                    <img src="../logonibay.png" alt="Logo" style="width: 130px; height: auto; margin-left: 50px;"> <!-- Adjust size as needed -->
+                </div>
             <!-- Title and Details Section (Centered) -->
             <div class="col-8 text-center">
                 <h1 class="page-title text-secondary-d1">
@@ -154,10 +154,38 @@
                                 <div class="col-7">Remaining Balance</div>
                                 <div class="col-5" id="printremainingbalance">0.00</div>
                             </div>
+                            
+                             <div class="row mb-2" id="">
+                                <div class="col-7">Discount: </div>
+                            </div>
+                                 
+                             <div class="row mb-2" id="">
+                                <div class="col-7">Total: </div>
+                            </div>
 
                         </div>
                     </div>
-
+                    
+                   <div class="row mt-5">
+                        <div class="col-6 text-center">
+                            <!-- Top label above "Prepared by" -->
+                            <span class="text-600 text-black" style="border-top: 1px solid black; padding-top: 5px; display: inline-block; width: 180px;"></span>
+                            <br>
+                            <span class="text-secondary-d1 text-105">Prepared by:</span>
+                        
+                            
+                        </div>
+                        
+                        <div class="col-6 text-center">
+                            <span class="text-600 text-black" style="border-top: 1px solid black; padding-top: 5px; display: inline-block; width: 180px;"></span>
+                            <br>
+                            <span class="text-secondary-d1 text-105">Received by:</span>
+                            
+                           
+                        </div>
+                    </div>
+                    
+                    
                     <hr />
 
                     <div>

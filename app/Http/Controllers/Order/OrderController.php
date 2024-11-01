@@ -50,7 +50,7 @@ class OrderController extends Controller
         //
         $data = $request->all();
         $validator = Validator::make($data,[
-            "po_no" => 'numeric|required', //done
+            "po_no" => 'string|required', //done
             "terms" => 'string|required',  //done
             "address" => 'string|required', //done
             "delivered_date" => 'string|required', //done
@@ -58,8 +58,8 @@ class OrderController extends Controller
             "fullname" => 'string|required', //done
             "contact_num" => 'numeric|required', //done
             "deliveredby" => 'string|required',  //done
-            "or" => 'numeric|required', //done
-            "cr" => 'numeric|required', //done
+            "or" => 'string|required', //done
+            "cr" => 'string|required', //done
             "email" =>'string|nullable',
             "collected_by" => 'string|required', //done
         ]);
@@ -237,7 +237,7 @@ class OrderController extends Controller
         $data = $request->all();
 
         $validator = Validator::make($data,[
-            "po_no" => 'numeric|required', //done
+            "po_no" => 'string|required', //done
             "terms" => 'string|required',  //done
             "address" => 'string|required', //done
             "delivered_date" => 'string|required', //done
@@ -245,8 +245,8 @@ class OrderController extends Controller
             "fullname" => 'string|required', //done
             "contact_num" => 'numeric|required', //done
             "deliveredby" => 'string|required',  //done
-            "or" => 'numeric|required', //done
-            "cr" => 'numeric|required', //done
+            "or" => 'string|required', //done
+            "cr" => 'string|required', //done
             "email" =>'string|nullable',
             "collected_by" => 'string|required', //done
         ]);

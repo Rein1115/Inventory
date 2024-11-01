@@ -35,13 +35,13 @@
                             <div class="form-group col-sm">
                                 <label for="suppliername">OR No. <span class="text-danger">*</span></label>
                                 <input value="{{isset($data['or']) ? $data['or'] : '' }}" 
-                                class="form-control form-control-sm" type="number" id="or" name="or" placeholder="Enter OR No." {{isset($data['readonly']) ?$data['readonly'] : "" }}>
+                                class="form-control form-control-sm" type="text" id="or" name="or" placeholder="Enter OR No." {{isset($data['readonly']) ?$data['readonly'] : "" }}>
                             </div>
 
                             <div class="form-group col-sm">
                                 <label for="suppliername">CR No. <span class="text-danger">*</span></label>
                                 <input value="{{isset($data['cr']) ? $data['cr'] : '' }}" 
-                                class="form-control form-control-sm" type="number" id="cr" name="cr"placeholder="Enter CR No." {{isset($data['readonly']) ?$data['readonly'] : "" }}>
+                                class="form-control form-control-sm" type="text" id="cr" name="cr"placeholder="Enter CR No." {{isset($data['readonly']) ?$data['readonly'] : "" }}>
                             </div>
                             
                     </div>
@@ -50,7 +50,7 @@
                         <div class="form-group col-sm">
                             <label for="suppliername">PO No. <span class="text-danger">*</span></label>
                             <input value="{{isset($data['po_no']) ? $data['po_no'] : '' }}" 
-                            class="form-control form-control-sm" type="number" id="po_no" name="po_no" placeholder="Enter PO No." {{isset($data['readonly']) ?$data['readonly'] : "" }}>
+                            class="form-control form-control-sm" type="text" id="po_no" name="po_no" placeholder="Enter PO No." {{isset($data['readonly']) ?$data['readonly'] : "" }}>
                         </div>
 
                         <div class="form-group col-sm">
