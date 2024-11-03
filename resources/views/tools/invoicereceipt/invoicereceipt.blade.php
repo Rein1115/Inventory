@@ -167,17 +167,28 @@
                     </div>
                     
                    <div class="row mt-5">
-                        <div class="col-6 text-center">
+                       
+      
+                       
+                        <div class="col-4 text-center">
                             <!-- Top label above "Prepared by" -->
-                            <span class="text-600 text-black" style="border-top: 1px solid black; padding-top: 5px; display: inline-block; width: 180px;"></span>
+                            <span class="text-600 text-black" style="border-top: 1px solid black; padding-top: 5px; display: inline-block; width: 200px;"></span>
                             <br>
                             <span class="text-secondary-d1 text-105">Prepared by:</span>
-                        
                             
                         </div>
                         
-                        <div class="col-6 text-center">
-                            <span class="text-600 text-black" style="border-top: 1px solid black; padding-top: 5px; display: inline-block; width: 180px;"></span>
+                        <div class="col-4 text-center">
+                            <!-- Top label above "Prepared by" -->
+                            <span class="text-600 text-black" style="border-top: 1px solid black; padding-top: 5px; display: inline-block; width: 200px;"></span>
+                            <br>
+                            <span class="text-secondary-d1 text-105">Checked by:</span>
+                        
+                        </div>
+                        
+                        
+                        <div class="col-4 text-center">
+                            <span class="text-600 text-black" style="border-top: 1px solid black; padding-top: 5px; display: inline-block; width: 200px;"></span>
                             <br>
                             <span class="text-secondary-d1 text-105">Received by:</span>
                             

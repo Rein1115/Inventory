@@ -107,13 +107,25 @@ class DashboardController extends Controller
         return response()->json($data);
     }
     
-    public function dashboardunot(){
-        $data = DB::select('SELECT p.unit AS unit , p.product_name, SUM(o.quantity) as total_quantity_sold ,p.brand_name AS brandname
-        FROM products AS p
-        LEFT JOIN orders AS o ON p.id = o.product_id WHERE o.product_id =p.id
-        GROUP BY p.brand_name ,p.id, p.product_name ,p.unit 
-        ORDER BY total_quantity_sold DESC
+    // public function dashboardunot(){
+    //     $data = DB::select('SELECT p.unit AS unit , p.product_name, SUM(o.quantity) as total_quantity_sold ,p.brand_name AS brandname
+    //     FROM products AS p
+    //     LEFT JOIN orders AS o ON p.id = o.product_id WHERE o.product_id =p.id
+    //     GROUP BY p.brand_name ,p.id, p.product_name ,p.unit 
+    //     ORDER BY total_quantity_sold DESC
+    //     ');
+    // return response()->json($data);
+    // }
+
+        
+    public function dashboardunot() {
+        $data = DB::select('SELECT p.unit AS unit, p.product_name, SUM(o.quantity) AS total_quantity_sold, p.brand_name AS brandname
+            FROM products AS p
+            LEFT JOIN orders AS o ON p.id = o.product_id
+            GROUP BY p.brand_name, p.id, p.product_name, p.unit 
+            ORDER BY total_quantity_sold DESC
+            LIMIT 10
         ');
-    return response()->json($data);
+        return response()->json($data);
     }
 }
