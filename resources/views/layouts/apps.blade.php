@@ -27,19 +27,13 @@
 
 
     @yield('link')
-{{-- <style>
-    body {
-        font-size: 80% !important;
-    }
-    .form-group{
-        font-size: 50% !important;
-    }
-    /* span{
-        font-size: 100% !important;
-    } */
+    <style>
+        body {
+        background: linear-gradient(to right, #ff7f7f, #8b0000);
+        }
 
-   
-</style> --}}
+    
+    </style>
   </head>
   
   <body>
@@ -177,7 +171,7 @@
       <!--**********************************
               Nav header start
           ***********************************-->
-          <div style="background-color:rgb(247, 232, 210)" class="nav-header">
+          <div style="background: linear-gradient(to right, #ffcccc, #ff9999);" class="nav-header">
                 <div class="brand-logo" style="display: flex; justify-content: center; align-items: center; height: 100%;">
                     <a href="{{ route('home') }}">
                         <b class="logo-abbr">

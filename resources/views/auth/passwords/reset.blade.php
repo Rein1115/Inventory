@@ -12,7 +12,7 @@
     <link href="../../css/style.css" rel="stylesheet">
 </head>
 
-<body>
+<body style="background: linear-gradient(to right, #ff7f7f, #8b0000);">
 
     <!--*******************
         Preloader start
@@ -33,11 +33,11 @@
             <div class="row justify-content-center h-100">
                 <div class="col-xl-6">
                     <div class="form-input-content">
-                        <div class="card login-form mb-0">
+                        <div class="card login-form mb-0" style="box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.3);">
                             <div class="card-body pt-5">
-                                <a class="text-center" href="{{ url('/') }}"> 
-                                    <h4>Inventory</h4>
-                                </a>
+                                <div class="text-center">
+                                    <img src=".../logonibay.png" alt="Logo" class="img-fluid text-center" style="max-height: 150px; width: auto;"> <!-- Added img-fluid class -->
+                                </div>
 
                                 <div class="card">
                                     <div class="card-header">{{ __('Reset Password') }}</div>
