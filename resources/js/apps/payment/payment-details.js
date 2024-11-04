@@ -33,9 +33,7 @@ $(document).ready(function(){
      function toggleNumberInput() {
         const paymentMethod = $('#paymentmethod').val();
         if (paymentMethod === 'Cash') {
-           
             $('#hidenum').hide(); 
-            
         } else {
             $('.num').removeClass('d-none')
             $('#hidenum').show();  // Show number input for other payment methods
@@ -66,7 +64,7 @@ $(document).ready(function(){
                 Swal.fire({
                     icon: "error",
                     title: "Oops...",
-                    text: "Serial number is required.",
+                    text: "All input is required.",
                 });
                 return false;
             }
