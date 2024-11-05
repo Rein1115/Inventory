@@ -146,9 +146,31 @@ hr {
         display: none !important;
     }
 
-    #parentprintheaders{
+    /* #parentprintheaders{
         display: block !important;
+    } */
+
+    #parentprintheaders {
+        display: block !important;
+        -webkit-print-color-adjust: exact; /* Ensure color adjustment for WebKit browsers */
+        print-color-adjust: exact; /* Ensure color adjustment for other browsers */
+        position: relative; /* Required for positioning the pseudo-element */
+       
     }
+    
+    #parentprintheaders::before {
+        content: ""; /* Create a pseudo-element */
+        background: url('../logonibayicon.png') no-repeat center center; /* Add your image here */
+        background-size: 60% auto; /* Adjust the size here (50% of the width, auto height) */
+        position: absolute; /* Position it absolutely within the parent */
+        top: 0; /* Align to the top */
+        left: 0; /* Align to the left */
+        right: 0; /* Stretch to the right */
+        bottom: 0; /* Stretch to the bottom */
+        opacity: 0.3; /* Adjust this value for the image opacity */
+        z-index: -1; /* Send it behind the content of #parentprintheaders */
+    }
+
     
      .page-content {
         display: block !important;
