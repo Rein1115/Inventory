@@ -86,7 +86,7 @@
                 
                 <!-- Convert the list of items into a table -->
                 <div class="mt-4">
-                    <table id="printtable" class="table table-bordered">
+                    <table id="printtable" class="table table-bordered" >
                         <thead>
                             <tr class="bgc-default-tp1 text-black">
                                 <th>#</th>
