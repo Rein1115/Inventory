@@ -19,7 +19,9 @@ class ExpensesController extends Controller
 
         $admin = DB::select('SELECT COUNT(*) AS count FROM users WHERE role = "Admin" AND id = ?' , [Auth::user()->id]);
         if($admin[0]->count > 0){
-            $data = DB::select("SELECT DATE_FORMAT(expenses_date, '%Y') AS `year`,MONTH(expenses_date) AS `month`, DATE_FORMAT(expenses_date, '%M') AS `monthname` FROM expenses GROUP BY DATE_FORMAT(expenses_date, '%Y'), DATE_FORMAT(expenses_date, '%M'),MONTH(expenses_date) ORDER BY MONTH(expenses_date) , YEAR(expenses_date)");
+            // $data = DB::select("SELECT DATE_FORMAT(expenses_date, '%Y') AS `year`,MONTH(expenses_date) AS `month`, DATE_FORMAT(expenses_date, '%M') AS `monthname` FROM expenses    GROUP BY DATE_FORMAT(expenses_date, '%Y'), DATE_FORMAT(expenses_date, '%M'),MONTH(expenses_date) ORDER BY MONTH(expenses_date) , YEAR(expenses_date)");
+
+            $data = DB::select("SELECT DATE_FORMAT(expenses_date, '%Y') AS `year`,MONTH(expenses_date) AS `month`, DATE_FORMAT(expenses_date, '%M') AS `monthname` FROM expenses  WHERE YEAR(expenses_date) = ?  GROUP BY DATE_FORMAT(expenses_date, '%Y'), DATE_FORMAT(expenses_date, '%M'),MONTH(expenses_date) ORDER BY MONTH(expenses_date) , YEAR(expenses_date)",[$request->year]);
             if ($request->ajax()) {
                 return response()->json($data);
             }

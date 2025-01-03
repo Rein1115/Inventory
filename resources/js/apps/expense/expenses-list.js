@@ -17,6 +17,12 @@ $(document).ready(function(){
         'December': ' #800000' 
     };
 
+ 
+    $('#searchButton').on('click', function() {
+     selectedYear = $('#yearInput').val();
+        fetchData(selectedYear); // Fetch data for the selected year
+    });
+
 
     $('#expenses').DataTable({
 
@@ -81,6 +87,9 @@ $(document).ready(function(){
         ],
         ajax: {
             url: 'expenses',
+            data: {
+                year: 2024
+            },
             dataSrc: ''
         },
         lengthMenu: [12, 25, 500], // Pagination options
