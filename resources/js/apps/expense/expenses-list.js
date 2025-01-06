@@ -1,7 +1,6 @@
 $(document).ready(function(){
 
-
-
+    var selectedYear = $('#yearInput').val();
     const monthColorMapping = {
         'January': '#ff9999', 
         'February': '#ff8080',
@@ -17,124 +16,130 @@ $(document).ready(function(){
         'December': ' #800000' 
     };
 
- 
-    $('#searchButton').on('click', function() {
-     selectedYear = $('#yearInput').val();
-        fetchData(selectedYear); // Fetch data for the selected year
-    });
 
+    function fetchData(selectedYear){
 
-    $('#expenses').DataTable({
-
-        dom             : 'Bflrtip',
-        processing      : true,
-        // serverSide      : true,
-        responsive      : true,
-        async           : true,
-        language        : {
-            processing  : '<i class="fa fa-spinner fa-spin fa-3x fa-fw text-secondary"></i><br><span class="sr-only font-weight-bold text-secondary">Loading...</span> ',
-            lengthMenu  : 'Display _MENU_ records',
-            search      : 'Search ',
-            emptyTable  : '<span class="text-secondary font-12px-bold">No available record to show</span>',
-        },
-        buttons: [
-            {
-                text    : '<i class="fa fa-fw fa-lg fa-refresh text-info"></i>',
-                className: 'btn px-2 py-1',
-                attr    : { 'data-toggle': 'tooltip', 'title': 'Reload' },
-                action  : function(e,dt,node,config){ 
-                    $('#supplier').DataTable().ajax.reload(); 
-                   
-                } 
+        if ($.fn.DataTable.isDataTable('#expenses')) {
+            $('#expenses').DataTable().destroy();
+        }
+        $('#expenses').DataTable({
+            dom: 'Bflrtip',
+            processing: true,
+            responsive: true,
+            language: {
+                processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw text-secondary"></i><br><span class="sr-only font-weight-bold text-secondary">Loading...</span>',
+                lengthMenu: 'Display _MENU_ records',
+                search: 'Search ',
+                emptyTable: '<span class="text-secondary font-12px-bold">No available record to show</span>',
             },
-            {
-                text    : '<i class="fa fa-fw fa-lg fa-plus-square text-info"></i>',
-                className: 'btn px-2 py-1',
-                attr    : {'data-toggle': 'tooltip', 'title': 'Create New'},
-                action  : function(e,dt,node,config){
-                    $('#exampleModalCenter').find('input').val('');
-                    $('#exampleModalCenter').find('select').each(function() {
-                        this.selectedIndex = 0; 
-                    });
-                    $('#exampleModalLongTitle').text('');
-                    $('#saveandupdate').removeClass('btn btn-success');
-
-                    $('#category').val('');
-                    $('#amount').val('');
-                    $('#expensedate').val('');
-
-                    $('#exampleModalCenter').modal('show');
-                    $('#saveandupdate').text('Save');
-                    $('#saveandupdate').addClass('btn btn-primary');
-                    $('#hiddensaveup').val('0');
-                    $('#exampleModalLongTitle').text('Create Expenses');
-                    $('#expensedate').attr('readonly', false);
-                } 
+            buttons: [
+                {
+                    text: '<i class="fa fa-fw fa-lg fa-refresh text-info"></i>',
+                    className: 'btn px-2 py-1',
+                    attr: { 'data-toggle': 'tooltip', 'title': 'Reload' },
+                    action: function(e, dt, node, config) { 
+                        $('#expenses').DataTable().ajax.reload(); 
+                    } 
+                },
+                {
+                    text: '<i class="fa fa-fw fa-lg fa-plus-square text-info"></i>',
+                    className: 'btn px-2 py-1',
+                    attr: {'data-toggle': 'tooltip', 'title': 'Create New'},
+                    action: function(e, dt, node, config) {
+                        $('#exampleModalCenter').find('input').val('');
+                        $('#exampleModalCenter').find('select').each(function() {
+                            this.selectedIndex = 0; 
+                        });
+                        $('#exampleModalLongTitle').text('');
+                        $('#saveandupdate').removeClass('btn btn-success');
+                        $('#category').val('');
+                        $('#amount').val('');
+                        $('#expensedate').val('');
+                        $('#exampleModalCenter').modal('show');
+                        $('#saveandupdate').text('Save');
+                        $('#saveandupdate').addClass('btn btn-primary');
+                        $('#hiddensaveup').val('0');
+                        $('#exampleModalLongTitle').text('Create Expenses');
+                        $('#expensedate').attr('readonly', false);
+                    } 
+                },
+                {
+                    extend: 'collection',
+                    text: '<i class="fa fa-fw fa-lg fa-print text-info"></i>',
+                    className: 'btn px-2 py-1',
+                    attr: {'data-toggle': 'tooltip', 'title': 'Export'},
+                    buttons: [
+                        { extend: 'pdf', exportOptions: { columns: [1, 2, 3] } },
+                        { extend: 'excel', exportOptions: { columns: [1, 2, 3] } },
+                        { extend: 'print', exportOptions: { columns: [1, 2, 3] } },
+                        { extend: 'copy', exportOptions: { columns: [1, 2, 3] } },
+                        { extend: 'csv', exportOptions: { columns: [1, 2, 3] } }
+                    ]
+                },
+            ],
+            ajax: {
+                url: 'expenses',
+                data: {
+                    year: selectedYear
+                },
+                dataSrc: ''
             },
-            {
-                extend  : 'collection',
-                text    : '<i class="fa fa-fw fa-lg fa-print text-info"></i>',
-                className: 'btn px-2 py-1',
-                attr    : {'data-toggle': 'tooltip', 'title': 'Export'},
-                buttons: [
-                    {extend: 'pdf', exportOptions: {columns: [1, 2, 3]}},
-                    {extend: 'excel', exportOptions: {columns: [1, 2,3]}},
-                    {extend: 'print', exportOptions: {columns: [1, 2, 3]}},
-                    {extend: 'copy', exportOptions: {columns: [1, 2, 3]}},
-                    {extend: 'csv', exportOptions: {columns: [1, 2, 3]}},
-                ]
-            },
-        ],
-        ajax: {
-            url: 'expenses',
-            data: {
-                year: 2024
-            },
-            dataSrc: ''
-        },
-        lengthMenu: [12, 25, 500], // Pagination options
-        pageLength: 12, // Default page length
-        columns: [
-            {
-                data: null,
-                render: function(data, type, row, meta) {
-                    return meta.row + 1;
+            lengthMenu: [12, 25, 500],
+            pageLength: 12,
+            columns: [
+                {
+                    data: null,
+                    render: function(data, type, row, meta) {
+                        return meta.row + 1;
+                    }
+                },
+                { 
+                    data: null,
+                    render: function (data, type, row) {
+                        const color = monthColorMapping[row.monthname] || 'defaultcolor';
+                        return '<span class="badge" style="background-color: ' + color + '; color: white;">' + row.monthname + '</span>';
+                    }
+                },
+                { 
+                    data: null,
+                    render: function (data, type, row) {
+                        return '<span class="badge badge-info">'+row.year+'</span>';
+                    }
+                },
+                {
+                    data: null,
+                    render: function (data, type, row) {
+                        return '<button  class="btn btn-primary edit" id="edit" data-month="'+row.month+'" data-year="'+row.year+'"><i class="icon-eye eye-icon"> </i></button>';
+                    }
                 }
-            },
-            { 
-                data: null,
-                render: function (data, type, row) {
-                    const color = monthColorMapping[row.monthname] || 'defaultcolor';
-                    return '<span class="badge" style="background-color: ' + color +"!important" + '; color: white;">' + row.monthname + '</span>';
-                }
-            
-            },
-            { 
-                data: null,
-                render: function (data, type, row) {
-                    return '<span class="badge badge-info">'+row.year+'</span>';
-                }
-            },
-            {
-                data: null,
-                render: function (data, type, row) {
-                   
-                    return '<button  class="btn btn-primary edit" id="edit" data-month="'+row.month+'"><i class="icon-eye eye-icon"> </i></button>';
-                }
-            }
-        ]
-    });
+            ]
+        });
+    }
+
+
+        fetchData(selectedYear);
+
+        $('#searchButton').on('click', function() {
+            selectedYear = $('#yearInput').val();
+            fetchData(selectedYear);
+       });
+       
+
 
     $('#expenses').on('click','.edit',function(){
         var id = $(this).data('month');
+        var year = $(this).data('year');
         $('#expensesmodal').modal('show');
         var totalall = 0;
        $('#hiddensaveup').val(id);
 
        $('#expensedate').attr('readonly', true);
-
    
-        axios.get('/expenses/'+id)
+        axios.get(`/expenses/${id}`, {
+            params: {
+                year: year 
+            }
+        })
         .then(response=>{
             var data =response.data;
             var items = [];
@@ -399,5 +404,8 @@ $(document).ready(function(){
     
 
 })
+
+
+
 
 

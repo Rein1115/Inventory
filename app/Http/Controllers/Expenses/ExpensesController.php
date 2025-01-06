@@ -21,7 +21,7 @@ class ExpensesController extends Controller
         if($admin[0]->count > 0){
             // $data = DB::select("SELECT DATE_FORMAT(expenses_date, '%Y') AS `year`,MONTH(expenses_date) AS `month`, DATE_FORMAT(expenses_date, '%M') AS `monthname` FROM expenses    GROUP BY DATE_FORMAT(expenses_date, '%Y'), DATE_FORMAT(expenses_date, '%M'),MONTH(expenses_date) ORDER BY MONTH(expenses_date) , YEAR(expenses_date)");
 
-            $data = DB::select("SELECT DATE_FORMAT(expenses_date, '%Y') AS `year`,MONTH(expenses_date) AS `month`, DATE_FORMAT(expenses_date, '%M') AS `monthname` FROM expenses  WHERE YEAR(expenses_date) = ?  GROUP BY DATE_FORMAT(expenses_date, '%Y'), DATE_FORMAT(expenses_date, '%M'),MONTH(expenses_date) ORDER BY MONTH(expenses_date) , YEAR(expenses_date)",[$request->year]);
+            $data = DB::select("SELECT DATE_FORMAT(expenses_date, '%Y') AS `year`,MONTH(expenses_date) AS `month`, DATE_FORMAT(expenses_date, '%M') AS `monthname`  FROM expenses  WHERE YEAR(expenses_date) = ?  GROUP BY DATE_FORMAT(expenses_date, '%Y'), DATE_FORMAT(expenses_date, '%M'),MONTH(expenses_date) ORDER BY MONTH(expenses_date) , YEAR(expenses_date)",[$request->year]);
             if ($request->ajax()) {
                 return response()->json($data);
             }
@@ -55,14 +55,14 @@ class ExpensesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request , string $id)
     {
         //  
 
         $admin = DB::select('SELECT COUNT(*) AS count FROM users WHERE role = "Admin" AND id = ?' , [Auth::user()->id]);
 
         if($admin[0]->count > 0){
-            $data['expenses'] = DB:: select('SELECT id, amount,  category,expenses_date,created_by ,DATE_FORMAT(expenses_date, "%M") AS monthname, YEAR(expenses_date) AS `year`  FROM expenses WHERE MONTH(expenses_date) =? ',[$id]);
+            $data['expenses'] = DB:: select('SELECT id, amount,  category,expenses_date,created_by ,DATE_FORMAT(expenses_date, "%M") AS monthname, YEAR(expenses_date) AS `year`  FROM expenses WHERE MONTH(expenses_date) =? AND  YEAR(expenses_date) = ? ',[$id, $request->year]);
 
             $result = [];
             for($i = 0; $i<count($data['expenses']); $i++){
