@@ -20,10 +20,6 @@ $(document).ready(function(){
     var prodall = $('#products').data('products');
 
 
-
-  
-
-
     if (data.length > 0) {
         data.forEach(dat => {
             var array = {
@@ -39,6 +35,7 @@ $(document).ready(function(){
         });
     }
 
+  
 
     $('#prodname').select2({
         ajax: {
@@ -58,7 +55,7 @@ $(document).ready(function(){
             cache: true
         },
         placeholder: 'Select a product',
-        minimumInputLength: 0 // Minimum length of input before making a request
+        minimumInputLength: 1// Minimum length of input before making a request
     }).on('select2:select',function(e){
           
         var datas = e.params.data;
