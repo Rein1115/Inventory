@@ -55,7 +55,7 @@ $(document).ready(function(){
             cache: true
         },
         placeholder: 'Select a product',
-        minimumInputLength: 1// Minimum length of input before making a request
+        minimumInputLength: 0// Minimum length of input before making a request
     }).on('select2:select',function(e){
           
         var datas = e.params.data;
