@@ -8,6 +8,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB; 
 use Illuminate\Support\Facades\Validator; 
 use App\Models\Product;
+
 use Auth;
 
 class ProductController extends Controller
@@ -258,5 +259,21 @@ class ProductController extends Controller
         }
         
     }
+
+
+    public function productlist(){
+        if(Auth::check()){
+            try {
+                $brand  = DB::select('SELECT * FROM brands');
+                $product = DB::select("SELECT * FROM products");
+
+                return response()->json(['success' => true, 'brand' => $brand ,'products'=>$product]);
+            } catch (\Throwable $th) {
+                return response()->json(['success' => false, 'message' => 'Failed to delete supplier', 'error' => $e->getMessage()], 500);
+            }
+
+        }
+    }
+
 
 }

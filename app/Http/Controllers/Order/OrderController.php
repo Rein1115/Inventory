@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Order;
 use Auth;
 use App\Models\Product;
+use App\Http\Controllers\Product\ProductController;
 
 class OrderController extends Controller
 {
@@ -363,8 +364,15 @@ class OrderController extends Controller
             return response()->json(['success' => false, 'message' => ' You dont have rights to delete this transaction.'],200);
         }
 
-       
+    }
 
+    public function ordercreate(){
+        $brandprod = (new ProductController)->productList();
+        $data = $brandprod->getData(); 
+        $brand = $data->brand;
+        $prodlist  = $data->products;
+        $data = ["button" => $this->buttonPrivate("orders",0,'trans_no'),"productlist" => []];
+        return view('order.order-pos-details',compact('brand','prodlist'));
     }
 
     

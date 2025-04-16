@@ -63,6 +63,7 @@ Route::post('modificationpaymenthistory/{id}', [PaymenthistoryController::class,
 
     // ORDER
     Route::resource('order', OrderController::class);
+    Route::get('ordercreate', [OrderController::class,'ordercreate'])->name('ordercreate');
 
     // PAYMENT
     Route::resource('payment', PaymentController::class);
