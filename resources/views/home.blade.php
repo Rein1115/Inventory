@@ -14,19 +14,6 @@
 
 @section('content')
 
-        <div class="row">
-            <!-- Search Input -->
-            <div class="input-group mb-3" style="width: 200px; margin-left: 15px;"> <!-- Add margin if needed -->
-                <input type="number" id="yearInput" class="form-control form-control-sm " 
-                    placeholder="Year" min="2000" max="2100" value="{{ date('Y') }}" 
-                    style="height: 20px;"> <!-- Transparent input field -->
-                <div class="input-group-append">
-                    <button class="btn btn-primary btn-sm" id="" type="button" style="height: 36px;">
-                        Search
-                    </button>
-                </div>
-            </div>
-        </div>
     <div class="row">
         <div class="col-lg-3 col-sm-3">
             <a href="" class="text-white">
@@ -36,6 +23,20 @@
                         <div class="">{{-- <div class="d-inline-block"> --}}
                             <h2 class="text-white">₱ <span id="totalsales">{{isset($data['totalsales'][0]->totalsales) ? $data['totalsales'][0]->totalsales : '0.00'}}</span></h2>
                             {{-- <p class="text-white mb-0">Jan - March 2019</p> --}}
+                        </div>
+                        <span class="float-right display-5 opacity-5"><i class="fa fa-money"></i></span>
+                    </div>
+                </div>
+             </a>
+        </div>
+
+        <div class="col-lg-3 col-sm-3">
+            <a href="" class="text-white">
+                <div class="card gradient-2">
+                    <div class="card-body">
+                        <h3 class="card-title text-white">Sales in <span id="salesyear"></span></h3>
+                        <div class="">{{-- <div class="d-inline-block"> --}}
+                            <h2 class="text-white">₱<span id="yearlysales"></span></h2>
                         </div>
                         <span class="float-right display-5 opacity-5"><i class="fa fa-money"></i></span>
                     </div>

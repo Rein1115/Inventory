@@ -265,8 +265,7 @@ class ProductController extends Controller
         if(Auth::check()){
             try {
                 $brand  = DB::select('SELECT * FROM brands');
-                $product = DB::select("SELECT * FROM products");
-
+                $product = DB::select("SELECT * FROM products WHERE status LIKE '%Available%'");
                 return response()->json(['success' => true, 'brand' => $brand ,'products'=>$product]);
             } catch (\Throwable $th) {
                 return response()->json(['success' => false, 'message' => 'Failed to delete supplier', 'error' => $e->getMessage()], 500);

@@ -17,7 +17,7 @@ class SupplierController extends Controller
     public function index(Request $request)
     {
 
-        $admin = DB::select('SELECT COUNT(*) AS count FROM users WHERE role = "Admin" AND id = ?' , [Auth::user()->id]);
+        $admin = DB::select('SELECT COUNT(*) AS count FROM users WHERE (role = "Admin" or role= "Superadmin") AND id = ?' , [Auth::user()->id]);
         if($admin[0]->count > 0){
             if($request->ajax()){
                 // $data = DB::select('SELECT s.* , u.fname AS ufname, u.lname AS ulname FROM suppliers AS s INNER JOIN users AS u ON u.id = s.created_by');
@@ -63,7 +63,7 @@ class SupplierController extends Controller
     public function show(string $id)
     {
 
-        $admin = DB::select('SELECT COUNT(*) AS count FROM users WHERE role = "Admin" AND id = ?' , [Auth::user()->id]);
+        $admin = DB::select('SELECT COUNT(*) AS count FROM users WHERE (role = "Admin" or role= "Superadmin") AND id = ?' , [Auth::user()->id]);
         
         if($admin[0]->count > 0){
           

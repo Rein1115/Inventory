@@ -55,7 +55,7 @@
                     </li>
                         {{-- End Dashboard --}}
     
-                    @if(Auth::user()->role === 'Admin'  )
+                    @if(Auth::user()->role === 'Admin'  || Auth::user()->role === 'Superadmin' )
 
 
                   
@@ -112,7 +112,7 @@
                         </li>
                     </li>
 
-                    @if(isset(Auth::user()->role) && Auth::user()->role === 'Admin')
+                    @if(isset(Auth::user()->role) && Auth::user()->role === 'Admin' || Auth::user()->role === 'Superadmin')
                     <li>
                         <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="fa fa-book menu-icon"></i><span class="nav-text">Summary</span></a>
                             <ul aria-expanded="false">
@@ -124,7 +124,7 @@
                     </li>
                     @endif
             
-                    @if(isset(Auth::user()->role) && Auth::user()->role === 'Admin')
+                    @if(isset(Auth::user()->role) && Auth::user()->role === 'Admin'|| Auth::user()->role === 'Superadmin')
                     <hr>
 
                     <li>

@@ -90,6 +90,9 @@ $(document).ready(function(){
         })
         .then(function (response) {
             // Process the data
+
+            $('#salesyear').text();
+
             var data = response.data;
             var labels = [];
             var values = [];
@@ -98,6 +101,14 @@ $(document).ready(function(){
                 labels.push(item.formatted_date + ' ' + item.year);
                 values.push(parseFloat(item.total)); // Convert total to float
             });
+
+            let yearlytotal = values.reduce((sum, val) => sum + val, 0);
+            let formattedTotal = yearlytotal.toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            
+
+            $('#yearlysales').text(formattedTotal)
+
+            $('#salesyear').text(year !== '' ? year : new Date().getFullYear());
 
             // Update chart data
             myBarChart.data.labels = labels;

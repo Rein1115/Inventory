@@ -163,133 +163,132 @@ class OrderController extends Controller
      */
    
 
-    //  public function show(string $id)
-    //  {
-    //      $result = DB::select('SELECT * FROM orders WHERE trans_no = ? ',[$id]);
-    //      if (empty($result)) {
-    //          return response()->view('page-error-404', [], 404);
-    //      }
-    //      $productlist = DB::select('SELECT p.product_name,o.quantity,o.total_amount,p.selling_price,p.brand_name,p.unit FROM orders AS o LEFT JOIN products AS p ON p.id = o.product_id WHERE o.trans_no = ?' ,[$id]);
-    //      $datas = [] ; 
+     public function show(string $id)
+     {
+         $result = DB::select('SELECT * FROM orders WHERE trans_no = ? ',[$id]);
+         if (empty($result)) {
+             return response()->view('page-error-404', [], 404);
+         }
+         $productlist = DB::select('SELECT p.product_name,o.quantity,o.total_amount,p.selling_price,p.brand_name,p.unit FROM orders AS o LEFT JOIN products AS p ON p.id = o.product_id WHERE o.trans_no = ?' ,[$id]);
+         $datas = [] ; 
 
 
-    //      $orders =  db::select('SELECT p.product_name, o.trans_no,o.product_id, o.quantity, o.total_amount,p.unit,p.brand_name FROM orders AS o INNER JOIN products AS p ON o.product_id = p.id  WHERE o.trans_no = ? ', [$id]);
+         $orders =  db::select('SELECT p.product_name, o.trans_no,o.product_id, o.quantity, o.total_amount,p.unit,p.brand_name FROM orders AS o INNER JOIN products AS p ON o.product_id = p.id  WHERE o.trans_no = ? ', [$id]);
 
 
-    //      $overalltotal = 0;
-    //      foreach($orders AS $totalamount){
-    //         $overalltotal += $totalamount->total_amount;
-    //      }
+         $overalltotal = 0;
+         foreach($orders AS $totalamount){
+            $overalltotal += $totalamount->total_amount;
+         }
 
 
 
 
-    //      for($i = 0; $i<count($result); $i++){
+         for($i = 0; $i<count($result); $i++){
  
  
-    //          $data = [
-    //              "transNo" => $result[$i]->trans_no,
-    //              "po_no" => $result[$i]->po_no,
-    //              "address" => $result[$i]->address, 
-    //              "delivered_date" => $result[$i]->delivered_date,
-    //              "deliveredto" => $result[$i]->deliveredto,
-    //              "fullname" => $result[$i]->fullname,
-    //              "contact_num" => $result[$i]->contact_num,
-    //              "deliveredby"  => $result[$i]->deliveredby,
-    //              "or" => $result[$i]->or,
-    //              "cr" => $result[$i]->cr, 
-    //              "terms" =>   $result[$i]->terms,
-    //              "payment_status" => $result[$i]->payment_status,              
-    //              "collected_by" =>$result[$i]->collected_by ,
-    //              "email" => $result[$i]->email,
-    //              "readonly" => $result[$i]->created_id == Auth::user()->id || Auth::user()->role === "Admin"  ? " " : 
-    //              "readonly",
-    //              "lines" =>$orders,
-    //              "productlist" => $productlist,
-    //              "freebieslist" => DB::select('SELECT p.product_name,f.quantity,p.selling_price,p.brand_name,p.unit FROM freebies AS f INNER JOIN products AS p ON p.id = f.product_id WHERE f.trans_No =? ',[$id]),
-    //              "totalall" => $overalltotal,
-    //              "button" => $this->buttonPrivate("orders",$id,'trans_no')
-    //          ];
-    //      }
+             $data = [
+                 "transNo" => $result[$i]->trans_no,
+                 "po_no" => $result[$i]->po_no,
+                 "address" => $result[$i]->address, 
+                 "delivered_date" => $result[$i]->delivered_date,
+                 "deliveredto" => $result[$i]->deliveredto,
+                 "fullname" => $result[$i]->fullname,
+                 "contact_num" => $result[$i]->contact_num,
+                 "deliveredby"  => $result[$i]->deliveredby,
+                 "or" => $result[$i]->or,
+                 "cr" => $result[$i]->cr, 
+                 "terms" =>   $result[$i]->terms,
+                 "payment_status" => $result[$i]->payment_status,              
+                 "collected_by" =>$result[$i]->collected_by ,
+                 "email" => $result[$i]->email,
+                 "readonly" => $result[$i]->created_id == Auth::user()->id || Auth::user()->role === "Admin"  ? " " : 
+                 "readonly",
+                 "lines" =>$orders,
+                 "productlist" => $productlist,
+                 "freebieslist" => DB::select('SELECT p.product_name,f.quantity,p.selling_price,p.brand_name,p.unit FROM freebies AS f INNER JOIN products AS p ON p.id = f.product_id WHERE f.trans_No =? ',[$id]),
+                 "totalall" => $overalltotal,
+                 "button" => $this->buttonPrivate("orders",$id,'trans_no')
+             ];
+         }
  
-    //          $products = DB::select('SELECT * FROM products');
+             $products = DB::select('SELECT * FROM products');
  
-    //      return view('order.order-details',compact('data','products'));
-    //      // return $result;
+         return view('order.order-details',compact('data','products'));
+         // return $result;
  
  
-    //  }
+     }
 
-    public function show(string $id)
-    {
-        $result = DB::select('SELECT * FROM orders WHERE trans_no = ? ',[$id]);
-        if (empty($result)) {
-            return response()->view('page-error-404', [], 404);
-        }
-        $productlist = DB::select('SELECT p.product_name,o.quantity,o.total_amount,p.selling_price,p.brand_name,p.unit FROM orders AS o LEFT JOIN products AS p ON p.id = o.product_id WHERE o.trans_no = ?' ,[$id]);
-        $datas = [] ; 
-
-
-        $orders =  db::select('SELECT p.product_name, o.trans_no,o.product_id, o.quantity, o.total_amount,p.unit,p.brand_name FROM orders AS o INNER JOIN products AS p ON o.product_id = p.id  WHERE o.trans_no = ? ', [$id]);
+    // public function show(string $id)
+    // {
+    //     $result = DB::select('SELECT * FROM orders WHERE trans_no = ? ',[$id]);
+    //     if (empty($result)) {
+    //         return response()->view('page-error-404', [], 404);
+    //     }
+    //     $productlist = DB::select('SELECT p.product_name,o.quantity,o.total_amount,p.selling_price,p.brand_name,p.unit FROM orders AS o LEFT JOIN products AS p ON p.id = o.product_id WHERE o.trans_no = ?' ,[$id]);
+    //     $datas = [] ; 
 
 
-        $overalltotal = 0;
-        foreach($orders AS $totalamount){
-           $overalltotal += $totalamount->total_amount;
-        }
-
-        $brandprod = (new ProductController)->productList();
-        $datas = $brandprod->getData(); 
-        $brand = $datas->brand;
-        $prodlist  = $datas->products;
-        $products = DB::select('SELECT * FROM products where status= "Available"');
+    //     $orders =  db::select('SELECT p.selling_price,p.product_name, o.trans_no,o.product_id, o.quantity, o.total_amount,p.unit,p.brand_name FROM orders AS o INNER JOIN products AS p ON o.product_id = p.id  WHERE o.trans_no = ? ', [$id]);
 
 
-        for($i = 0; $i<count($result); $i++){
+    //     $overalltotal = 0;
+    //     foreach($orders AS $totalamount){
+    //        $overalltotal += $totalamount->total_amount;
+    //     }
+
+    //     $brandprod = (new ProductController)->productList();
+    //     $datas = $brandprod->getData(); 
+    //     $brand = $datas->brand;
+    //     $prodlist  = $datas->products;
+    //     $products = DB::select('SELECT * FROM products where status= "Available"');
 
 
-            $data = [
-                "transNo" => $result[$i]->trans_no,
-                "po_no" => $result[$i]->po_no,
-                "address" => $result[$i]->address, 
-                "delivered_date" => $result[$i]->delivered_date,
-                "deliveredto" => $result[$i]->deliveredto,
-                "fullname" => $result[$i]->fullname,
-                "contact_num" => $result[$i]->contact_num,
-                "deliveredby"  => $result[$i]->deliveredby,
-                "or" => $result[$i]->or,
-                "cr" => $result[$i]->cr, 
-                "terms" =>   $result[$i]->terms,
-                "payment_status" => $result[$i]->payment_status,              
-                "collected_by" =>$result[$i]->collected_by ,
-                "email" => $result[$i]->email,
-                "readonly" => $result[$i]->created_id == Auth::user()->id || Auth::user()->role === "Admin"  ? " " : 
-                "readonly",
-                "lines" =>$orders,
-                "productlist" => $productlist,
-                "freebieslist" => DB::select('SELECT p.id,p.product_name,f.quantity,p.selling_price,p.brand_name,p.unit FROM freebies AS f INNER JOIN products AS p ON p.id = f.product_id WHERE f.trans_No =? ',[$id]),
-                "totalall" => $overalltotal,
-                "prodlist" =>$prodlist,
-                "brand" => $brand,
-                "button" => $this->buttonPrivate("orders",$id,'trans_no')
-            ];
-        }
-
-        $products = DB::select('SELECT * FROM products');
-
-        //  add for test
-        $brandprod = (new ProductController)->productList();
-        $brandprod = (new ProductController)->productList();
-        $datas = $brandprod->getData(); 
-        $brand = $datas->brand;
-        $prodlist  = $datas->products;
+    //     for($i = 0; $i<count($result); $i++){
 
 
-        // dd($data);
-        return view('order.order-pos-details',compact('data'));
+    //         $data = [
+    //             "transNo" => $result[$i]->trans_no,
+    //             "po_no" => $result[$i]->po_no,
+    //             "address" => $result[$i]->address, 
+    //             "delivered_date" => $result[$i]->delivered_date,
+    //             "deliveredto" => $result[$i]->deliveredto,
+    //             "fullname" => $result[$i]->fullname,
+    //             "contact_num" => $result[$i]->contact_num,
+    //             "deliveredby"  => $result[$i]->deliveredby,
+    //             "or" => $result[$i]->or,
+    //             "cr" => $result[$i]->cr, 
+    //             "terms" =>   $result[$i]->terms,
+    //             "payment_status" => $result[$i]->payment_status,              
+    //             "collected_by" =>$result[$i]->collected_by ,
+    //             "email" => $result[$i]->email,
+    //             "readonly" => $result[$i]->created_id == Auth::user()->id || Auth::user()->role === "Admin"  ? " " : 
+    //             "readonly",
+    //             "lines" =>$orders,
+    //             "productlist" => $productlist,
+    //             "freebieslist" => DB::select('SELECT p.id,p.product_name,f.quantity,p.selling_price,p.brand_name,p.unit FROM freebies AS f INNER JOIN products AS p ON p.id = f.product_id WHERE f.trans_No =? ',[$id]),
+    //             "totalall" => $overalltotal,
+    //             "prodlist" =>$prodlist,
+    //             "brand" => $brand,
+    //             "button" => $this->buttonPrivate("orders",$id,'trans_no')
+    //         ];
+    //     }
+
+    //     $products = DB::select('SELECT * FROM products');
+
+    //     //  add for test
+    //     $brandprod = (new ProductController)->productList();
+    //     $brandprod = (new ProductController)->productList();
+    //     $datas = $brandprod->getData(); 
+    //     $brand = $datas->brand;
+    //     $prodlist  = $datas->products;
+
+    //     // dd($data);
+    //     return view('order.order-pos-details',compact('data'));
  
 
-    }
+    // }
 
 
 
