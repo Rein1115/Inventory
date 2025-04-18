@@ -137,9 +137,10 @@ $(document).ready(function() {
         });
 
         // Update the total amount
-        $("#totalAmount").text(`₱${total.toFixed(2)}`);
+
+      
+        $("#totalAmount").text(`₱ ${total.toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`);
         updateChange(total);
-        
     }
 
     // Update change calculation
