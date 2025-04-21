@@ -555,7 +555,7 @@ $(document).ready(function(){
                                     Swal.fire({
                                         icon: 'error',
                                         title: 'Oops...',
-                                        text: 'Something went wrong! Please try again.',
+                                        text: error,
                                     });
                                 });
                         } else if (result.dismiss === Swal.DismissReason.cancel) {

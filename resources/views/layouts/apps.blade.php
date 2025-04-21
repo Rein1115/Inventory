@@ -30,7 +30,12 @@
     <style>
         body {
         background: linear-gradient(to right, #ff7f7f, #8b0000);
+         font-size: x-small !important;
+         font-family: Arial, Helvetica, sans-serif;
+         overflow-x: hidden;
+         overflow-y: auto;
         }
+       
 
     
     </style>

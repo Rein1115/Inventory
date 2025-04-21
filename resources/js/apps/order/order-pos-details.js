@@ -3,9 +3,10 @@ $(document).ready(function() {
     let cart = [];
     const products = $('#main-container').data('productslists');
     const order = $('#main-container').data('order');
+    const freebie = $('#main-container').data('freebie');
     let selectedCategory = 'All';
 
-    console.log(order);
+    console.log(freebie);
 
     // Initialize cart based on existing order data
     if (order && order.length > 0) {
@@ -19,12 +20,33 @@ $(document).ready(function() {
                 cart.push({
                     id: o.product_id,
                     selling_price: parseFloat(o.selling_price),
-                    quantity: o.quantity  
+                    quantity: o.quantity,
+                    total_amount : o.total_amount
                 });
             } 
         }); 
         updateCart();
     }
+
+    if (freebie && freebie.length > 0) {
+        freebie.forEach(o => {
+            // const price = parseFloat(o.price);
+            const existing = cart.find(item => item.id === o.product_id);
+            if (existing) {
+                existing.quantity += o.quantity;
+            } else {
+                cart.push({
+                    id: o.id,
+                    selling_price: '',
+                    quantity: o.quantity,
+                    total_amount : o.Amount
+                });
+            } 
+        }); 
+        updateCart();
+    }
+
+    // return console.log(cart);
 
     // Initialize select2 for category and options selection
     $('#optionsfn, #categorySelect').select2({
@@ -44,7 +66,7 @@ $(document).ready(function() {
                             <h6 class="card-title">${p.product_name}</h6>
                             <p class="card-text">10 ml</p>
                             <p class="card-text">Expiration Date: 2026-02-10</p>
-                            <p class="card-text">Quantity Available: ${p.quantity}</p>
+                            <p class="card-text ${p.quantity == 0 ? 'text-danger':'text-success'}">Quantity Available: ${p.quantity}</p>
                             <p class="card-text">₱${(parseFloat(p.selling_price) || 0).toFixed(2)}</p>
                         </div>
                     </div>
@@ -96,13 +118,13 @@ $(document).ready(function() {
 
         // Create table with header if it's not already created
         const $table = $(`
-            <table class="table table-sm table-borderless">
+            <table class="table table-sm table-borderless" id="addcart">
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col" class="text-start">Product Name</th>
                         <th scope="col" class="text-center">Quantity</th>
                         <th scope="col" class="text-end">Total</th>
-                        <th scope="col" class="text-center">Action</th>
+                        <th scope="col" class="text-center"></th>
                     </tr>
                 </thead>
                 <tbody id="cartBody"></tbody>
@@ -120,15 +142,16 @@ $(document).ready(function() {
             // Create row for each product in the cart
             const $row = $(`
                 <tr>
-                    <td class="text-start">${product ? product.product_name : 'Unknown Product'}</td>
+                    <td class="text-start product_id" data-product_id="${product.id}">${product ? product.product_name : 'Unknown Product'}</td>
                     <td class="text-center">
                         <input type="number" class="form-control form-control-sm qty-input" data-index="${index}" value="${item.quantity}" min="1">
                     </td>
-                    <td class="text-end">
+                    <td class="text-end product_totalprice" data-totalprice= "${item.selling_price * item.quantity}">
                         ₱${(item.selling_price * item.quantity).toFixed(2)}
                     </td>
                     <td class="text-center">
-                        <button class="btn btn-sm btn-danger ms-2 remove-btn" data-index="${index}">❌</button>
+                    ${$('#main-container').data('transno')?' ' : '<button class="btn btn-sm btn-danger ms-2 remove-btn" data-index="${index}">❌</button>'}
+                        
                     </td>
                 </tr>
             `);
@@ -199,14 +222,17 @@ $(document).ready(function() {
 
     // Handle product click (add to cart)
     $(document).on("click", ".product-card", function () {
-        const id = parseInt($(this).data("id"));
-        const selling_price = parseFloat($(this).data("price"));
-        const quantity = $(this).data('quantity');
-        
-        if (quantity == 0) {
-            return alert('Zero quantity.');
+
+        if($('#main-container').data('transno') == '' ){
+            const id = parseInt($(this).data("id"));
+            const selling_price = parseFloat($(this).data("price"));
+            const quantity = $(this).data('quantity');
+            
+            if (quantity == 0) {
+                return alert('Zero quantity.');
+            }
+            addToCart(id, selling_price);
         }
-        addToCart(id, selling_price);
     });
 
     // Handle remove product from cart
@@ -252,7 +278,191 @@ $(document).ready(function() {
         finalCheckout();
     });
 
+    //Save 
+    $("#Btn-save").on('click', function () {
+        var finalSave = [];
+    
+        $('#addcart tbody tr').each(function () {
+            let product_id = $(this).find('td.product_id').data('product_id');
+            let quantity = $(this).find('td .qty-input').val();
+            let totalamount = parseFloat($(this).find('td.product_totalprice').data('totalprice')) || 0;
+      
+            finalSave.push({
+                product_id: product_id,
+                quantity: quantity,
+                total_amount: totalamount
+            });
+        });
+
+        var data = {
+            po_no : $('#po').val(),
+             terms: $('#terms').val(),
+            address :$('#address').val(),
+            delivered_date : $('#delivered_date').val(),
+            deliveredto : $('#deliveredto').val(),
+            fullname :$('#fullname').val(),
+            contact_num :$('#contact_num').val(),
+            deliveredby:$('#deliverby').val(),
+            or :$('#orno').val(),
+            cr:$('#cr').val(),
+            collected_by:$('#collectby').val(),
+            email : $('#email').val(),
+            lines : finalSave
+        };
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you want to checkout this order(s)?",
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, save it!',
+            cancelButtonText: 'No, cancel!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.post('/order/', data)
+                    .then(response => {
+                        var resp = response.data;
+               
+                        if (resp.success === true) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success!',
+                                text: resp.message
+                            }).then(() => {
+                                // window.location.href = '/order';
+                                location.reload();
+                            });
+                        } else {
+                            var errorMessage = 'Error!';
+                            if (resp.response && typeof resp.response === 'object') {
+                                var errors = [];
+                                for (var key in resp.response) {
+                                    if (resp.response[key] instanceof Array) {
+                                        errors = errors.concat(resp.response[key]);
+                                    }
+                                }
+                                errorMessage = errors.join(' ');
+                            } else {
+                                errorMessage = resp.message || 'An error occurred.';
+                            }
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error!',
+                                text: errorMessage
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: error,
+                        });
+                    });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Cancelled',
+                    text: 'Order was not save',
+                });
+            }
+        });
+
+        console.log('Final Update', finalSave);
+    });
+
+    // Update
+    $("#Btn-update").on('click', function () {
+        var finalSave = [];
+
+        var transNo = $('#main-container').data('transno');
+        var data = {
+            po_no : $('#po').val(),
+             terms: $('#terms').val(),
+            address :$('#address').val(),
+            delivered_date : $('#delivered_date').val(),
+            deliveredto : $('#deliveredto').val(),
+            fullname :$('#fullname').val(),
+            contact_num :$('#contact_num').val(),
+            deliveredby:$('#deliverby').val(),
+            or :$('#orno').val(),
+            cr:$('#cr').val(),
+            collected_by:$('#collectby').val(),
+            email : $('#email').val(),
+            // lines : finalSave
+        };
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you want to checkout this order(s)?",
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, save it!',
+            cancelButtonText: 'No, cancel!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.put('/order/'+transNo, data)
+                    .then(response => {
+                        var resp = response.data;
+            //    alert(1234);
+                        if (resp.success === true) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success!',
+                                text: resp.message
+                            }).then(() => {
+                                // window.location.href = '/order';
+                                location.reload();
+                            });
+                        } else {
+                            var errorMessage = 'Error!';
+                            if (resp.response && typeof resp.response === 'object') {
+                                var errors = [];
+                                for (var key in resp.response) {
+                                    if (resp.response[key] instanceof Array) {
+                                        errors = errors.concat(resp.response[key]);
+                                    }
+                                }
+                                errorMessage = errors.join(' ');
+                            } else {
+                                errorMessage = resp.message || 'An error occurred.';
+                            }
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error!',
+                                text: errorMessage
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: error,
+                        });
+                    });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Cancelled',
+                    text: 'Order was not save',
+                });
+            }
+        });
+
+        console.log('Final Update', finalSave);
+    });
+    
+
     // Initial render of products and filtering
     renderProducts(products);
     filterProducts(selectedCategory);
+
+    $('#Btn-back').on('click', function() {
+        window.location.href = '/order';
+    });
 });

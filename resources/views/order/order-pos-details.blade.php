@@ -10,7 +10,10 @@
       <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
       <!-- Optional: Bootstrap 5 Select2 Theme -->
       <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet" />
+
+      <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
       <style>
+      
          body {
          font-size: small;
          font-family: Arial, Helvetica, sans-serif;
@@ -31,7 +34,11 @@
       </style>
    </head>
    <body>
-      <div class="container-fluid" id="main-container"data-productslists='@json(isset($data['prodlist']) ? $data['prodlist'] : [])'data-order='@json(isset($data['lines']) ? $data['lines'] : [])' data-freebie="@json(isset($data['freebieslist']) ? $data['freebieslist'] : [])">
+    <div class="container-fluid" id="main-container" data-transNo="{{isset($data['transNo']) ? $data['transNo'] : '' }}"
+        data-productslists='@json(isset($data["prodlist"]) ? $data["prodlist"] : [])'
+        data-order='@json(isset($data["lines"]) ? $data["lines"] : [])'
+        data-freebie='@json(isset($data["freebieslist"]) ? $data["freebieslist"] : [])'>
+    </div>
       </div>
       <div class="row g-2 mb-1 mt-2">
          <div class="col-md-3">
@@ -57,8 +64,8 @@
             <input type="text" value="{{isset($data['fullname']) ? $data['fullname'] : '' }}" id="fullname" class="form-control bg-dark text-light border-secondary" placeholder="Fullname">
          </div>
          <div class="col-md-3">
-            <label for="contact_num" value="{{isset($data['contact_num']) ? $data['contact_num'] : '' }}"  class="form-label text-light">Contact No.<span class="text-danger">*</span></label>
-            <input type="text" id="contact_num" class="form-control bg-dark text-light border-secondary" placeholder="Contact No.">
+            <label for="contact_num" class="form-label text-light">Contact No.<span class="text-danger">*</span></label>
+            <input type="text" id="contact_num" value="{{isset($data['contact_num']) ? $data['contact_num'] : '' }}" class="form-control bg-dark text-light border-secondary" placeholder="Contact No.">
          </div>
          <div class="col-md-3">
             <label for="address" class="form-label text-light">Address<span class="text-danger">*</span></label>
@@ -84,7 +91,7 @@
          </div>
          <div class="col-md-3">
             <label for="email" class="form-label text-light">Email (Optional)</label>
-            <input type="text" id="input8" class="form-control bg-dark text-light border-secondary" placeholder="Email (Optional)">
+            <input type="text" id="email" class="form-control bg-dark text-light border-secondary" placeholder="Email (Optional)" value="{{isset($data['email']) ? $data['email'] : '' }}">
          </div>
       </div>
       <div class="row g-2 mb-3 {{!empty($data['payment_status']) ? $data['payment_status'] : 'd-none'}}">
@@ -153,8 +160,13 @@
          </div>
       </div>
       </div>
+      
       <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+      <!-- SweetAlert2 JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
       @vite(['resources/js/apps/order/order-pos-details.js'])
    </body>
 </html>

@@ -10,6 +10,7 @@ use App\Models\Order;
 use Auth;
 use App\Models\Product;
 use App\Http\Controllers\Product\ProductController;
+use App\Models\Freebie;
 
 class OrderController extends Controller
 {
@@ -46,249 +47,368 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
-        $data = $request->all();
-        $validator = Validator::make($data,[
-            "po_no" => 'string|required', //done
-            "terms" => 'string|required',  //done
-            "address" => 'string|required', //done
-            "delivered_date" => 'string|required', //done
-            "deliveredto" => 'string|required', //done
-            "fullname" => 'string|required', //done
-            "contact_num" => 'numeric|required', //done
-            "deliveredby" => 'string|required',  //done
-            "or" => 'string|required', //done
-            "cr" => 'string|required', //done
-            "email" =>'string|nullable',
-            "collected_by" => 'string|required', //done
-        ]);
+    //  ORIGINAL CODE 
+    // public function store(Request $request)
+    // {
+    //     //
+    //     $data = $request->all();
+    //     $validator = Validator::make($data,[
+    //         "po_no" => 'string|required', //done
+    //         "terms" => 'string|required',  //done
+    //         "address" => 'string|required', //done
+    //         "delivered_date" => 'string|required', //done
+    //         "deliveredto" => 'string|required', //done
+    //         "fullname" => 'string|required', //done
+    //         "contact_num" => 'numeric|required', //done
+    //         "deliveredby" => 'string|required',  //done
+    //         "or" => 'string|required', //done
+    //         "cr" => 'string|required', //done
+    //         "email" =>'string|nullable',
+    //         "collected_by" => 'string|required', //done
+    //     ]);
 
 
-        if($validator->fails()){
-            return response()->json(['success' => false, 'Detect' => 'Header' , 'response' => $validator->errors()]);
-        }
+    //     if($validator->fails()){
+    //         return response()->json(['success' => false, 'Detect' => 'Header' , 'response' => $validator->errors()]);
+    //     }
 
-        $existsor = DB::select('SELECT count(*) AS count FROM orders WHERE `or` = ?',[$data['or']]);
-        $existspo = DB::select('SELECT count(*) AS count FROM orders WHERE `po_no` = ?',[$data['po_no']]);
-        $existscr = DB::select('SELECT count(*) AS count FROM orders WHERE `cr` = ?',[$data['cr']]);
+    //     $existsor = DB::select('SELECT count(*) AS count FROM orders WHERE `or` = ?',[$data['or']]);
+    //     $existspo = DB::select('SELECT count(*) AS count FROM orders WHERE `po_no` = ?',[$data['po_no']]);
+    //     $existscr = DB::select('SELECT count(*) AS count FROM orders WHERE `cr` = ?',[$data['cr']]);
 
-        if($existsor[0]->count > 0){
-            return response()->json(['success' => false, 'message'=> 'OR no. is already exists. Please check first.']) ;
+    //     if($existsor[0]->count > 0){
+    //         return response()->json(['success' => false, 'message'=> 'OR no. is already exists. Please check first.']) ;
            
-        }
-        else if($existspo[0]->count > 0 ) {
-            return response()->json(['success' => false, 'message'=> 'PO no. is already exists. Please check first.']) ;
-        }
-        else if ($existscr[0]->count > 0 ){
-            return response()->json(['success' => false, 'message'=> 'cr no. is already exists. Please check first.']) ;
-        }
+    //     }
+    //     else if($existspo[0]->count > 0 ) {
+    //         return response()->json(['success' => false, 'message'=> 'PO no. is already exists. Please check first.']) ;
+    //     }
+    //     else if ($existscr[0]->count > 0 ){
+    //         return response()->json(['success' => false, 'message'=> 'cr no. is already exists. Please check first.']) ;
+    //     }
 
-        $maxTransNo = DB::table('orders')->max('trans_no');
-        $transNo = $maxTransNo ? $maxTransNo + 1 : 1;
+    //     $maxTransNo = DB::table('orders')->max('trans_no');
+    //     $transNo = $maxTransNo ? $maxTransNo + 1 : 1;
 
-        $lines = Validator::make($data['lines'],[
-            "product_id" => 'integer|required',
-            "quantity" => 'integer|required',
-            "total_amount" => 'integer|required'
-        ]);
-        if($validator->fails()){
-            return response()->json(['success' => false, 'Detect' => 'Lines' , 'message' => $validator->errors()]);
-        }
+    //     $lines = Validator::make($data['lines'],[
+    //         "product_id" => 'integer|required',
+    //         "quantity" => 'integer|required',
+    //         "total_amount" => 'integer|required'
+    //     ]);
+    //     if($validator->fails()){
+    //         return response()->json(['success' => false, 'Detect' => 'Lines' , 'message' => $validator->errors()]);
+    //     }
       
 
 
-        try {
-            DB::beginTransaction(); // Start a transaction
+    //     try {
+    //         DB::beginTransaction(); // Start a transaction
         
+    //         for ($i = 0; $i < count($data['lines']); $i++) {
+    //             $line = $data['lines'][$i];
+                
+    //             $product = Product::find($line['product_id']);
+    //             if ($product) {
+    //                 if ($product->quantity < $line['quantity']) {
+    //                     return response()->json([
+    //                         'success' => false, 
+    //                         'response' => "$product->product_name Not enough stock(s)."
+    //                     ]);
+    //                 }
+    //                 $product->quantity -= $line['quantity'];
+    //                 $product->save(); 
+    //             } else {
+    //                 return response()->json([
+    //                     'success' => false, 
+    //                     'message' => 'Product not found', 
+    //                     'product_id' => $line['product_id']
+    //                 ]);
+    //             }
+        
+                
+
+    //             Order::create([
+    //                 'trans_no' => $transNo,
+    //                 'product_id' => $line['product_id'],
+    //                 'deliveredto' => $data['deliveredto'],
+    //                 'address' => $data['address'],
+    //                 'delivered_date' => $data['delivered_date'],
+    //                 'quantity' => $line['quantity'],
+    //                 'total_amount' => $line['total_amount'],
+    //                 'po_no' => $data['po_no'],
+    //                 'terms' => $data['terms'],
+    //                 'deliveredby' => $data['deliveredby'],
+    //                 'fullname' => $data['fullname'],
+    //                 'contact_num' => $data['contact_num'],
+    //                 'or' => $data['or'],
+    //                 'cr' => $data['cr'],
+    //                 'collected_by' => $data['collected_by'],
+    //                 'payment_status' => 'Unpaid',
+    //                 'created_by' => Auth::user()->fullname,
+    //                 'created_id' => Auth::user()->id,
+    //                 'email' => $data['email']
+
+    //             ]);
+    //         }
+        
+    //         DB::commit(); // Commit the transaction
+        
+    //         return response()->json(['success' => true, 'message' => 'Order(s) checkout successfully']);
+    //     } catch (\Exception $e) {
+    //         DB::rollBack(); // Rollback the transaction in case of error
+    //         return response()->json(['success' => false, 'message' => 'An error occurred during insertion', 'error' => $e->getMessage()]);
+    //     }
+    // }
+
+    // modified code 
+    public function store(Request $request)
+    {
+        $data = $request->all();
+    
+        $validator = Validator::make($data, [
+            "po_no" => 'string|required',
+            "terms" => 'string|required',
+            "address" => 'string|required',
+            "delivered_date" => 'string|required',
+            "deliveredto" => 'string|required',
+            "fullname" => 'string|required',
+            "contact_num" => 'numeric|required',
+            "deliveredby" => 'string|required',
+            "or" => 'string|required',
+            "cr" => 'string|required',
+            "email" => 'string|nullable',
+            "collected_by" => 'string|required',
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'Detect' => 'Header', 'response' => $validator->errors()]);
+        }
+    
+        $existsor = DB::select('SELECT count(*) AS count FROM orders WHERE `or` = ?', [$data['or']]);
+        $existspo = DB::select('SELECT count(*) AS count FROM orders WHERE `po_no` = ?', [$data['po_no']]);
+        $existscr = DB::select('SELECT count(*) AS count FROM orders WHERE `cr` = ?', [$data['cr']]);
+    
+        if ($existsor[0]->count > 0) {
+            return response()->json(['success' => false, 'message' => 'OR no. already exists.']);
+        } elseif ($existspo[0]->count > 0) {
+            return response()->json(['success' => false, 'message' => 'PO no. already exists.']);
+        } elseif ($existscr[0]->count > 0) {
+            return response()->json(['success' => false, 'message' => 'CR no. already exists.']);
+        }
+    
+        $maxTransNo = DB::table('orders')->max('trans_no');
+        $transNo = $maxTransNo ? $maxTransNo + 1 : 1;
+    
+        try {
+            DB::beginTransaction();
+    
             for ($i = 0; $i < count($data['lines']); $i++) {
                 $line = $data['lines'][$i];
-                
+    
+                $lineValidator = Validator::make($line, [
+                    "product_id" => 'required|integer',
+                    "quantity" => 'required|integer',
+                    "total_amount" => 'required|numeric'
+                ]);
+    
+                if ($lineValidator->fails()) {
+                    return response()->json(['success' => false, 'Detect' => 'Lines', 'message' => $lineValidator->errors()]);
+                }
+    
                 $product = Product::find($line['product_id']);
-                if ($product) {
-                    if ($product->quantity < $line['quantity']) {
-                        return response()->json([
-                            'success' => false, 
-                            'response' => "$product->product_name Not enough stock(s)."
-                        ]);
-                    }
-                    $product->quantity -= $line['quantity'];
-                    $product->save(); 
-                } else {
+    
+                if (!$product) {
+                    return response()->json(['success' => false, 'message' => 'Product not found', 'product_id' => $line['product_id']]);
+                }
+    
+                if ($product->quantity < $line['quantity']) {
                     return response()->json([
-                        'success' => false, 
-                        'message' => 'Product not found', 
-                        'product_id' => $line['product_id']
+                        'success' => false,
+                        'response' => "$product->product_name Not enough stock(s)."
                     ]);
                 }
-        
-                
-
-                Order::create([
-                    'trans_no' => $transNo,
-                    'product_id' => $line['product_id'],
-                    'deliveredto' => $data['deliveredto'],
-                    'address' => $data['address'],
-                    'delivered_date' => $data['delivered_date'],
-                    'quantity' => $line['quantity'],
-                    'total_amount' => $line['total_amount'],
-                    'po_no' => $data['po_no'],
-                    'terms' => $data['terms'],
-                    'deliveredby' => $data['deliveredby'],
-                    'fullname' => $data['fullname'],
-                    'contact_num' => $data['contact_num'],
-                    'or' => $data['or'],
-                    'cr' => $data['cr'],
-                    'collected_by' => $data['collected_by'],
-                    'payment_status' => 'Unpaid',
-                    'created_by' => Auth::user()->fullname,
-                    'created_id' => Auth::user()->id,
-                    'email' => $data['email']
-
-                ]);
+    
+                if ($line['total_amount'] == 0) {
+                    // Freebie
+                    Freebie::create([
+                        'trans_No' => $transNo,
+                        'product_id' => $line['product_id'],
+                        'quantity' => $line['quantity'],
+                        'created_by' => Auth::user()->fullname,
+                        'created_id' => Auth::user()->id
+                    ]);
+                } else {
+                    // Regular order
+                    Order::create([
+                        'trans_no' => $transNo,
+                        'product_id' => $line['product_id'],
+                        'deliveredto' => $data['deliveredto'],
+                        'address' => $data['address'],
+                        'delivered_date' => $data['delivered_date'],
+                        'quantity' => $line['quantity'],
+                        'total_amount' => $line['total_amount'],
+                        'po_no' => $data['po_no'],
+                        'terms' => $data['terms'],
+                        'deliveredby' => $data['deliveredby'],
+                        'fullname' => $data['fullname'],
+                        'contact_num' => $data['contact_num'],
+                        'or' => $data['or'],
+                        'cr' => $data['cr'],
+                        'collected_by' => $data['collected_by'],
+                        'payment_status' => 'Unpaid',
+                        'created_by' => Auth::user()->fullname,
+                        'created_id' => Auth::user()->id,
+                        'email' => $data['email']
+                    ]);
+                }
+    
+                // Always reduce product quantity
+                $product->quantity -= $line['quantity'];
+                $product->save();
             }
-        
-            DB::commit(); // Commit the transaction
-        
+    
+            DB::commit();
             return response()->json(['success' => true, 'message' => 'Order(s) checkout successfully']);
         } catch (\Exception $e) {
-            DB::rollBack(); // Rollback the transaction in case of error
+            DB::rollBack();
             return response()->json(['success' => false, 'message' => 'An error occurred during insertion', 'error' => $e->getMessage()]);
         }
     }
+    
 
     /**
      * Display the specified resource.
      */
    
-
-     public function show(string $id)
-     {
-         $result = DB::select('SELECT * FROM orders WHERE trans_no = ? ',[$id]);
-         if (empty($result)) {
-             return response()->view('page-error-404', [], 404);
-         }
-         $productlist = DB::select('SELECT p.product_name,o.quantity,o.total_amount,p.selling_price,p.brand_name,p.unit FROM orders AS o LEFT JOIN products AS p ON p.id = o.product_id WHERE o.trans_no = ?' ,[$id]);
-         $datas = [] ; 
-
-
-         $orders =  db::select('SELECT p.product_name, o.trans_no,o.product_id, o.quantity, o.total_amount,p.unit,p.brand_name FROM orders AS o INNER JOIN products AS p ON o.product_id = p.id  WHERE o.trans_no = ? ', [$id]);
+    // ORIGINAL CODE
+    //  public function show(string $id)
+    //  {
+    //      $result = DB::select('SELECT * FROM orders WHERE trans_no = ? ',[$id]);
+    //      if (empty($result)) {
+    //          return response()->view('page-error-404', [], 404);
+    //      }
+    //      $productlist = DB::select('SELECT p.product_name,o.quantity,o.total_amount,p.selling_price,p.brand_name,p.unit FROM orders AS o LEFT JOIN products AS p ON p.id = o.product_id WHERE o.trans_no = ?' ,[$id]);
+    //      $datas = [] ; 
 
 
-         $overalltotal = 0;
-         foreach($orders AS $totalamount){
-            $overalltotal += $totalamount->total_amount;
-         }
+    //      $orders =  db::select('SELECT p.product_name, o.trans_no,o.product_id, o.quantity, o.total_amount,p.unit,p.brand_name FROM orders AS o INNER JOIN products AS p ON o.product_id = p.id  WHERE o.trans_no = ? ', [$id]);
+
+
+    //      $overalltotal = 0;
+    //      foreach($orders AS $totalamount){
+    //         $overalltotal += $totalamount->total_amount;
+    //      }
 
 
 
 
-         for($i = 0; $i<count($result); $i++){
+    //      for($i = 0; $i<count($result); $i++){
  
  
-             $data = [
-                 "transNo" => $result[$i]->trans_no,
-                 "po_no" => $result[$i]->po_no,
-                 "address" => $result[$i]->address, 
-                 "delivered_date" => $result[$i]->delivered_date,
-                 "deliveredto" => $result[$i]->deliveredto,
-                 "fullname" => $result[$i]->fullname,
-                 "contact_num" => $result[$i]->contact_num,
-                 "deliveredby"  => $result[$i]->deliveredby,
-                 "or" => $result[$i]->or,
-                 "cr" => $result[$i]->cr, 
-                 "terms" =>   $result[$i]->terms,
-                 "payment_status" => $result[$i]->payment_status,              
-                 "collected_by" =>$result[$i]->collected_by ,
-                 "email" => $result[$i]->email,
-                 "readonly" => $result[$i]->created_id == Auth::user()->id || Auth::user()->role === "Admin"  ? " " : 
-                 "readonly",
-                 "lines" =>$orders,
-                 "productlist" => $productlist,
-                 "freebieslist" => DB::select('SELECT p.product_name,f.quantity,p.selling_price,p.brand_name,p.unit FROM freebies AS f INNER JOIN products AS p ON p.id = f.product_id WHERE f.trans_No =? ',[$id]),
-                 "totalall" => $overalltotal,
-                 "button" => $this->buttonPrivate("orders",$id,'trans_no')
-             ];
-         }
+    //          $data = [
+    //              "transNo" => $result[$i]->trans_no,
+    //              "po_no" => $result[$i]->po_no,
+    //              "address" => $result[$i]->address, 
+    //              "delivered_date" => $result[$i]->delivered_date,
+    //              "deliveredto" => $result[$i]->deliveredto,
+    //              "fullname" => $result[$i]->fullname,
+    //              "contact_num" => $result[$i]->contact_num,
+    //              "deliveredby"  => $result[$i]->deliveredby,
+    //              "or" => $result[$i]->or,
+    //              "cr" => $result[$i]->cr, 
+    //              "terms" =>   $result[$i]->terms,
+    //              "payment_status" => $result[$i]->payment_status,              
+    //              "collected_by" =>$result[$i]->collected_by ,
+    //              "email" => $result[$i]->email,
+    //              "readonly" => $result[$i]->created_id == Auth::user()->id || Auth::user()->role === "Admin"  ? " " : 
+    //              "readonly",
+    //              "lines" =>$orders,
+    //              "productlist" => $productlist,
+    //              "freebieslist" => DB::select('SELECT p.product_name,f.quantity,p.selling_price,p.brand_name,p.unit FROM freebies AS f INNER JOIN products AS p ON p.id = f.product_id WHERE f.trans_No =? ',[$id]),
+    //              "totalall" => $overalltotal,
+    //              "button" => $this->buttonPrivate("orders",$id,'trans_no')
+    //          ];
+    //      }
  
-             $products = DB::select('SELECT * FROM products');
+    //          $products = DB::select('SELECT * FROM products');
  
-         return view('order.order-details',compact('data','products'));
-         // return $result;
+    //      return view('order.order-details',compact('data','products'));
+    //      // return $result;
  
  
-     }
-
-    // public function show(string $id)
-    // {
-    //     $result = DB::select('SELECT * FROM orders WHERE trans_no = ? ',[$id]);
-    //     if (empty($result)) {
-    //         return response()->view('page-error-404', [], 404);
-    //     }
-    //     $productlist = DB::select('SELECT p.product_name,o.quantity,o.total_amount,p.selling_price,p.brand_name,p.unit FROM orders AS o LEFT JOIN products AS p ON p.id = o.product_id WHERE o.trans_no = ?' ,[$id]);
-    //     $datas = [] ; 
+    //  }
 
 
-    //     $orders =  db::select('SELECT p.selling_price,p.product_name, o.trans_no,o.product_id, o.quantity, o.total_amount,p.unit,p.brand_name FROM orders AS o INNER JOIN products AS p ON o.product_id = p.id  WHERE o.trans_no = ? ', [$id]);
+    // modified code 
+    public function show(string $id)
+    {
+        $result = DB::select('SELECT * FROM orders WHERE trans_no = ? ',[$id]);
+        if (empty($result)) {
+            return response()->view('page-error-404', [], 404);
+        }
+        $productlist = DB::select('SELECT p.product_name,o.quantity,o.total_amount,p.selling_price,p.brand_name,p.unit FROM orders AS o LEFT JOIN products AS p ON p.id = o.product_id WHERE o.trans_no = ?' ,[$id]);
+        $datas = [] ; 
 
 
-    //     $overalltotal = 0;
-    //     foreach($orders AS $totalamount){
-    //        $overalltotal += $totalamount->total_amount;
-    //     }
-
-    //     $brandprod = (new ProductController)->productList();
-    //     $datas = $brandprod->getData(); 
-    //     $brand = $datas->brand;
-    //     $prodlist  = $datas->products;
-    //     $products = DB::select('SELECT * FROM products where status= "Available"');
+        $orders =  db::select('SELECT p.selling_price,p.product_name, o.trans_no,o.product_id, o.quantity, o.total_amount,p.unit,p.brand_name FROM orders AS o INNER JOIN products AS p ON o.product_id = p.id  WHERE o.trans_no = ? ', [$id]);
 
 
-    //     for($i = 0; $i<count($result); $i++){
+        $overalltotal = 0;
+        foreach($orders AS $totalamount){
+           $overalltotal += $totalamount->total_amount;
+        }
+
+        $brandprod = (new ProductController)->productList();
+        $datas = $brandprod->getData(); 
+        $brand = $datas->brand;
+        $prodlist  = $datas->products;
+        $products = DB::select('SELECT * FROM products where status= "Available"');
 
 
-    //         $data = [
-    //             "transNo" => $result[$i]->trans_no,
-    //             "po_no" => $result[$i]->po_no,
-    //             "address" => $result[$i]->address, 
-    //             "delivered_date" => $result[$i]->delivered_date,
-    //             "deliveredto" => $result[$i]->deliveredto,
-    //             "fullname" => $result[$i]->fullname,
-    //             "contact_num" => $result[$i]->contact_num,
-    //             "deliveredby"  => $result[$i]->deliveredby,
-    //             "or" => $result[$i]->or,
-    //             "cr" => $result[$i]->cr, 
-    //             "terms" =>   $result[$i]->terms,
-    //             "payment_status" => $result[$i]->payment_status,              
-    //             "collected_by" =>$result[$i]->collected_by ,
-    //             "email" => $result[$i]->email,
-    //             "readonly" => $result[$i]->created_id == Auth::user()->id || Auth::user()->role === "Admin"  ? " " : 
-    //             "readonly",
-    //             "lines" =>$orders,
-    //             "productlist" => $productlist,
-    //             "freebieslist" => DB::select('SELECT p.id,p.product_name,f.quantity,p.selling_price,p.brand_name,p.unit FROM freebies AS f INNER JOIN products AS p ON p.id = f.product_id WHERE f.trans_No =? ',[$id]),
-    //             "totalall" => $overalltotal,
-    //             "prodlist" =>$prodlist,
-    //             "brand" => $brand,
-    //             "button" => $this->buttonPrivate("orders",$id,'trans_no')
-    //         ];
-    //     }
+        for($i = 0; $i<count($result); $i++){
 
-    //     $products = DB::select('SELECT * FROM products');
 
-    //     //  add for test
-    //     $brandprod = (new ProductController)->productList();
-    //     $brandprod = (new ProductController)->productList();
-    //     $datas = $brandprod->getData(); 
-    //     $brand = $datas->brand;
-    //     $prodlist  = $datas->products;
+            $data = [
+                "transNo" => $result[$i]->trans_no,
+                "po_no" => $result[$i]->po_no,
+                "address" => $result[$i]->address, 
+                "delivered_date" => $result[$i]->delivered_date,
+                "deliveredto" => $result[$i]->deliveredto,
+                "fullname" => $result[$i]->fullname,
+                "contact_num" => $result[$i]->contact_num,
+                "deliveredby"  => $result[$i]->deliveredby,
+                "or" => $result[$i]->or,
+                "cr" => $result[$i]->cr, 
+                "terms" =>   $result[$i]->terms,
+                "payment_status" => $result[$i]->payment_status,              
+                "collected_by" =>$result[$i]->collected_by ,
+                "email" => $result[$i]->email,
+                "readonly" => $result[$i]->created_id == Auth::user()->id || Auth::user()->role === "Admin"  ? " " : 
+                "readonly",
+                "lines" =>$orders,
+                "productlist" => $productlist,
+                "freebieslist" => DB::select('SELECT f.Amount,p.id,p.product_name,f.quantity,p.selling_price,p.brand_name,p.unit FROM freebies AS f INNER JOIN products AS p ON p.id = f.product_id WHERE f.trans_No =? ',[$id]),
+                "totalall" => $overalltotal,
+                "prodlist" =>$prodlist,
+                "brand" => $brand,
+                "button" => $this->buttonPrivate("orders",$id,'trans_no')
+            ];
+        }
 
-    //     // dd($data);
-    //     return view('order.order-pos-details',compact('data'));
+        $products = DB::select('SELECT * FROM products');
+
+        //  add for test
+        $brandprod = (new ProductController)->productList();
+        $brandprod = (new ProductController)->productList();
+        $datas = $brandprod->getData(); 
+        $brand = $datas->brand;
+        $prodlist  = $datas->products;
+
+        // dd($data);
+        return view('order.order-pos-details',compact('data'));
  
 
-    // }
+    }
 
 
 
@@ -304,12 +424,73 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
+    // ORIGINAL CODE 
+    // public function update(Request $request, string $id){
 
+
+    //     $data = $request->all();
+
+    //     $validator = Validator::make($data,[
+    //         "po_no" => 'string|required', //done
+    //         "terms" => 'string|required',  //done
+    //         "address" => 'string|required', //done
+    //         "delivered_date" => 'string|required', //done
+    //         "deliveredto" => 'string|required', //done
+    //         "fullname" => 'string|required', //done
+    //         "contact_num" => 'numeric|required', //done
+    //         "deliveredby" => 'string|required',  //done
+    //         "or" => 'string|required', //done
+    //         "cr" => 'string|required', //done
+    //         "email" =>'string|nullable',
+    //         "collected_by" => 'string|required', //done
+    //     ]);
+
+
+    //     if($validator->fails()){
+    //         return response()->json(['success' => false, 'Detect' => 'Header' , 'response' => $validator->errors()]);
+    //     }
+
+    //     $existsor = DB::select('SELECT COUNT(*) AS count FROM orders WHERE `or` = ? AND trans_no != ?', [$data['or'], $id]);
+    //     $existspo = DB::select('SELECT count(*) AS count FROM orders WHERE `po_no` = ? AND trans_no !=?',[$data['po_no'] , $id]);
+    //     $existscr = DB::select('SELECT count(*) AS count FROM orders WHERE `cr` = ? AND trans_no!= ? ',[$data['cr'],$id]);
+
+    //     if($existsor[0]->count > 0){
+    //         return response()->json(['success' => false, 'message'=> 'OR no. is already exists. Please check first.']) ;
+           
+    //     }
+    //     else if($existspo[0]->count > 0 ) {
+    //         return response()->json(['success' => false, 'message'=> 'PO no. is already exists. Please check first.']) ;
+    //     }
+    //     else if ($existscr[0]->count > 0 ){
+    //         return response()->json(['success' => false, 'message'=> 'cr no. is already exists. Please check first.']) ;
+    //     }
+        
+    //     try {
+    //         DB::beginTransaction();
+    //             $update = DB::update('UPDATE orders SET deliveredto = ?, `address` = ? , delivered_date =?, po_no = ? , terms = ?,  deliveredby = ? , fullname =? , contact_num = ?, `or` =? , cr =? , collected_by = ?,updated_by = ?,email =? WHERE trans_no = ?  ', [
+    //                 $data['deliveredto'],$data['address'],$data['delivered_date'],$data['po_no'],$data['terms'],$data['deliveredby'],$data['fullname'],$data['contact_num'],$data['or'],$data['cr'],$data['collected_by'],Auth::user()->fullname,$data['email'],$id]
+    //             );
+    //             if ($update) {
+    //                 // Commit transaction
+    //                 DB::commit();
+    //                 return response()->json(['success' => true, 'message' => 'Order information updated successfully.']);
+    //             } else {
+    //                 // Rollback if no rows were affected
+    //                 DB::rollBack();
+    //                 return response()->json(['success' => false, 'message' => 'No updates made.']);
+    //             }
+
+
+    //             // return response()->json(['success' => true, 'message' => 'Order information updated successfully.']);
+    //     } catch (Exception $e) {
+    //         return response()->json(['success' => false, 'message' => 'Failed to update information order.', 'error' => $e->getMessage()]);
+    //     }
+    // }   
+
+
+    // MODIFIED CODE 
     public function update(Request $request, string $id){
-
-
         $data = $request->all();
-
         $validator = Validator::make($data,[
             "po_no" => 'string|required', //done
             "terms" => 'string|required',  //done
@@ -333,15 +514,25 @@ class OrderController extends Controller
         $existsor = DB::select('SELECT COUNT(*) AS count FROM orders WHERE `or` = ? AND trans_no != ?', [$data['or'], $id]);
         $existspo = DB::select('SELECT count(*) AS count FROM orders WHERE `po_no` = ? AND trans_no !=?',[$data['po_no'] , $id]);
         $existscr = DB::select('SELECT count(*) AS count FROM orders WHERE `cr` = ? AND trans_no!= ? ',[$data['cr'],$id]);
-
-        if($existsor[0]->count > 0){
+        $paidpayment = DB::select('SELECT count(*) AS count FROM orders WHERE payment_status = "Paid" AND trans_no = ? ',[$id]);
+        if($paidpayment[0]->count > 0){
+            return response()->json(['success' => false, 'message' => 'This transaction is already paid. Please delete the payment history of this OR number first, then you can edit it. Consult the admin if needed.']);
+        }
+        else if($existsor[0]->count > 0){
+            DB::rollBack();
             return response()->json(['success' => false, 'message'=> 'OR no. is already exists. Please check first.']) ;
            
         }
         else if($existspo[0]->count > 0 ) {
+            DB::rollBack();
+            return response()->json(['success' => false, 'message' => 'This transaction is already paid. Please delete the payment history of this OR number first, then you can update it. Consult the admin if needed.']);
+        }
+        else if($existspo[0]->count > 0 ) {
+            DB::rollBack();
             return response()->json(['success' => false, 'message'=> 'PO no. is already exists. Please check first.']) ;
         }
         else if ($existscr[0]->count > 0 ){
+            DB::rollBack();
             return response()->json(['success' => false, 'message'=> 'cr no. is already exists. Please check first.']) ;
         }
         
@@ -357,7 +548,7 @@ class OrderController extends Controller
                 } else {
                     // Rollback if no rows were affected
                     DB::rollBack();
-                    return response()->json(['success' => false, 'message' => 'No updates made.'], 400);
+                    return response()->json(['success' => false, 'message' => 'No updates made.']);
                 }
 
 
@@ -367,6 +558,7 @@ class OrderController extends Controller
         }
     }   
 
+    
     /**
      * Remove the specified resource from storage.
      */
