@@ -34,7 +34,7 @@
       </style>
    </head>
    <body>
-    <div class="container-fluid" id="main-container" data-transNo="{{isset($data['transNo']) ? $data['transNo'] : '' }}"
+    <div class="container-fluid" id="main-container" data-transNo="{{isset($data['transNo']) ? $data['transNo'] : '0' }}"
         data-productslists='@json(isset($data["prodlist"]) ? $data["prodlist"] : [])'
         data-order='@json(isset($data["lines"]) ? $data["lines"] : [])'
         data-freebie='@json(isset($data["freebieslist"]) ? $data["freebieslist"] : [])'>
