@@ -144,7 +144,7 @@ $(document).ready(function() {
                 <tr>
                     <td class="text-start product_id" data-product_id="${product.id}">${product ? product.product_name : 'Unknown Product'}</td>
                     <td class="text-center">
-                        <input type="number" class="form-control form-control-sm qty-input" data-index="${index}" value="${item.quantity}" min="1">
+                        <input type="number" class="form-control form-control-sm qty-input" data-index="${index}" value="${item.quantity}" ${$('#main-container').data('transno') == ' ' ? '' : 'readonly'} min="1">
                     </td>
                     <td class="text-end product_totalprice" data-totalprice= "${item.selling_price * item.quantity}">
                         ₱${(item.selling_price * item.quantity).toFixed(2)}
@@ -233,6 +233,8 @@ $(document).ready(function() {
             }
             addToCart(id, selling_price);
         }
+      
+        
     });
 
     // Handle remove product from cart
