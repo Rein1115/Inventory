@@ -562,74 +562,143 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request ,string $id)
-    {       
+    // original code 
+    // public function destroy(Request $request ,string $id)
+    // {       
 
-        $auth = $this->Authentication("orders",'trans_no',$id);
-        // return response()->json(['success' => true, 'message' => $auth],200);
-        if($auth === 1){
-            try{ 
+    //     $auth = $this->Authentication("orders",'trans_no',$id);
+    //     // return response()->json(['success' => true, 'message' => $auth],200);
+    //     if($auth === 1){
+    //         try{ 
 
-                $data = $request->all();
+    //             $data = $request->all();
 
 
-                $existsfreebies = DB::select('SELECT COUNT(*) AS count FROM freebies WHERE trans_No =? ',[$id]);
+    //             $existsfreebies = DB::select('SELECT COUNT(*) AS count FROM freebies WHERE trans_No =? ',[$id]);
 
-                if($existsfreebies[0]->count > 0){
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'You cannot delete this order because it has associated freebies. Please delete the associated freebies before attempting to delete this order.'
-                    ], 200);
-                }
+    //             if($existsfreebies[0]->count > 0){
+    //                 return response()->json([
+    //                     'success' => false,
+    //                     'message' => 'You cannot delete this order because it has associated freebies. Please delete the associated freebies before attempting to delete this order.'
+    //                 ], 200);
+    //             }
         
-                $validator = Validator::make($data['order'], [
-                   'quantity' => 'required|integer',
-                    'product_id' => 'required|integer'
-                ]);
-                $totalQuantity= [];
-                $updated = []; 
-                $prod_id = [];
-                $count = 0 ;
+    //             $validator = Validator::make($data['order'], [
+    //                'quantity' => 'required|integer',
+    //                 'product_id' => 'required|integer'
+    //             ]);
+    //             $totalQuantity= [];
+    //             $updated = []; 
+    //             $prod_id = [];
+    //             $count = 0 ;
 
-                $selectpay = DB::select('SELECT count(*)AS count FROM orders AS o INNER JOIN payments AS p ON p.order_transno = o.trans_no WHERE p.order_transno = ? ',[$id]);
+    //             $selectpay = DB::select('SELECT count(*)AS count FROM orders AS o INNER JOIN payments AS p ON p.order_transno = o.trans_no WHERE p.order_transno = ? ',[$id]);
 
-                // return $selectpay[0]->count;
+    //             // return $selectpay[0]->count;
 
-                if($selectpay[0]->count > 0) {
-                    return response()->json(['success' => false, 'message' => 'You cant delete this order cause they have already payment.'],200);
-                }
-                else{
-                    for ($i = 0; $i < count($data['order']); $i++) {
-                        $var = $data['order'][$i];
+    //             if($selectpay[0]->count > 0) {
+    //                 return response()->json(['success' => false, 'message' => 'You cant delete this order cause they have already payment.'],200);
+    //             }
+    //             else{
+    //                 for ($i = 0; $i < count($data['order']); $i++) {
+    //                     $var = $data['order'][$i];
             
             
-                        $prod_id[$i] =  $var['product_id'];
-                        $quer = DB::select('SELECT quantity FROM products WHERE id = ?', [$prod_id[$i]]);
+    //                     $prod_id[$i] =  $var['product_id'];
+    //                     $quer = DB::select('SELECT quantity FROM products WHERE id = ?', [$prod_id[$i]]);
             
                
-                        $totalQuantity[$i] = $var['quantity'];
-                        foreach ($quer as $row) {
-                            $totalQuantity[$i] += $row->quantity;
-                        }
-                        $updated[$i] = DB::update('UPDATE products SET quantity = ? WHERE id = ? ', [$totalQuantity[$i],$prod_id[$i]]);
-                        $count++;
-                    }
+    //                     $totalQuantity[$i] = $var['quantity'];
+    //                     foreach ($quer as $row) {
+    //                         $totalQuantity[$i] += $row->quantity;
+    //                     }
+    //                     $updated[$i] = DB::update('UPDATE products SET quantity = ? WHERE id = ? ', [$totalQuantity[$i],$prod_id[$i]]);
+    //                     $count++;
+    //                 }
             
-                    if(count($prod_id) > 0 ){
-                        DB::select('DELETE FROM orders WHERE trans_no = ? ', [$id]);
-                    }
-                    return response()->json(['success' => true, 'message' => 'Transaction deleted Successfully.'],200);
+    //                 if(count($prod_id) > 0 ){
+    //                     DB::select('DELETE FROM orders WHERE trans_no = ? ', [$id]);
+    //                 }
+    //                 return response()->json(['success' => true, 'message' => 'Transaction deleted Successfully.'],200);
+    //             }
+
+    //            }catch(Exception $e){
+    //                 return response()->json(['success' => false, 'message' => 'An error occurred during deletion', 'error' => $e->getMessage()]);
+    //            }
+    //     }
+    //     else{
+    //         return response()->json(['success' => false, 'message' => ' You dont have rights to delete this transaction.'],200);
+    //     }
+
+    // }
+
+
+    // modified code 
+    public function destroy(Request $request ,string $id)
+    {       
+        $auth = $this->Authentication("orders",'trans_no',$id);
+
+        if($auth === 1){
+            try{ 
+                $data = $request->all();
+
+                // Check for payment first
+                $selectpay = DB::select('SELECT count(*) AS count FROM orders AS o INNER JOIN payments AS p ON p.order_transno = o.trans_no WHERE p.order_transno = ?', [$id]);
+
+                if($selectpay[0]->count > 0) {
+                    return response()->json(['success' => false, 'message' => 'You can\'t delete this order because it already has a payment.'], 200);
                 }
 
-               }catch(Exception $e){
-                    return response()->json(['success' => false, 'message' => 'An error occurred during deletion', 'error' => $e->getMessage()]);
-               }
-        }
-        else{
-            return response()->json(['success' => false, 'message' => ' You dont have rights to delete this transaction.'],200);
-        }
+                // Process products in the order
+                $orderItems = $data['order'];
+                foreach ($orderItems as $item) {
+                    $validator = Validator::make($item, [
+                        'quantity' => 'required|integer',
+                        'product_id' => 'required|integer'
+                    ]);
+                    if ($validator->fails()) {
+                        return response()->json(['success' => false, 'message' => 'Validation failed.', 'errors' => $validator->errors()], 422);
+                    }
 
+                    // Return the quantity to the product stock
+                    $product = DB::select('SELECT quantity FROM products WHERE id = ?', [$item['product_id']]);
+                    if ($product) {
+                        $newQty = $product[0]->quantity + $item['quantity'];
+                        DB::update('UPDATE products SET quantity = ? WHERE id = ?', [$newQty, $item['product_id']]);
+                    }
+                }
+
+                // Handle associated freebies
+                $freebies = DB::select('SELECT product_id, quantity FROM freebies WHERE trans_no = ?', [$id]);
+                foreach ($freebies as $freebie) {
+                    // Return freebie product quantity
+                    $product = DB::select('SELECT quantity FROM products WHERE id = ?', [$freebie->product_id]);
+                    if ($product) {
+                        $newQty = $product[0]->quantity + $freebie->quantity;
+                        DB::update('UPDATE products SET quantity = ? WHERE id = ?', [$newQty, $freebie->product_id]);
+                    }
+                }
+
+                // Delete freebies
+                DB::delete('DELETE FROM freebies WHERE trans_no = ?', [$id]);
+
+                // Delete order
+                DB::delete('DELETE FROM orders WHERE trans_no = ?', [$id]);
+
+                return response()->json(['success' => true, 'message' => 'This transaction deleted successfully.'], 200);
+
+            } catch(Exception $e){
+                return response()->json([
+                    'success' => false,
+                    'message' => 'An error occurred during deletion',
+                    'error' => $e->getMessage()
+                ], 500);
+            }
+        } else {
+            return response()->json(['success' => false, 'message' => 'You don\'t have rights to delete this transaction.'], 403);
+        }
     }
+
 
     public function ordercreate(){
         $brandprod = (new ProductController)->productList();

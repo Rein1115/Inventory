@@ -150,7 +150,7 @@ $(document).ready(function() {
                         ₱${(item.selling_price * item.quantity).toFixed(2)}
                     </td>
                     <td class="text-center">
-                    ${$('#main-container').data('transno')?' ' : '<button class="btn btn-sm btn-danger ms-2 remove-btn" data-index="${index}">❌</button>'}
+                    ${$('#main-container').data('transno')?' ' : `<button class="btn btn-sm btn-danger ms-2 remove-btn" data-index="${index}">❌</button>`}
                         
                     </td>
                 </tr>
@@ -241,6 +241,8 @@ $(document).ready(function() {
     $(document).on("click", ".remove-btn", function () {
         const index = $(this).data("index");
         const product = cart[index];
+
+        // alert(product);
         const productInStock = products.find(p => p.id === product.id);
         if (productInStock) {
             productInStock.quantity += product.quantity; // Return quantity to product list
