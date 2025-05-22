@@ -114,9 +114,11 @@
             <label for="categorySelect" class="form-label text-light">Category</label>
             <select id="categorySelect" class="form-select bg-dark text-light border-secondary">
                <option value="All">All</option>
+               @if (!empty($data['brand']))
                @foreach($data['brand'] as $value)
-               <option value="{{$value->brand_name}}">{{ $value->brand_name }}</option>
+                   <option value="{{ $value->brand_name }}">{{ $value->brand_name }}</option>
                @endforeach
+           @endif
             </select>
          </div>
          <!-- Fullscreen Button -->

@@ -11,12 +11,12 @@
 
       <!-- Favicon icon -->
       <link rel="icon" type="image/png" sizes="16x16" href="../logonibayicon.png">
-
+      {{-- <link rel="icon" type="image/png" sizes="16x16" href="@vite(['public/logonibayicon.png'])"> --}}
       
       <!-- Custom Stylesheet -->
       <link href="../css/style.css" rel="stylesheet">
+      {{-- <link href="@vite(['public/css/style.css'])" rel="stylesheet"> --}}
 
-      {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
 
 
       {{-- sweetalert2 --}}
@@ -311,7 +311,13 @@
       <script src="../apps/tools/customizefunction.js"></script>
 
 
-      
+      {{-- @vite(['public/plugins/common/common.min.js'])
+      @vite(['public/js/custom.min.js'])
+      @vite(['public/js/settings.js'])
+      @vite(['public/js/gleek.js'])
+      @vite(['public/js/styleSwitcher.js'])
+      @vite(['public/apps/tools/customizefunction.js']) --}}
+
     
       <!-- DataTables CSS -->
       <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">

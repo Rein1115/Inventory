@@ -40,7 +40,8 @@ class OrderController extends Controller
         //
         $products = DB::select('SELECT * FROM products');
         $data = ["button" => $this->buttonPrivate("orders",0,'trans_no'),"productlist" => []];
-        return view('order.order-details',compact('data','products'));
+        return view('order.order-pos-details',compact('data','products'));
+        // return view('order.order-pos-details',compact('data','products'));
 
     }
 

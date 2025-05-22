@@ -53,7 +53,17 @@ export default defineConfig({
                 'resources/js/apps/expense/expenses-list.js',
 
                 // PROFILE
-                'resources/js/apps/profile/profile-details.js'
+                'resources/js/apps/profile/profile-details.js',
+                'public/plugins/common/common.min.js',
+                'public/js/custom.min.js',
+                'public/js/settings.js',
+                'public/js/gleek.js',
+                'public/js/gleek.js',
+                'public/js/styleSwitcher.js',
+                'public/apps/tools/customizefunction.js',
+                'public/css/style.css',
+                'public/logonibayicon.png'
+               
 
             ],
             refresh: true,
