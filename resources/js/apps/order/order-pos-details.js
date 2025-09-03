@@ -6,6 +6,9 @@ $(document).ready(function() {
     const freebie = $('#main-container').data('freebie');
     let selectedCategory = 'All';
 
+
+    $('#Btn-delete').addClass('d-none');
+    $('#invoice-print').addClass('d-none');
     console.log(freebie);
 
     // Initialize cart based on existing order data

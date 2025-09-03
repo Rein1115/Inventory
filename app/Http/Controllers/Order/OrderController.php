@@ -38,9 +38,12 @@ class OrderController extends Controller
     public function create()
     {
         //
-        $products = DB::select('SELECT * FROM products');
-        $data = ["button" => $this->buttonPrivate("orders",0,'trans_no'),"productlist" => []];
-        return view('order.order-pos-details',compact('data','products'));
+        $products = DB::select('SELECT * FROM products WHERE status = "Available"');
+        $brand = DB::select('SELECT * FROM brands');
+        
+
+        $data = ["button" => $this->buttonPrivate("orders",0,'trans_no'),"prodlist" => $products,"brand" => $brand];
+        return view('order.order-pos-details',compact('data'));
         // return view('order.order-pos-details',compact('data','products'));
 
     }
@@ -367,8 +370,6 @@ class OrderController extends Controller
 
 
         for($i = 0; $i<count($result); $i++){
-
-
             $data = [
                 "transNo" => $result[$i]->trans_no,
                 "po_no" => $result[$i]->po_no,
@@ -395,15 +396,6 @@ class OrderController extends Controller
                 "button" => $this->buttonPrivate("orders",$id,'trans_no')
             ];
         }
-
-        $products = DB::select('SELECT * FROM products');
-
-        //  add for test
-        $brandprod = (new ProductController)->productList();
-        $brandprod = (new ProductController)->productList();
-        $datas = $brandprod->getData(); 
-        $brand = $datas->brand;
-        $prodlist  = $datas->products;
 
         // dd($data);
         return view('order.order-pos-details',compact('data'));
