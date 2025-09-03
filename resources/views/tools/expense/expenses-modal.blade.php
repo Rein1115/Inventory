@@ -12,15 +12,15 @@
       <div class="modal-body">
         <div class="form-group">
           <label for="category">Category<span class="text-danger">*</span></label>
-          <input type="text" class="form-control" id="category" placeholder="Enter brand name">
+          <input type="text" class="form-control" id="category" placeholder="Enter Category">
         </div>
         <div class="form-group">
           <label for="amount">Amount<span class="text-danger">*</span></label>
-          <input type="number" class="form-control" id="amount" placeholder="Enter brand name">
+          <input type="number" class="form-control" id="amount" placeholder="Enter Amount">
         </div>
         <div class="form-group">
           <label for="modalInputName">Expenses Date<span class="text-danger">*</span></label>
-          <input type="date" class="form-control" id="expensedate" placeholder="Enter brand name">
+          <input type="date" class="form-control" id="expensedate" placeholder="Enter Expenses Date">
         </div>
       </div>
       <div class="modal-footer">

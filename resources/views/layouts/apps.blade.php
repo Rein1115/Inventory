@@ -119,9 +119,9 @@
 
                     @if(isset(Auth::user()->role) && Auth::user()->role === 'Admin' || Auth::user()->role === 'Superadmin')
                     <li>
-                        <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="fa fa-book menu-icon"></i><span class="nav-text">Summary</span></a>
+                        <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="fa fa-book menu-icon"></i><span class="nav-text">Report</span></a>
                             <ul aria-expanded="false">
-                                <li><a href="{{route('anualsales.index')}}"><i class="icon-notebook menu-icon" style="font-size:12px;"></i> Annual Sales
+                                <li><a href="{{route('anualsales.index')}}"><i class="icon-notebook menu-icon" style="font-size:12px;"></i> Yearly Sales Report
                                 </a></li>
                                 
                             </ul>

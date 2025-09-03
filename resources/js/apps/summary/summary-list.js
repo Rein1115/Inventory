@@ -1,7 +1,6 @@
 $(document).ready(function(){
 
 
-
     const monthColorMapping = {
         'January': '#ff9999', 
         'February': '#ff8080',
@@ -84,47 +83,93 @@ $(document).ready(function(){
         ]
     });
 
+    // $('#annualsales').on('click','.view',function(){
+    //     var year = $(this).data('year');
+    //     $('#annualSummaryModal').modal('show'); 
+    //     axios.get('/anualsales/'+year)
+    //     .then(response=>{
+    //         var data =response.data;
+
+    //         console.log(data);
+
+    //         var totalexpense = parseFloat(data.total_expenses);
+    //         var sales = parseFloat(data.totalsales);
+    //         var fprofit = parseFloat(data.finalnetprofit);
+            
+    //         // Set color for total expenses
+    //         if (totalexpense < 0) {
+    //             $('#summaryTotalExpenses').addClass('text-danger').removeClass('text-warning');
+    //         } else {
+    //             $('#summaryTotalExpenses').addClass('text-warning').removeClass('text-danger');
+    //         }
+            
+    //         // Set color for total sales
+    //         if (sales < 0) {
+    //             $('#summaryTotalSales').addClass('text-danger').removeClass('text-success');
+    //         } else {
+    //             $('#summaryTotalSales').addClass('text-success').removeClass('text-danger');
+    //         }
+
+    //         if (fprofit < 0) {
+    //             $('#summaryFinalNetProfit').addClass('text-danger').removeClass('text-secondary');
+    //         } else {
+    //             $('#summaryFinalNetProfit').addClass('text-secondary').removeClass('text-danger');
+    //         }
+            
+            
+    //         // Set text values
+    //         $('#summaryTotalExpenses').text( '₱' + ' '+ formatNumber(totalexpense));
+    //         $('#summaryTotalSales').text('₱' + ' '+ formatNumber(sales));
+    //         $('#summaryFinalNetProfit').text('₱' + ' '+ formatNumber(fprofit));
+    //         $('#annualSummaryModalTitle').text(data.Year);
+            
+    //     }).catch(error => {
+    //         Swal.fire({
+    //             title: 'Warning!',
+    //             text: error,
+    //             icon: 'warning',
+    //             showCancelButton: false,
+    //             confirmButtonColor: '#3085d6',
+    //             confirmButtonText: 'Close'
+    //         });
+    //     });
+
+    // });
+
+
     $('#annualsales').on('click','.view',function(){
         var year = $(this).data('year');
-
-
         $('#annualSummaryModal').modal('show'); 
         axios.get('/anualsales/'+year)
         .then(response=>{
             var data =response.data;
+            $('#annualSummaryModalTitle').text("Sales Report" +' '+year);
 
-            console.log(data);
+            reports(data.data);
 
-            var totalexpense = parseFloat(data.total_expenses);
-            var sales = parseFloat(data.totalsales);
-            var fprofit = parseFloat(data.finalnetprofit);
-            
-            // Set color for total expenses
-            if (totalexpense < 0) {
-                $('#summaryTotalExpenses').addClass('text-danger').removeClass('text-warning');
-            } else {
-                $('#summaryTotalExpenses').addClass('text-warning').removeClass('text-danger');
-            }
-            
-            // Set color for total sales
-            if (sales < 0) {
-                $('#summaryTotalSales').addClass('text-danger').removeClass('text-success');
-            } else {
-                $('#summaryTotalSales').addClass('text-success').removeClass('text-danger');
+           let totalsales = 0;
+
+            data.data.forEach(element => {
+                totalsales += parseFloat(element.total_amount);
+            });
+
+            let totalexpenses = parseFloat(data.totalexpenses); // ensure it's a number
+            let netProfit = totalsales - totalexpenses;
+
+            // force negative if expenses are greater
+            if (totalexpenses > totalsales) {
+                netProfit = -Math.abs(netProfit);
             }
 
-            if (fprofit < 0) {
-                $('#summaryFinalNetProfit').addClass('text-danger').removeClass('text-secondary');
-            } else {
-                $('#summaryFinalNetProfit').addClass('text-secondary').removeClass('text-danger');
-            }
-            
-            
-            // Set text values
-            $('#summaryTotalExpenses').text( '₱' + ' '+ formatNumber(totalexpense));
-            $('#summaryTotalSales').text('₱' + ' '+ formatNumber(sales));
-            $('#summaryFinalNetProfit').text('₱' + ' '+ formatNumber(fprofit));
-            $('#annualSummaryModalTitle').text(data.Year);
+            $('#summaryTotalExpenses').text(
+                '₱ ' + totalexpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            );
+            $('#summaryTotalSales').text(
+                '₱ ' + totalsales.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            );
+            $('#summaryFinalNetProfit').text(
+                '₱ ' + netProfit.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            );
             
         }).catch(error => {
             Swal.fire({
@@ -139,6 +184,74 @@ $(document).ready(function(){
 
     });
 
+
+
+    
 })
+
+
+function reports(data){
+
+    // return console.log(data);
+    if ($.fn.DataTable.isDataTable('#reports')) {
+        $('#reports').DataTable().clear().destroy();
+    }
+
+    $('#reports').DataTable({
+        paging: true,
+        searching: true,
+        ordering: true,
+        responsive: true,
+        info: true,
+        processing: true,
+        scrollX: false,
+        columnDefs: [
+            {
+                targets: '_all',
+                className: 'text-center'
+            }
+        ],
+        language: {
+            processing: `<div class="text-center py-3">
+                            <i class="fa fa-spinner fa-spin fa-3x fa-fw text-secondary"></i><br>
+                            <span class="font-weight-bold text-secondary">Loading...</span>
+                        </div>`
+        },
+         buttons: [
+
+        ],
+        dom: 'Bfrtip',
+        data: data,
+        columns: [
+                { 
+                    data: "po_no",        
+                    title: "PO No.",
+                    render: function(data) {
+                        return `<span class="badge bg-success fw-bold text-white">${data}</span>`;
+                    }
+                },
+                { 
+                    data: "fullname",     
+                    title: "Fullname"
+                },
+                { 
+                    data: "or",           
+                    title: "OR No."
+                },
+                { 
+                    data: "cr",           
+                    title: "CR No."
+                },
+                { 
+                    data: "total_amount", 
+                    title: "Total Amount",
+                    render: function(data) {
+                        return `<span class="badge bg-primary fw-bold text-white">${data}</span>`;
+                    }
+                }
+            ]
+
+    });
+}
 
 
