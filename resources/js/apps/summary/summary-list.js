@@ -224,15 +224,15 @@ function reports(data){
         data: data,
         columns: [
                 { 
+                    data: "fullname",     
+                    title: "Fullname"
+                },
+                { 
                     data: "po_no",        
                     title: "PO No.",
                     render: function(data) {
                         return `<span class="badge bg-success fw-bold text-white">${data}</span>`;
                     }
-                },
-                { 
-                    data: "fullname",     
-                    title: "Fullname"
                 },
                 { 
                     data: "or",           

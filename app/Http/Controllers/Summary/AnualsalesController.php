@@ -17,7 +17,7 @@ class AnualsalesController extends Controller
         //
         $admin = DB::select('SELECT COUNT(*) AS count FROM users WHERE role = "Admin" AND id = ?' , [Auth::user()->id]);
         if($admin[0]->count > 0){
-            $data = DB::select('SELECT YEAR(created_at) AS year FROM orders GROUP BY YEAR(created_at)');
+            $data = DB::select('SELECT YEAR(delivered_date) AS year FROM orders WHERE payment_status = "Paid"  GROUP BY YEAR(delivered_date)');
             if ($request->ajax()) {
                 return response()->json($data);
             }
@@ -122,7 +122,7 @@ class AnualsalesController extends Controller
         $orders = DB::select('SELECT  o.trans_no,o.po_no,o.fullname,o.or,o.cr
             FROM orders o  
             WHERE o.payment_status = "Paid" 
-            AND YEAR(COALESCE(o.updated_at, o.created_at)) = ?
+            AND YEAR(o.delivered_date) = ?
             GROUP BY o.trans_no, o.po_no, o.fullname, o.or, o.cr
         ', [$id]);
 
