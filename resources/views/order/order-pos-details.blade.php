@@ -18,6 +18,7 @@
          font-size: small;
          font-family: Arial, Helvetica, sans-serif;
          background-color: #121212;
+         zoom: 90%;
          color: #f1f1f1;
          margin-left: 2px;
          margin-right: 2px;
@@ -162,13 +163,17 @@
          </div>
       </div>
       </div>
-      
+
+
+   @section('print')
+   @include('tools.invoicereceipt.invoicereceipt')
+   @endsection
       <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
       <!-- SweetAlert2 JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-      @vite(['resources/js/apps/order/order-pos-details.js'])
+      @vite(['resources/js/apps/order/order-pos-details.js','resources/js/apps/invoicereceipt/invoicereceipt.js'])
    </body>
 </html>

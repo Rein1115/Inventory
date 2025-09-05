@@ -107,31 +107,106 @@ $(document).ready(function(){
     });
 
 
-
-    $('#order').on('click', '.delete', function() {
-        var id = $(this).data('id');
-        var arrayob = [];
+    // ORIGINAL CODE 
+    // $('#order').on('click', '.delete', function() {
+    //     var id = $(this).data('id');
+    //     var arrayob = [];
      
-        var info = $('#alldas').data('datas');
+    //     var info = $('#alldas').data('datas');
    
 
 
      
-        info.forEach(item => { 
-            if(item.trans_no === id){
-                let result = {
-                    quantity : item.quantity,
-                    product_id : item.product_id
-                }
-                arrayob.push(result);
+    //     info.forEach(item => { 
+    //         if(item.trans_no === id){
+    //             let result = {
+    //                 quantity : item.quantity,
+    //                 product_id : item.product_id
+    //             }
+    //             arrayob.push(result);
+    //         }
+    //     }); 
+
+  
+
+    //     var data ={
+    //         order : arrayob
+    //     };
+    //     Swal.fire({
+    //         title: 'Are you sure?',
+    //         text: "Do you want to delete this order?",
+    //         icon: 'warning',
+    //         showCancelButton: true,
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         confirmButtonText: 'Yes, delete it!',
+    //         cancelButtonText: 'No, cancel!'
+    //     }).then((result) => {
+    //         if (result.isConfirmed) {
+    //             axios.delete(base_url('order/')+id, {data})
+    //                 .then(response => {
+    //                     var resp = response.data;
+                
+    //                     if (resp.success === true) {
+    //                         Swal.fire({
+    //                             icon: 'success',
+    //                             title: 'Success!',
+    //                             text: resp.message
+    //                         }).then(() => {
+    //                             $('#order').DataTable().ajax.reload();
+
+    //                         });
+    //                     } else {
+    //                         Swal.fire({
+    //                             icon: 'error',
+    //                             title: 'Error!',
+    //                             text: resp.message
+    //                         });
+    //                     }
+    //                 })
+    //                 .catch(error => {
+    //                     Swal.fire({
+    //                         icon: 'error',
+    //                         title: 'Oops...',
+    //                         text: 'Something went wrong! Please try again.',
+    //                     });
+    //                 });
+    //         } else if (result.dismiss === Swal.DismissReason.cancel) {
+    //             Swal.fire({
+    //                 icon: 'info',
+    //                 title: 'Cancelled',
+    //                 text: 'Product was not deleted',
+    //             });
+    //         }
+    //     });
+    // });
+
+    // MODIFIED CODE 
+       $('#order').on('click', '.delete', function() {
+        var id = $(this).data('id');
+        var arrayob = [];
+        var info = $('#alldas').data('datas');
+   
+        // return console.log(info);
+        info.forEach(item => {
+            if (item.trans_no === id) {
+                arrayob.push({
+                    quantity: item.quantity,
+                    product_id: item.product_id,
+                    trans_no: item.trans_no,
+                    head: item.head
+                });
             }
-        }); 
+        });
+
 
   
 
         var data ={
             order : arrayob
         };
+
+        // return console.log(data);
         Swal.fire({
             title: 'Are you sure?',
             text: "Do you want to delete this order?",
@@ -180,7 +255,6 @@ $(document).ready(function(){
             }
         });
     });
-
 
 
 

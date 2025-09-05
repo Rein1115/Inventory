@@ -6,9 +6,7 @@ $(document).ready(function() {
     const freebie = $('#main-container').data('freebie');
     let selectedCategory = 'All';
 
-
-    $('#Btn-delete').addClass('d-none');
-    $('#invoice-print').addClass('d-none');
+    
     console.log(freebie);
 
     // Initialize cart based on existing order data
@@ -469,7 +467,76 @@ $(document).ready(function() {
     renderProducts(products);
     filterProducts(selectedCategory);
 
+
+    $('#Btn-delete').on('click', function() {
+        var id = $('#main-container').data('transno');
+        var items= [];
+
+        cart.forEach(item => {
+                items.push({
+                    product_id : item.id,
+                    quantity:item.quantity
+                })
+        })
+
+        var data ={
+            order : items
+        };
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you want to delete this order?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.delete('/order/'+id, {data})
+                    .then(response => {
+
+                    
+                        var resp = response.data;
+                
+                        if (resp.success === true) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success!',
+                                text: resp.message
+                            }).then(() => {
+                                window.location.href = '/order';
+
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error!',
+                                text: resp.message
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Something went wrong! Please try again.',
+                        });
+                    });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Cancelled',
+                    text: 'Order was not deleted',
+                });
+            }
+        });
+    });
+
     $('#Btn-back').on('click', function() {
         window.location.href = '/order';
     });
+
+
+
 });

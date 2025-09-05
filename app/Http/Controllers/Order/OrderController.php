@@ -21,15 +21,48 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         //
-            $data= DB::select('SELECT o.created_id,o.terms,o.trans_no, o.or, o.deliveredto,o.created_by,o.updated_by,o.address,o.created_at, u.fname , u.lname  FROM orders AS o LEFT JOIN users AS u ON u.id = o.created_by LEFT JOIN products AS p ON p.id = o.product_id GROUP BY trans_no, `or`, deliveredto,created_by,`address`,created_at,terms, u.fname , u.lname,o.updated_by,o.created_id');
-            if($request->ajax()){
-                return response()->json($data);
+        $data= DB::select('SELECT o.created_id,o.terms,o.trans_no, o.or, o.deliveredto,o.created_by,o.updated_by,o.address,o.created_at, u.fname , u.lname  FROM orders AS o LEFT JOIN users AS u ON u.id = o.created_by LEFT JOIN products AS p ON p.id = o.product_id GROUP BY trans_no, `or`, deliveredto,created_by,`address`,created_at,terms, u.fname , u.lname,o.updated_by,o.created_id');
+        if($request->ajax()){
+            return response()->json($data);
+        }
+
+        // ORIGINAL CODE 
+        // $datas = DB::select('SELECT * FROM orders');
+
+
+
+        // MODIFIEDCODE
+        $orders = DB::select('SELECT * FROM orders');
+        $freebies = DB::select('SELECT * FROM freebies');
+
+        $datas = [];
+        $transNos = []; // store all trans numbers from orders
+        // Push orders and collect transaction numbers
+        for ($o = 0; $o < count($orders); $o++) {
+            $transNos[] = trim($orders[$o]->trans_no);
+
+            $datas[] = [
+                "quantity"   => $orders[$o]->quantity,
+                "product_id" => $orders[$o]->product_id,
+                "trans_no"   => $orders[$o]->trans_no,
+                "head"       => "orders"
+            ];
+        }
+        // Push freebies only if their trans_no exists in orders
+        if (!empty($freebies)) {
+            for ($f = 0; $f < count($freebies); $f++) {
+                if (in_array(trim($freebies[$f]->trans_No), $transNos)) {
+                    $datas[] = [
+                        "quantity"   => $freebies[$f]->quantity,
+                        "product_id" => $freebies[$f]->product_id,
+                        "trans_no"   => $freebies[$f]->trans_No,
+                        "head"       => "freebies"
+                    ];
+                }
             }
-   
-            $datas = DB::select('SELECT * FROM orders');
-            return view('order.order-list',compact('datas'));
-  
-            // return response()->json($data);
+        }
+        return view('order.order-list',compact('datas'));
+
 
     }
     /**
@@ -42,7 +75,7 @@ class OrderController extends Controller
         $brand = DB::select('SELECT * FROM brands');
         
 
-        $data = ["button" => $this->buttonPrivate("orders",0,'trans_no'),"prodlist" => $products,"brand" => $brand];
+        $data = ["button" => $this->buttonPrivate("orders",0,'trans_no'),"prodlist" => $products,"productlist" => [],"brand" => $brand];
         return view('order.order-pos-details',compact('data'));
         // return view('order.order-pos-details',compact('data','products'));
 
@@ -350,9 +383,9 @@ class OrderController extends Controller
         if (empty($result)) {
             return response()->view('page-error-404', [], 404);
         }
+
         $productlist = DB::select('SELECT p.product_name,o.quantity,o.total_amount,p.selling_price,p.brand_name,p.unit FROM orders AS o LEFT JOIN products AS p ON p.id = o.product_id WHERE o.trans_no = ?' ,[$id]);
         $datas = [] ; 
-
 
         $orders =  db::select('SELECT p.selling_price,p.product_name, o.trans_no,o.product_id, o.quantity, o.total_amount,p.unit,p.brand_name FROM orders AS o INNER JOIN products AS p ON o.product_id = p.id  WHERE o.trans_no = ? ', [$id]);
 
@@ -397,7 +430,6 @@ class OrderController extends Controller
             ];
         }
 
-        // dd($data);
         return view('order.order-pos-details',compact('data'));
  
 
@@ -658,17 +690,6 @@ class OrderController extends Controller
                     if ($product) {
                         $newQty = $product[0]->quantity + $item['quantity'];
                         DB::update('UPDATE products SET quantity = ? WHERE id = ?', [$newQty, $item['product_id']]);
-                    }
-                }
-
-                // Handle associated freebies
-                $freebies = DB::select('SELECT product_id, quantity FROM freebies WHERE trans_no = ?', [$id]);
-                foreach ($freebies as $freebie) {
-                    // Return freebie product quantity
-                    $product = DB::select('SELECT quantity FROM products WHERE id = ?', [$freebie->product_id]);
-                    if ($product) {
-                        $newQty = $product[0]->quantity + $freebie->quantity;
-                        DB::update('UPDATE products SET quantity = ? WHERE id = ?', [$newQty, $freebie->product_id]);
                     }
                 }
 

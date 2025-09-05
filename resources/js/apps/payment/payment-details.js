@@ -1,6 +1,5 @@
 $(document).ready(function(){
    
-
     var payments = $('#payments').data('payment');
     var items = [];
     var array = [];
