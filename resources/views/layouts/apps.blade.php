@@ -52,7 +52,6 @@
   <body>
   
       <div id="main-wrapper" >
-  
        <!--**********************************
               Sidebar start
        ***********************************-->
@@ -216,15 +215,18 @@
                   </div>
                   <div class="header-right">
                       <ul class="clearfix">
-                          <li class="icons dropdown">
+                            <li class="icons dropdown">
+                                <button id="fullscreenBtn" class="btn btn">
+                                    <i class="fa fa-expand" style="font-size:18px;"></i>
+                                </button>
+                            </li>
+                            <li class="icons dropdown">
                               @if(!empty(Auth::user()->id))
                                 <span> {{Auth::user()->fullname}} ( {{Auth::user()->role}} ) </span>
 
                               @else
-
                               @endif 
-                          </li>
-        
+                            </li>
                           <li class="icons dropdown">
                             <div class="user-img c-pointer position-relative" id="userDropdownToggle">
                                 <span class="activity active"></span>
@@ -242,6 +244,7 @@
                                                 @csrf
                                             </form>
                                         </li>
+                                 
                                     </ul>
                                 </div>
                             </div>
@@ -386,6 +389,58 @@
                     $('#logout-form').submit(); // Submit the form
                 });
             });
+
+            $("#fullscreenBtn").on("click", function () {
+                let elem = document.documentElement; // whole page
+                let icon = $(this).find("i");
+
+                if (!document.fullscreenElement && 
+                    !document.mozFullScreenElement && 
+                    !document.webkitFullscreenElement && 
+                    !document.msFullscreenElement) {
+
+                    // Enter fullscreen
+                    if (elem.requestFullscreen) {
+                        elem.requestFullscreen();
+                    } else if (elem.mozRequestFullScreen) { // Firefox
+                        elem.mozRequestFullScreen();
+                    } else if (elem.webkitRequestFullscreen) { // Chrome, Safari, Opera
+                        elem.webkitRequestFullscreen();
+                    } else if (elem.msRequestFullscreen) { // IE/Edge
+                        elem.msRequestFullscreen();
+                    }
+
+                    // Change icon
+                    icon.removeClass("fa-expand").addClass("fa-compress");
+
+                } else {
+                    // Exit fullscreen
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    } else if (document.mozCancelFullScreen) {
+                        document.mozCancelFullScreen();
+                    } else if (document.webkitExitFullscreen) {
+                        document.webkitExitFullscreen();
+                    } else if (document.msExitFullscreen) {
+                        document.msExitFullscreen();
+                    }
+
+                    // Change icon back
+                    icon.removeClass("fa-compress").addClass("fa-expand");
+                }
+            });
+
+            // Handle ESC key or user exits fullscreen manually
+            $(document).on("fullscreenchange webkitfullscreenchange mozfullscreenchange MSFullscreenChange", function () {
+                let icon = $("#fullscreenBtn").find("i");
+                if (!document.fullscreenElement && 
+                    !document.mozFullScreenElement && 
+                    !document.webkitFullscreenElement && 
+                    !document.msFullscreenElement) {
+                    icon.removeClass("fa-compress").addClass("fa-expand");
+                }
+            });
+            
         </script>
 </body>
 </html>
