@@ -61,7 +61,8 @@ $(document).ready(function() {
             },
         ],
         ajax: {
-            url: 'user',
+            url: base_url('user'),
+            type: 'GET',
             dataSrc: ''
         },
         lengthMenu: [10, 25, 500], // Pagination options
@@ -118,7 +119,7 @@ $(document).ready(function() {
         $('#hiddensaveup').val(id);
 
        
-        axios.get('/user/' + id)
+        axios.get(base_url('user/') + id)
         .then(response => {
             var resp = response.data;
             console.log(resp);
@@ -162,7 +163,7 @@ $(document).ready(function() {
             cancelButtonText: 'No, cancel!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete('user/'+id)
+                axios.delete(base_url('user/')+id)
                     .then(response => {
                         var resp = response.data;
                         console.log(resp);
@@ -235,7 +236,7 @@ $(document).ready(function() {
             cancelButtonText: 'No, cancel!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.put('user/' + Id, userData)
+                axios.put(base_url('user/')+ Id, userData)
                     .then(response => {
                         var resp = response.data;
                         console.log(resp);

@@ -65,7 +65,7 @@ $(document).ready(function() {
     // Start supplier
     $('#suppliername').select2({
         ajax: {
-            url: '/selectsupplier',
+            url: base_url('selectsupplier'),
             dataType: 'json',
             delay: 250,
             data: function (params) {
@@ -90,7 +90,7 @@ $(document).ready(function() {
       // Start brand
     $('#brandname').select2({
         ajax: {
-            url: '/selectbrand',
+            url:base_url('selectbrand'),
             dataType: 'json',
             delay: 250,
             data: function (params) {
@@ -137,7 +137,7 @@ $(document).ready(function() {
             cancelButtonText: 'No, cancel!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.post('/product/', data)
+                axios.post(base_url('product/'), data)
                     .then(response => {
 
                         var resp = response.data;
@@ -218,7 +218,7 @@ $(document).ready(function() {
             cancelButtonText: 'No, cancel!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.put('/product/' + id, data)
+                axios.put(base_url('product/')+ id, data)
                     .then(response => {
                         var resp = response.data;
                
@@ -281,7 +281,7 @@ $(document).ready(function() {
             cancelButtonText: 'No, cancel!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete('/product/'+id)
+                axios.delete(base_url('product/')+id)
                     .then(response => {
                         var resp = response.data;
                         if (resp.success === true) {

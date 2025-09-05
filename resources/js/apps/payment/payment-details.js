@@ -208,7 +208,7 @@ $(document).ready(function(){
                 cancelButtonText: 'No, cancel!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    axios.post('/payment/',data)
+                    axios.post(base_url('payment/'),data)
                         .then(response => {
                             var resp = response.data;
                    
@@ -308,7 +308,7 @@ $(document).ready(function(){
             cancelButtonText: 'No, cancel!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.post('/destroymodification/'+id,trans)
+                axios.post(base_url('destroymodification/')+id,trans)
                     .then(response => {
 
                        
@@ -379,7 +379,7 @@ $(document).ready(function(){
                 });
 
 
-                axios.get('/paymentemail/' + id)
+                axios.get(base_url('paymentemail/')+ id)
                 .then(response => {
                     var resp = response.data;
                     swal.close();

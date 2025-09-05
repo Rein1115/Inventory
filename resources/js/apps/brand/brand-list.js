@@ -56,7 +56,8 @@ $(document).ready(function() {
             },
         ],
         ajax: {
-            url: 'brand',
+            url: base_url('brand'),
+            type: 'GET',
             dataSrc: ''
         },
         lengthMenu: [10, 25,50, 500], // Pagination options
@@ -96,7 +97,7 @@ $(document).ready(function() {
         $('#saveandupdate').addClass('btn btn-success');
 
         $('#hiddensaveup').val(id);
-        axios.get('brand/' + id)
+        axios.get(base_url('brand/')+id)
         .then(response => {
             var resp = response.data.response;
        
@@ -118,7 +119,7 @@ $(document).ready(function() {
             cancelButtonText: 'No, cancel!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete('brand/'+id)
+                axios.delete(base_url('brand/')+id)
                     .then(response => {
                         var resp = response.data;
             
@@ -185,7 +186,7 @@ $(document).ready(function() {
             cancelButtonText: 'No, cancel!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.put('brand/' + Id, data)
+                axios.put(base_url('brand/')+ Id, data)
                     .then(response => {
                         var resp = response.data;
                         if (resp.success === true) {

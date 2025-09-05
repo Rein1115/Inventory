@@ -56,6 +56,7 @@ $(document).ready(function(){
         ],
         ajax: {
             url: 'anualsales',
+            type:'GET',
             dataSrc: ''
         },
         lengthMenu: [12, 25, 500], // Pagination options
@@ -83,64 +84,10 @@ $(document).ready(function(){
         ]
     });
 
-    // $('#annualsales').on('click','.view',function(){
-    //     var year = $(this).data('year');
-    //     $('#annualSummaryModal').modal('show'); 
-    //     axios.get('/anualsales/'+year)
-    //     .then(response=>{
-    //         var data =response.data;
-
-    //         console.log(data);
-
-    //         var totalexpense = parseFloat(data.total_expenses);
-    //         var sales = parseFloat(data.totalsales);
-    //         var fprofit = parseFloat(data.finalnetprofit);
-            
-    //         // Set color for total expenses
-    //         if (totalexpense < 0) {
-    //             $('#summaryTotalExpenses').addClass('text-danger').removeClass('text-warning');
-    //         } else {
-    //             $('#summaryTotalExpenses').addClass('text-warning').removeClass('text-danger');
-    //         }
-            
-    //         // Set color for total sales
-    //         if (sales < 0) {
-    //             $('#summaryTotalSales').addClass('text-danger').removeClass('text-success');
-    //         } else {
-    //             $('#summaryTotalSales').addClass('text-success').removeClass('text-danger');
-    //         }
-
-    //         if (fprofit < 0) {
-    //             $('#summaryFinalNetProfit').addClass('text-danger').removeClass('text-secondary');
-    //         } else {
-    //             $('#summaryFinalNetProfit').addClass('text-secondary').removeClass('text-danger');
-    //         }
-            
-            
-    //         // Set text values
-    //         $('#summaryTotalExpenses').text( '₱' + ' '+ formatNumber(totalexpense));
-    //         $('#summaryTotalSales').text('₱' + ' '+ formatNumber(sales));
-    //         $('#summaryFinalNetProfit').text('₱' + ' '+ formatNumber(fprofit));
-    //         $('#annualSummaryModalTitle').text(data.Year);
-            
-    //     }).catch(error => {
-    //         Swal.fire({
-    //             title: 'Warning!',
-    //             text: error,
-    //             icon: 'warning',
-    //             showCancelButton: false,
-    //             confirmButtonColor: '#3085d6',
-    //             confirmButtonText: 'Close'
-    //         });
-    //     });
-
-    // });
-
-
     $('#annualsales').on('click','.view',function(){
         var year = $(this).data('year');
         $('#annualSummaryModal').modal('show'); 
-        axios.get('/anualsales/'+year)
+        axios.get(base_url('anualsales/')+year)
         .then(response=>{
             var data =response.data;
             $('#annualSummaryModalTitle').text("Sales Report" +' '+year);

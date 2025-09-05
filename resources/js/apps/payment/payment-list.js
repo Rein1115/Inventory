@@ -44,7 +44,8 @@ $(document).ready(function(){
             },
         ],
         ajax: {
-            url: 'payment',
+            url: base_url('payment'),
+            type: 'GET',
             dataSrc: ''
         },
         lengthMenu: [10, 25, 50], 

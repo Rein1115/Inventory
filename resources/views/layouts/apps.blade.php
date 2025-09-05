@@ -26,6 +26,14 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/css/select2.min.css" rel="stylesheet" />
 
 
+    <script>
+    var base_url = function(urlText) {
+        var url = 'http://127.0.0.1:8000/' + urlText + '';
+            return url;
+    }
+    </script>
+
+
     @yield('link')
     <style>
         body {

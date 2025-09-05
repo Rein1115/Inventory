@@ -44,7 +44,8 @@ $(document).ready(function(){
             },
         ],
         ajax: {
-            url: 'paymenthistory',
+            url: base_url('paymenthistory'),
+            type:'GET',
             dataSrc: ''
         },
         lengthMenu: [10, 25, 50], 

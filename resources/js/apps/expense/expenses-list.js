@@ -78,7 +78,8 @@ $(document).ready(function(){
                 },
             ],
             ajax: {
-                url: 'expenses',
+                url: base_url('expenses'),
+                type:'GET',
                 data: {
                     year: selectedYear
                 },
@@ -135,7 +136,7 @@ $(document).ready(function(){
 
        $('#expensedate').attr('readonly', true);
    
-        axios.get(`/expenses/${id}`, {
+        axios.get(base_url('expenses/')+id, {
             params: {
                 year: year 
             }
@@ -212,7 +213,7 @@ $(document).ready(function(){
         $('#saveandupdate').addClass('btn btn-success');
         $('#exampleModalLongTitle').text('Update Expense(s)');
 
-        axios.get('/individualexpenses/'+id)
+        axios.get(base_url('individualexpenses/')+id)
         .then(response => {
 
             var data  = response.data;
@@ -276,7 +277,7 @@ $(document).ready(function(){
             cancelButtonText: 'No, cancel!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.put('/expenses/' + id, data)
+                axios.put(base_url('expenses/') + id, data)
                     .then(response => {
                         var resp = response.data;
     
@@ -344,7 +345,7 @@ $(document).ready(function(){
             cancelButtonText: 'No, cancel!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete('expenses/'+id)
+                axios.delete(base_url('expenses/')+id)
                     .then(response => {
                         var resp = response.data;
                    

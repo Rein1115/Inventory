@@ -56,7 +56,8 @@ $(document).ready(function(){
             },
         ],
         ajax: {
-            url: 'supplier',
+            url: base_url('supplier'),
+            type:'GET',
             dataSrc: ''
         },
         lengthMenu: [10, 25, 50], 
@@ -109,7 +110,7 @@ $(document).ready(function(){
         var id = $(this).data('id');
 
         $('#hiddensaveup').val(id);
-        axios.get('supplier/'+id)
+        axios.get(base_url('supplier/')+id)
         .then(response=>{
             var resp = response.data.response;
 
@@ -138,66 +139,66 @@ $(document).ready(function(){
         contact_no : $('#contactno').val(),
         address : $('#address').val()
        };
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "Do you want to "+textm+" this supplier?",
-                icon: 'info',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, '+textm+' it!',
-                cancelButtonText: 'No, cancel!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    axios.put('supplier/' + id, data)
-                        .then(response => {
-                            var resp = response.data;
-                   
-                            if (resp.success === true) {
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Success!',
-                                    text: resp.message
-                                }).then(() => {
-                                    $('#exampleModalCenter').find('input').val('');
-                                    $('#exampleModalCenter').modal('hide');
-                                    $('#supplier').DataTable().ajax.reload();
-                                });
-                            } else {
-                                var errorMessage = 'Error!';
-                                if (resp.response && typeof resp.response === 'object') {
-                                    var errors = [];
-                                    for (var key in resp.response) {
-                                        if (resp.response[key] instanceof Array) {
-                                            errors = errors.concat(resp.response[key]);
-                                        }
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you want to "+textm+" this supplier?",
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, '+textm+' it!',
+            cancelButtonText: 'No, cancel!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.put(base_url('supplier/')+id, data)
+                    .then(response => {
+                        var resp = response.data;
+                
+                        if (resp.success === true) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success!',
+                                text: resp.message
+                            }).then(() => {
+                                $('#exampleModalCenter').find('input').val('');
+                                $('#exampleModalCenter').modal('hide');
+                                $('#supplier').DataTable().ajax.reload();
+                            });
+                        } else {
+                            var errorMessage = 'Error!';
+                            if (resp.response && typeof resp.response === 'object') {
+                                var errors = [];
+                                for (var key in resp.response) {
+                                    if (resp.response[key] instanceof Array) {
+                                        errors = errors.concat(resp.response[key]);
                                     }
-                                    errorMessage = errors.join(' ');
-                                } else {
-                                    errorMessage = resp.message || 'An error occurred.';
                                 }
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Error!',
-                                    text: errorMessage
-                                });
+                                errorMessage = errors.join(' ');
+                            } else {
+                                errorMessage = resp.message || 'An error occurred.';
                             }
-                        })
-                        .catch(error => {
                             Swal.fire({
                                 icon: 'error',
-                                title: 'Oops...',
-                                text: 'Something went wrong! Please try again.',
+                                title: 'Error!',
+                                text: errorMessage
                             });
+                        }
+                    })
+                    .catch(error => {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Something went wrong! Please try again.',
                         });
-                } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    Swal.fire({
-                        icon: 'info',
-                        title: 'Cancelled',
-                        text: 'supplier was not '+textm+'',
                     });
-                }
-            });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Cancelled',
+                    text: 'supplier was not '+textm+'',
+                });
+            }
+        });
     });
 
     $('#supplier').on('click', '.delete', function() {
@@ -214,7 +215,7 @@ $(document).ready(function(){
             cancelButtonText: 'No, cancel!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete('supplier/'+id)
+                axios.delete(base_url('supplier/')+id)
                     .then(response => {
                         var resp = response.data;
                 

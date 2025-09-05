@@ -44,7 +44,8 @@ $(document).ready(function(){
             },
         ],
         ajax: {
-            url: 'order',
+            url: base_url('order'),
+            type: 'GET', 
             dataSrc: ''
         },
         lengthMenu: [10, 25, 50], 
@@ -133,7 +134,7 @@ $(document).ready(function(){
         };
         Swal.fire({
             title: 'Are you sure?',
-            text: "Do you want to delete this product?",
+            text: "Do you want to delete this order?",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -142,7 +143,7 @@ $(document).ready(function(){
             cancelButtonText: 'No, cancel!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete('/order/'+id, {data})
+                axios.delete(base_url('order/')+id, {data})
                     .then(response => {
                         var resp = response.data;
                 

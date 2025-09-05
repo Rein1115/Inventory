@@ -44,7 +44,8 @@ $(document).ready(function(){
             },
         ],
         ajax: {
-            url: '/product',
+            url: base_url('product'),
+            type:'GET',
             dataSrc: ''
         },
         lengthMenu: [10, 25, 50], 
@@ -109,7 +110,7 @@ $(document).ready(function(){
         var id = $(this).data('id');
 
         $('#hiddensaveup').val(id);
-        axios.get('supplier/'+id)
+        axios.get(base_url('supplier/')+id)
         .then(response=>{
             var resp = response.data.response;
 
@@ -148,7 +149,7 @@ $(document).ready(function(){
                 cancelButtonText: 'No, cancel!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    axios.put('supplier/' + id, data)
+                    axios.put(base_url('supplier/')+ id, data)
                         .then(response => {
                             var resp = response.data;
                    
@@ -212,7 +213,7 @@ $(document).ready(function(){
             cancelButtonText: 'No, cancel!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete('/product/'+id)
+                axios.delete(base_url('product/')+id)
                     .then(response => {
 
                    
@@ -259,6 +260,7 @@ $(document).ready(function(){
         $('#exampleModalCenter').modal('show');
         $.ajax({
             url: '/product',
+            type: base_url('product'),
             type: 'GET',
             success: function(response) {
                 response.forEach(item => {

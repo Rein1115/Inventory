@@ -107,7 +107,7 @@ $(document).ready(function(){
             cancelButtonText: 'No, cancel!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.post('/modificationpaymenthistory/'+id,data)
+                axios.post(base_url('modificationpaymenthistory/')+id,data)
                     .then(response => {
                         var resp = response.data;
                 
@@ -198,7 +198,7 @@ $(document).ready(function(){
                 });
 
 
-                axios.get('/paymentemail/' + id)
+                axios.get(base_url('paymentemail/')+id)
                 .then(response => {
                     var resp = response.data;
                     swal.close();

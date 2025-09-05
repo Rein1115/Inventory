@@ -37,7 +37,8 @@ $(document).ready(function(){
                 },
             ],
             ajax: {
-                url: '/producthistory',
+                url: base_url('producthistory'),
+                type:'GET',
                 dataSrc: ''
             },
             lengthMenu: [10, 25, 50,100,500], 
@@ -126,7 +127,7 @@ $(document).ready(function(){
                 cancelButtonText: 'No, cancel!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    axios.put('/producthistory/' + id,{quantity : $('#quantity').val()})
+                    axios.put(base_url('producthistory/')+ id,{quantity : $('#quantity').val()})
                         .then(response => {
     
                            
