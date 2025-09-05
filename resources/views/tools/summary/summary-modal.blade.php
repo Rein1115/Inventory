@@ -50,6 +50,7 @@
                                     <th style="text-align:center;">OR No.</th>
                                     <th style="text-align:center;">CR No.</th>
                                     <th style="text-align:center;">Total Amount</th>
+                                    <th style="text-align:center;"></th>
                                 </tr>
                             </thead>
                             <tbody>   

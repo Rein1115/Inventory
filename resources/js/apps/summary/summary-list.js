@@ -248,9 +248,19 @@ function reports(data){
                     render: function(data) {
                         return `<span class="badge bg-primary fw-bold text-white">${data}</span>`;
                     }
+                },
+                { 
+                    data: "trans_no", 
+                    title: "Total Amount",
+                    render: function(data, type, row) {
+                        return `
+                            <a href="/paymenthistory/${data}" class="btn btn-sm btn-primary fw-bold" title="View Payment">
+                                <i class="fa fa-eye"></i>
+                            </a>
+                        `;
+                    }
                 }
             ]
-
     });
 }
 

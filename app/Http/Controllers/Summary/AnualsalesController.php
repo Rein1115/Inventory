@@ -135,6 +135,7 @@ class AnualsalesController extends Controller
                     [$orders[$o]->trans_no]
                 );
                 $result[] = [
+                    "trans_no" => $orders[$o]->trans_no,
                     "po_no"        => $orders[$o]->po_no,
                     "fullname"     => $orders[$o]->fullname,
                     "or"           => $orders[$o]->or,
