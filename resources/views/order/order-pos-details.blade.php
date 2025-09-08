@@ -123,12 +123,12 @@
             </select>
          </div>
          <!-- Fullscreen Button -->
-         {{-- <div class="col-md-2 d-grid">
+         <div class="col-md-2 d-grid">
             <label class="form-label invisible">Fullscreen</label>
             <button id="fullscreenBtn" class="btn btn-outline-light">
             <i class="bi bi-fullscreen"></i> Fullscreen
             </button>
-         </div> --}}
+         </div>
       </div>
       <!-- Product and Checkout Section -->
       <div class="row">
