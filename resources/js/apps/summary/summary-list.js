@@ -201,12 +201,15 @@ function reports(data){
                     title: "Total Amount",
                     render: function(data, type, row) {
                         return `
-                            <a href="/order/${data}" class="btn btn-sm btn-primary fw-bold" title="View Payment">
+                            <a href="${base_url('order/' + data)}" 
+                            class="btn btn-sm btn-primary fw-bold" 
+                            title="View Payment">
                                 <i class="fa fa-eye"></i>
                             </a>
                         `;
                     }
                 }
+
             ]
     });
 }
