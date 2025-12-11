@@ -89,9 +89,12 @@ $(document).ready(function(){
             },
             { data : 'created_at'},
             {
-                data: null,
-                render: function (data, type, row) {
-                    return '<a href="/payment/'+row.trans_no+'" class="btn btn-primary text-white edit" id="edit"     data-id="'+row.trans_no+'"><i class="icon-pencil pencil-icon"> </i></a>';
+            data: null,
+            render: function (data, type, row) {
+                return '<a href="' + base_url('payment/' + row.trans_no) + '" ' +
+               'class="btn btn-primary text-white edit" ' +
+               'id="edit" data-id="' + row.trans_no + '">' +
+               '<i class="icon-pencil pencil-icon"></i></a>';
                         //    '<button  class="btn btn-danger text-white delete" data-id="'+row.trans_no+'"><i class="icon-trash trash-icon"> </i></button>';
                 }
             }
